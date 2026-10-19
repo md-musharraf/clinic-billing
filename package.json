@@ -1,0 +1,84 @@
+{
+  "name": "medbilling-desktop",
+  "version": "1.0.0",
+  "description": "Medical Billing & Clinic Practice Management Desktop Application",
+  "author": "Antigravity",
+  "main": "main.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && node scripts/schema-sql.js && node scripts/build.js",
+    "start": "next start",
+    "electron:dev": "concurrently -k \"npm run dev\" \"wait-on tcp:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "pack": "npm run build && electron-builder --dir",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "electron-updater": "^6.3.9",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@prisma/client": "5.22.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "clsx": "^2.1.0",
+    "concurrently": "^8.2.2",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
+    "framer-motion": "^11.0.8",
+    "lucide-react": "^0.344.0",
+    "next": "14.2.35",
+    "postcss": "^8",
+    "prisma": "5.22.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.medicalbilling.saas",
+    "productName": "MedBilling",
+    "asar": true,
+    "npmRebuild": false,
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "lib/*.js",
+      "lib/*.json",
+      "out/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "prisma",
+        "to": "prisma",
+        "filter": [
+          "client/**/*",
+          "schema.sql"
+        ]
+      }
+    ],
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "MedBilling-Setup-${version}.${ext}"
+    }
+  }
+}

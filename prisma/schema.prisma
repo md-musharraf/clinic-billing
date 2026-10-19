@@ -1,0 +1,205 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model ClinicSettings {
+  id                  Int       @id @default(autoincrement())
+  clinicName          String    @default("City Medical Clinic & Pharmacy")
+  tagline             String?   @default("Comprehensive Health & Wellness Center")
+  address             String    @default("Main Hospital Road, Medical Hub")
+  phone               String    @default("+91 98765 43210")
+  email               String?   @default("info@cityclinic.com")
+  website             String?   @default("www.cityclinic.com")
+  doctorName          String?   @default("Dr. S. K. Sharma")
+  doctorQualification String?   @default("MBBS, MD (General Medicine)")
+  doctorRegNo         String?   @default("MCI-48291/2014")
+  dlNumber            String?   @default("DL-20B/21B-48190")
+  gstin               String?   @default("07AAAAA0000A1Z5")
+  currencySymbol      String    @default("₹")
+  footerNote          String?   @default("Thank you for choosing our clinic. Wishing you a speedy recovery!")
+  termsConditions     String?   @default("1. Consultation valid for 7 days. 2. Medicine returns accepted within 3 days with original bill and intact strip.")
+  logo                Bytes?
+  doctorSignature     Bytes?
+  clinicStamp         Bytes?
+  letterhead          Boolean   @default(false)
+  printShowLogo       Boolean   @default(true)
+  printShowSignature  Boolean   @default(true)
+  printThermal        Boolean   @default(false) // default to A4/A5 or 80mm thermal receipt
+  printPaperSize      String    @default("A4") // A4, A5, Thermal80
+  printColor          String    @default("#0f766e") // Teal medical accent
+  licenseKey          String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  name         String
+  email        String       @unique
+  password     String       // bcrypt hash
+  recoveryHash String?      // owner one-time recovery code
+  role         String       @default("RECEPTIONIST") // SUPER_ADMIN, ADMIN, PHARMACIST, RECEPTIONIST, DOCTOR
+  isActive     Boolean      @default(true)
+  lastLogin    DateTime?
+  avatar       Bytes?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  deletedAt    DateTime?
+  patients     Patient[]
+  bills        Bill[]
+  activityLogs ActivityLog[]
+}
+
+model Patient {
+  id               String    @id // e.g. MED-2026-00001
+  uhid             String?   @unique
+  name             String
+  age              Int
+  ageUnit          String    @default("YEARS") // YEARS, MONTHS, DAYS
+  gender           String    // MALE, FEMALE, OTHER
+  mobile           String
+  email            String?
+  address          String?
+  bloodGroup       String?   // A+, B+, O+, AB+, etc.
+  emergencyContact String?
+  referredDoctor   String?
+  createdBy        Int?
+  user             User?     @relation(fields: [createdBy], references: [id])
+  registeredAt     DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+  bills            Bill[]
+
+  @@index([name])
+  @@index([mobile])
+  @@index([registeredAt])
+}
+
+model Doctor {
+  id              Int       @id @default(autoincrement())
+  name            String
+  qualification   String?
+  specialization  String?   @default("General Physician")
+  hospital        String?
+  mobile          String?
+  email           String?
+  consultationFee Float     @default(300)
+  commission      Float     @default(0) // referral percentage if applicable
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model CatalogItem {
+  id           Int       @id @default(autoincrement())
+  code         String?   @unique
+  name         String
+  category     String    // Medicine, Lab Test, Doctor Fee, Procedure, Room Charges, Ambulance, Miscellaneous
+  defaultPrice Float
+  costPrice    Float?    @default(0)
+  stock        Int?      @default(100)
+  unit         String?   @default("unit") // strip, vial, test, visit, day
+  taxPercent   Float?    @default(0)
+  isCustom     Boolean   @default(false)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  @@index([name])
+  @@index([category])
+}
+
+model Bill {
+  id              Int        @id @default(autoincrement())
+  billNo          String     @unique // MED-BIL-20261018-0001
+  patientId       String
+  patient         Patient    @relation(fields: [patientId], references: [id])
+  patientName     String
+  patientAge      Int?
+  patientGender   String?
+  patientMobile   String?
+  doctorName      String?
+  subtotal        Float
+  discountType    String     @default("FLAT") // FLAT, PERCENT
+  discountValue   Float      @default(0)
+  discountAmount  Float      @default(0)
+  gstPercent      Float      @default(0)
+  gstAmount       Float      @default(0)
+  totalAmount     Float
+  paidAmount      Float      @default(0)
+  dueAmount       Float      @default(0)
+  paymentMethod   String     @default("CASH") // CASH, UPI, CARD, BANK_TRANSFER
+  paymentStatus   String     @default("PAID") // PAID, PARTIAL, UNPAID
+  notes           String?
+  clinicSnapshot  String?    // JSON snapshot of clinic name, DL No, GSTIN at billing time
+  createdBy       Int?
+  user            User?      @relation(fields: [createdBy], references: [id])
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  items           BillItem[]
+  payments        Payment[]
+
+  @@index([patientId])
+  @@index([createdAt])
+  @@index([billNo])
+}
+
+model BillItem {
+  id           Int       @id @default(autoincrement())
+  billId       Int
+  bill         Bill      @relation(fields: [billId], references: [id], onDelete: Cascade)
+  itemId       Int?
+  itemName     String
+  itemCategory String    @default("Medicine")
+  quantity     Int       @default(1)
+  unitPrice    Float
+  discount     Float     @default(0)
+  total        Float
+  createdAt    DateTime  @default(now())
+
+  @@index([billId])
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+  billId     Int
+  bill       Bill     @relation(fields: [billId], references: [id], onDelete: Cascade)
+  amount     Float
+  method     String   @default("CASH")
+  reference  String?  // UPI txn ID, card auth code, etc.
+  receivedBy Int?
+  paidAt     DateTime @default(now())
+
+  @@index([billId])
+}
+
+model License {
+  id             Int       @id @default(autoincrement())
+  machineId      String    @unique
+  licenseKey     String?
+  status         String    @default("TRIAL") // TRIAL, ACTIVE, EXPIRED, LOCKED
+  tier           String    @default("PRO")
+  trialStartedAt DateTime  @default(now())
+  activatedAt    DateTime?
+  expiresAt      DateTime?
+  updatedAt      DateTime  @updatedAt
+}
+
+model ActivityLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}

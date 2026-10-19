@@ -1,0 +1,1334 @@
+[
+  {
+    "code": "MED-101",
+    "name": "Paracetamol 500mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-102",
+    "name": "Paracetamol 650mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-103",
+    "name": "Ibuprofen 200mg",
+    "category": "Medicine",
+    "defaultPrice": 6.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-104",
+    "name": "Ibuprofen 400mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-105",
+    "name": "Diclofenac 50mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-106",
+    "name": "Aspirin 75mg",
+    "category": "Medicine",
+    "defaultPrice": 3.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-107",
+    "name": "Aspirin 325mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-108",
+    "name": "Naproxen 250mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-109",
+    "name": "Tramadol 50mg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-110",
+    "name": "Aceclofenac 100mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-111",
+    "name": "Amoxicillin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-112",
+    "name": "Amoxicillin 250mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-113",
+    "name": "Azithromycin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 25.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-114",
+    "name": "Azithromycin 250mg",
+    "category": "Medicine",
+    "defaultPrice": 18.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-115",
+    "name": "Ciprofloxacin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-116",
+    "name": "Cephalexin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 20.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-117",
+    "name": "Doxycycline 100mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-118",
+    "name": "Metronidazole 400mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-119",
+    "name": "Levofloxacin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 22.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-120",
+    "name": "Cefixime 200mg",
+    "category": "Medicine",
+    "defaultPrice": 18.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-121",
+    "name": "Augmentin 625mg",
+    "category": "Medicine",
+    "defaultPrice": 35.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-122",
+    "name": "Ofloxacin 200mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-123",
+    "name": "Omeprazole 20mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-124",
+    "name": "Pantoprazole 40mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-125",
+    "name": "Ranitidine 150mg",
+    "category": "Medicine",
+    "defaultPrice": 6.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-126",
+    "name": "Domperidone 10mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-127",
+    "name": "Ondansetron 4mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-128",
+    "name": "ORS Sachet",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-129",
+    "name": "Loperamide 2mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-130",
+    "name": "Cetirizine 10mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-131",
+    "name": "Loratadine 10mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-132",
+    "name": "Montelukast 10mg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-133",
+    "name": "Chlorpheniramine 4mg",
+    "category": "Medicine",
+    "defaultPrice": 3.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-134",
+    "name": "Fexofenadine 120mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-135",
+    "name": "Dextromethorphan Syrup",
+    "category": "Medicine",
+    "defaultPrice": 35.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-136",
+    "name": "Ambroxol Syrup",
+    "category": "Medicine",
+    "defaultPrice": 30.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-137",
+    "name": "Metformin 500mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-138",
+    "name": "Metformin 1000mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-139",
+    "name": "Glimepiride 1mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-140",
+    "name": "Glimepiride 2mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-141",
+    "name": "Sitagliptin 100mg",
+    "category": "Medicine",
+    "defaultPrice": 25.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-142",
+    "name": "Insulin Glargine 100IU",
+    "category": "Medicine",
+    "defaultPrice": 450.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-143",
+    "name": "Amlodipine 5mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-144",
+    "name": "Atorvastatin 10mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-145",
+    "name": "Atorvastatin 20mg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-146",
+    "name": "Losartan 50mg",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-147",
+    "name": "Telmisartan 40mg",
+    "category": "Medicine",
+    "defaultPrice": 10.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-148",
+    "name": "Clopidogrel 75mg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-149",
+    "name": "Metoprolol 25mg",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-150",
+    "name": "Enalapril 5mg",
+    "category": "Medicine",
+    "defaultPrice": 6.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-151",
+    "name": "Vitamin D3 60000IU",
+    "category": "Medicine",
+    "defaultPrice": 30.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-152",
+    "name": "Calcium + Vitamin D3",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-153",
+    "name": "Iron + Folic Acid",
+    "category": "Medicine",
+    "defaultPrice": 8.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-154",
+    "name": "Multivitamin Tablet",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-155",
+    "name": "Vitamin B12 1500mcg",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-156",
+    "name": "Vitamin C 500mg",
+    "category": "Medicine",
+    "defaultPrice": 5.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-157",
+    "name": "Zinc 50mg",
+    "category": "Medicine",
+    "defaultPrice": 6.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-158",
+    "name": "Betadine Solution 100ml",
+    "category": "Medicine",
+    "defaultPrice": 60.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-159",
+    "name": "Diclofenac Gel 30g",
+    "category": "Medicine",
+    "defaultPrice": 45.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-160",
+    "name": "Clotrimazole Cream 15g",
+    "category": "Medicine",
+    "defaultPrice": 30.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-161",
+    "name": "Mupirocin Ointment 5g",
+    "category": "Medicine",
+    "defaultPrice": 80.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-162",
+    "name": "Calamine Lotion 100ml",
+    "category": "Medicine",
+    "defaultPrice": 40.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-163",
+    "name": "Injection Ceftriaxone 1g",
+    "category": "Medicine",
+    "defaultPrice": 50.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-164",
+    "name": "Injection Ranitidine",
+    "category": "Medicine",
+    "defaultPrice": 15.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-165",
+    "name": "Injection Ondansetron",
+    "category": "Medicine",
+    "defaultPrice": 20.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-166",
+    "name": "Injection Diclofenac",
+    "category": "Medicine",
+    "defaultPrice": 12.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-167",
+    "name": "IV Normal Saline 500ml",
+    "category": "Medicine",
+    "defaultPrice": 35.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-168",
+    "name": "IV Dextrose 5% 500ml",
+    "category": "Medicine",
+    "defaultPrice": 40.0,
+    "unit": "unit",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "MED-169",
+    "name": "Custom Vitamin C 500mg",
+    "category": "Medicine",
+    "defaultPrice": 45.0,
+    "unit": "strip",
+    "taxPercent": 0,
+    "stock": 100
+  },
+  {
+    "code": "LAB-201",
+    "name": "Complete Blood Count (CBC)",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-202",
+    "name": "Hemoglobin (Hb)",
+    "category": "Lab Test",
+    "defaultPrice": 100.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-203",
+    "name": "Platelet Count",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-204",
+    "name": "ESR (Erythrocyte Sedimentation Rate)",
+    "category": "Lab Test",
+    "defaultPrice": 120.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-205",
+    "name": "Blood Group & Rh Typing",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-206",
+    "name": "Peripheral Blood Smear",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-207",
+    "name": "Prothrombin Time (PT/INR)",
+    "category": "Lab Test",
+    "defaultPrice": 350.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-208",
+    "name": "Blood Sugar Fasting",
+    "category": "Lab Test",
+    "defaultPrice": 80.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-209",
+    "name": "Blood Sugar PP (Post Prandial)",
+    "category": "Lab Test",
+    "defaultPrice": 80.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-210",
+    "name": "Random Blood Sugar",
+    "category": "Lab Test",
+    "defaultPrice": 80.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-211",
+    "name": "HbA1c (Glycated Hemoglobin)",
+    "category": "Lab Test",
+    "defaultPrice": 450.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-212",
+    "name": "Lipid Profile",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-213",
+    "name": "Liver Function Test (LFT)",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-214",
+    "name": "Kidney Function Test (KFT/RFT)",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-215",
+    "name": "Serum Creatinine",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-216",
+    "name": "Blood Urea",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-217",
+    "name": "Serum Uric Acid",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-218",
+    "name": "Serum Electrolytes (Na/K/Cl)",
+    "category": "Lab Test",
+    "defaultPrice": 400.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-219",
+    "name": "Serum Calcium",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-220",
+    "name": "Serum Protein (Total)",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-221",
+    "name": "Serum Albumin",
+    "category": "Lab Test",
+    "defaultPrice": 180.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-222",
+    "name": "Bilirubin (Total & Direct)",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-223",
+    "name": "SGOT (AST)",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-224",
+    "name": "SGPT (ALT)",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-225",
+    "name": "Alkaline Phosphatase",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-226",
+    "name": "GGT (Gamma GT)",
+    "category": "Lab Test",
+    "defaultPrice": 250.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-227",
+    "name": "TSH (Thyroid Stimulating Hormone)",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-228",
+    "name": "Free T3",
+    "category": "Lab Test",
+    "defaultPrice": 250.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-229",
+    "name": "Free T4",
+    "category": "Lab Test",
+    "defaultPrice": 250.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-230",
+    "name": "Thyroid Profile (T3, T4, TSH)",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-231",
+    "name": "Urine Routine & Microscopy",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-232",
+    "name": "Urine Culture & Sensitivity",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-233",
+    "name": "24-Hour Urine Protein",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-234",
+    "name": "Urine Microalbumin",
+    "category": "Lab Test",
+    "defaultPrice": 400.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-235",
+    "name": "X-Ray Chest PA",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-236",
+    "name": "X-Ray Abdomen",
+    "category": "Lab Test",
+    "defaultPrice": 350.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-237",
+    "name": "Ultrasound Abdomen",
+    "category": "Lab Test",
+    "defaultPrice": 800.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-238",
+    "name": "Ultrasound Pelvis",
+    "category": "Lab Test",
+    "defaultPrice": 700.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-239",
+    "name": "ECG (Electrocardiogram)",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-240",
+    "name": "2D Echocardiography",
+    "category": "Lab Test",
+    "defaultPrice": 1500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-241",
+    "name": "CT Scan Head",
+    "category": "Lab Test",
+    "defaultPrice": 3000.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-242",
+    "name": "CT Scan Abdomen",
+    "category": "Lab Test",
+    "defaultPrice": 4000.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-243",
+    "name": "MRI Brain",
+    "category": "Lab Test",
+    "defaultPrice": 6000.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-244",
+    "name": "MRI Spine",
+    "category": "Lab Test",
+    "defaultPrice": 6000.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-245",
+    "name": "Widal Test",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-246",
+    "name": "Dengue NS1 Antigen",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-247",
+    "name": "Dengue IgG/IgM",
+    "category": "Lab Test",
+    "defaultPrice": 700.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-248",
+    "name": "Malaria Antigen (Rapid)",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-249",
+    "name": "HIV 1 & 2 (Rapid)",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-250",
+    "name": "HBsAg (Hepatitis B)",
+    "category": "Lab Test",
+    "defaultPrice": 300.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-251",
+    "name": "HCV (Hepatitis C)",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-252",
+    "name": "CRP (C-Reactive Protein)",
+    "category": "Lab Test",
+    "defaultPrice": 350.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-253",
+    "name": "RA Factor",
+    "category": "Lab Test",
+    "defaultPrice": 350.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-254",
+    "name": "ANA (Antinuclear Antibody)",
+    "category": "Lab Test",
+    "defaultPrice": 800.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-255",
+    "name": "Vitamin D (25-OH)",
+    "category": "Lab Test",
+    "defaultPrice": 800.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-256",
+    "name": "Vitamin B12",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-257",
+    "name": "PSA (Prostate Specific Antigen)",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-258",
+    "name": "CA-125",
+    "category": "Lab Test",
+    "defaultPrice": 800.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-259",
+    "name": "AFP (Alpha Fetoprotein)",
+    "category": "Lab Test",
+    "defaultPrice": 600.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-260",
+    "name": "Ferritin",
+    "category": "Lab Test",
+    "defaultPrice": 400.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-261",
+    "name": "Iron Studies (Serum Iron, TIBC)",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-262",
+    "name": "Stool Routine & Microscopy",
+    "category": "Lab Test",
+    "defaultPrice": 150.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-263",
+    "name": "Stool Occult Blood",
+    "category": "Lab Test",
+    "defaultPrice": 200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-264",
+    "name": "Stool Culture",
+    "category": "Lab Test",
+    "defaultPrice": 500.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "LAB-265",
+    "name": "Vitamin D3 25-Hydroxy",
+    "category": "Lab Test",
+    "defaultPrice": 1200.0,
+    "unit": "test",
+    "taxPercent": 0,
+    "stock": 999
+  },
+  {
+    "code": "DOC-001",
+    "name": "General OPD Consultation",
+    "category": "Doctor Fee",
+    "defaultPrice": 300,
+    "unit": "visit"
+  },
+  {
+    "code": "DOC-002",
+    "name": "Specialist Doctor Consultation",
+    "category": "Doctor Fee",
+    "defaultPrice": 500,
+    "unit": "visit"
+  },
+  {
+    "code": "DOC-003",
+    "name": "Emergency OPD Consultation",
+    "category": "Doctor Fee",
+    "defaultPrice": 700,
+    "unit": "visit"
+  },
+  {
+    "code": "DOC-004",
+    "name": "Follow-up Consultation (Within 7 Days)",
+    "category": "Doctor Fee",
+    "defaultPrice": 0,
+    "unit": "visit"
+  },
+  {
+    "code": "PRC-001",
+    "name": "Wound Dressing (Minor)",
+    "category": "Procedure",
+    "defaultPrice": 150,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-002",
+    "name": "Wound Dressing (Major / Burn)",
+    "category": "Procedure",
+    "defaultPrice": 350,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-003",
+    "name": "Suture / Stitches (Per Stitched Area)",
+    "category": "Procedure",
+    "defaultPrice": 500,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-004",
+    "name": "Suture Removal",
+    "category": "Procedure",
+    "defaultPrice": 100,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-005",
+    "name": "IM / IV Injection Administration",
+    "category": "Procedure",
+    "defaultPrice": 50,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-006",
+    "name": "IV Cannula Insertion & Saline Setup",
+    "category": "Procedure",
+    "defaultPrice": 200,
+    "unit": "proc"
+  },
+  {
+    "code": "PRC-007",
+    "name": "Nebulization (Per Session)",
+    "category": "Procedure",
+    "defaultPrice": 100,
+    "unit": "session"
+  },
+  {
+    "code": "BED-001",
+    "name": "General Ward Bed (Per 24h)",
+    "category": "Room Charges",
+    "defaultPrice": 800,
+    "unit": "day"
+  },
+  {
+    "code": "BED-002",
+    "name": "Semi-Private Room (AC, Per 24h)",
+    "category": "Room Charges",
+    "defaultPrice": 1500,
+    "unit": "day"
+  },
+  {
+    "code": "BED-003",
+    "name": "Deluxe Single Room (Per 24h)",
+    "category": "Room Charges",
+    "defaultPrice": 2500,
+    "unit": "day"
+  },
+  {
+    "code": "BED-004",
+    "name": "ICU Bed with Multipara Monitor (Per 24h)",
+    "category": "Room Charges",
+    "defaultPrice": 4500,
+    "unit": "day"
+  },
+  {
+    "code": "AMB-001",
+    "name": "Emergency Ambulance Service (Local)",
+    "category": "Ambulance",
+    "defaultPrice": 1200,
+    "unit": "trip"
+  },
+  {
+    "code": "MSC-001",
+    "name": "Nursing Care & Monitoring (Per Day)",
+    "category": "Miscellaneous",
+    "defaultPrice": 300,
+    "unit": "day"
+  },
+  {
+    "code": "MSC-002",
+    "name": "Medical Consumables & Disposable Kit",
+    "category": "Miscellaneous",
+    "defaultPrice": 250,
+    "unit": "kit"
+  }
+]

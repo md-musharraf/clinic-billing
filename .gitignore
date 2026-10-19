@@ -1,0 +1,43 @@
+# Node & Electron & Next.js
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Secrets and environment variables - Zero .env Policy
+.env
+.env.*
+*.env
+*.env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database and Generated Files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite3
+invoices/
+*.pdf
+
+# Python
+legacy_python/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
