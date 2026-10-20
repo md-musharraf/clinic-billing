@@ -10,4 +10,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('db-changed', listener);
   },
   printReceipt: () => ipcRenderer.invoke('print-receipt'),
+  // The open bill as a PDF in Documents\MedBilling Bills
+  savePdf: (name) => ipcRenderer.invoke('save-pdf', name),
+  openPdf: (file) => ipcRenderer.invoke('open-pdf', file),
+  // Auto-update from GitHub Releases
+  updateStatus: () => ipcRenderer.invoke('update-status'),
+  updateInstall: () => ipcRenderer.invoke('update-install'),
+  onUpdateReady: (callback) => {
+    const listener = (event, info) => callback(info);
+    ipcRenderer.on('update-ready', listener);
+    return () => ipcRenderer.removeListener('update-ready', listener);
+  },
 });

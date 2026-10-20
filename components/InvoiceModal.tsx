@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from 'react';
 import { formatCurrency, formatDateTime } from '@/lib/utils';
 import { Modal, btnPrimary, btnGhost, printPage } from '@/components/kit';
-import { Printer } from 'lucide-react';
+import { Printer, FileDown, FolderOpen } from 'lucide-react';
 
 const PAGE_CSS: Record<string, string> = {
   A4: '@page { size: A4; margin: 10mm; }',
@@ -168,7 +169,7 @@ export function InvoiceSheet({ bill, clinic }: { bill: any; clinic?: any }) {
         <div className="text-center">
           {signature ? <img src={c.doctorSignature} alt="" className="mx-auto mb-1 h-12 object-contain" /> : <div className="mb-1 h-10 w-48 border-b border-dashed border-slate-400" />}
           <p className="text-xs font-bold">{c.doctorName || 'Authorised Signatory'}</p>
-          <p className="text-[10px] text-slate-500">{[c.doctorQualification, c.doctorRegNo && `Reg. ${c.doctorRegNo}`].filter(Boolean).join(' · ') || 'Authorised Signatory'}</p>
+          <p className="text-[10px] text-slate-500">{[c.doctorQualification, c.doctorRegNo && `Reg. ${c.doctorRegNo}`].filter(Boolean).join(' · ') || (c.doctorName ? 'Authorised Signatory' : '')}</p>
         </div>
       </div>
     </div>
@@ -176,13 +177,35 @@ export function InvoiceSheet({ bill, clinic }: { bill: any; clinic?: any }) {
 }
 
 export function InvoiceModal({ bill, clinicProfile, onClose }: { bill: any; clinicProfile?: any; onClose: () => void }) {
+  const [saved, setSaved] = useState<{ path?: string; error?: string } | null>(null);
   if (!bill) return null;
+
+  // Desktop app: the printer's page as a PDF file (works with no printer at all). Browser: its print dialog has "Save as PDF".
+  const download = async () => {
+    const bridge = (window as any).electronAPI;
+    if (!bridge?.savePdf) return window.print();
+    setSaved(await bridge.savePdf(bill.billNo).catch((e: Error) => ({ error: e.message })));
+  };
+
   return (
     <Modal title={`Invoice ${bill.billNo}`} onClose={onClose} wide>
       <style>{PAGE_CSS[clinicProfile?.printPaperSize] || PAGE_CSS.A4}</style>
       <InvoiceSheet bill={bill} clinic={clinicProfile} />
+      {saved && (
+        <div role="status" className={`no-print mt-4 flex items-center justify-between gap-3 rounded-xl border p-3 text-xs ${saved.path ? 'border-emerald-500/30 bg-emerald-500/10' : 'border-destructive/30 bg-destructive/10 text-destructive'}`}>
+          <span className="min-w-0 truncate">{saved.path ? <>Saved to <b>{saved.path}</b></> : `Could not save the PDF: ${saved.error}`}</span>
+          {saved.path && (
+            <button type="button" onClick={() => (window as any).electronAPI.openPdf(saved.path)} className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary hover:underline cursor-pointer">
+              <FolderOpen className="h-3.5 w-3.5" /> Open
+            </button>
+          )}
+        </div>
+      )}
       <div className="no-print mt-4 flex justify-end gap-3 border-t border-border pt-4">
         <button type="button" onClick={onClose} className={btnGhost}>Close</button>
+        <button type="button" onClick={download} className={btnGhost} title="Save this bill as a PDF on this computer">
+          <FileDown className="h-4 w-4" /> Download PDF
+        </button>
         <button type="button" onClick={printPage} className={btnPrimary} autoFocus>
           <Printer className="h-4 w-4" /> Print
         </button>

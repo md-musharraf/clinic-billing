@@ -53,6 +53,11 @@
     "directories": {
       "output": "dist"
     },
+    "publish": {
+      "provider": "github",
+      "owner": "md-musharraf",
+      "repo": "clinic-billing"
+    },
     "win": {
       "target": "nsis"
     },

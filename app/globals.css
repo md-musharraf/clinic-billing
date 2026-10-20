@@ -141,6 +141,8 @@
 
 @media print {
   .no-print, aside, header { display: none !important; }
+  /* White paper margins (the desktop window's dark background would otherwise print around the bill). */
+  html, body { background: #fff !important; }
   /* An open invoice prints alone, not the screen behind it. */
   body:has(#printable-invoice) * { visibility: hidden; }
   body:has(#printable-invoice) #printable-invoice,

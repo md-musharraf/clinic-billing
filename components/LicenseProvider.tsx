@@ -62,6 +62,15 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
   };
 
   // The backend asks the admin dashboard each time, so a pause/stop/renewal there applies within a minute.
+  // A new version downloaded in the background (startAutoUpdates in main.js).
+  const [update, setUpdate] = useState<{ version: string } | null>(null);
+  useEffect(() => {
+    const bridge = (window as any).electronAPI;
+    if (!bridge?.onUpdateReady) return;
+    bridge.updateStatus().then((u: any) => u && setUpdate(u));
+    return bridge.onUpdateReady(setUpdate);
+  }, []);
+
   useEffect(() => {
     fetchLicense();
     const timer = setInterval(fetchLicense, 60_000);
@@ -116,6 +125,26 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+
+      {update && (
+        <div role="status" className="no-print fixed bottom-5 right-5 z-[90] w-[340px] rounded-xl border border-border bg-card p-4 shadow-2xl">
+          <div className="flex items-start gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold">
+                Update ready <span className="ml-1 rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary">v{update.version}</span>
+              </p>
+              <p className="mt-0.5 text-xs text-muted-foreground">It installs by itself when you close MedBilling. Your bills and patients stay as they are.</p>
+            </div>
+          </div>
+          <div className="mt-3 flex gap-2">
+            <button onClick={() => (window as any).electronAPI.updateInstall()} className={`flex-1 ${btnPrimary} h-9`}>Restart now</button>
+            <button onClick={() => setUpdate(null)} className="rounded-lg border border-border px-3 text-xs font-medium hover:bg-muted cursor-pointer">Later</button>
+          </div>
+        </div>
+      )}
 
       {/* Forced Lockout Modal if license is expired */}
       {checked && !isValid && (

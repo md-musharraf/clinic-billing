@@ -36,6 +36,20 @@ npm run build
 npm run electron:build
 ```
 
+### 4. Release an update (clinics update by themselves)
+Bump `version` in package.json, commit, then tag and push:
+```bash
+git tag v1.0.1
+```
+```bash
+git push origin main v1.0.1
+```
+`.github/workflows/release.yml` builds, runs `npm test`, and publishes `MedBilling-Setup-<version>.exe` + `latest.yml`
+as a GitHub Release of md-musharraf/clinic-billing (public, so no token in the app). Installed apps check at start and
+every 4 hours, download in the background, and show **Update ready** (installs on close or "Restart now"). Before a new
+version first opens the database, a copy is saved in `backups/medbilling-preupdate-<old>-to-<new>-*.db`.
+Clinics on a version without the updater install the next version by hand once.
+
 ---
 
 ## 🚀 Key Modules & Capabilities
@@ -90,6 +104,10 @@ catalog; an unknown item gets its category guessed and the cursor goes to its pr
 ### 5. 👥 Patient Directory (`/patients` • F6)
 - Patient records with UHID, contact, age, gender, and blood group.
 - Complete patient history modal showing all past invoices and treatments.
+
+### Printing a bill
+**Print** opens the Windows print dialog (A4, A5 or 80 mm receipt, as chosen in Settings). **Download PDF** saves the
+same page as `Documents\MedBilling Bills\<bill no>.pdf` and offers to open it: the way out when no printer works.
 
 ### 6. 📄 Invoices & Financial Reports (`/invoices` • F4)
 - Live search by Bill No, Patient Name, or Mobile Number.

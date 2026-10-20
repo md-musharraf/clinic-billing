@@ -16,8 +16,14 @@ const { PrismaClient } = require('../prisma/client');
   const route = async (name, body) => (await api.callRoute(ctx, 'POST', name, body)).json;
 
   try {
-    await api.ensureSchema(prisma, fs.readFileSync(path.join(__dirname, '../prisma/schema.sql'), 'utf8'));
+    const sql = fs.readFileSync(path.join(__dirname, '../prisma/schema.sql'), 'utf8');
+    // A brand-new database has nothing to save; an update to another version keeps a copy first.
+    assert.strictEqual((await api.upgradeDatabase(prisma, sql, { dataDir: dir, version: '1.0.0' })).backup, null);
     await api.seedDefaults(prisma);
+    assert.strictEqual((await api.upgradeDatabase(prisma, sql, { dataDir: dir, version: '1.0.0' })).backup, null, 'same version: no copy');
+    const { backup } = await api.upgradeDatabase(prisma, sql, { dataDir: dir, version: '1.1.0' });
+    assert.match(path.basename(backup), /^medbilling-preupdate-1\.0\.0-to-1\.1\.0-/);
+    assert.ok(fs.statSync(backup).size > 0);
 
     // A new install has no sample clinic printed on bills.
     const blank = await prisma.clinicSettings.findFirst();
