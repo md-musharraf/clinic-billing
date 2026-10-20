@@ -42,22 +42,9 @@ async function initDatabase() {
     });
     ctx.prisma = prisma;
 
-    // Run schema.sql if database was just created
+    // Create/extend tables from schema.sql (statements that already applied just fail and are skipped)
     const schemaSqlPath = path.join(__dirname, 'prisma', 'schema.sql');
-    if (fs.existsSync(schemaSqlPath)) {
-      const sqlContent = fs.readFileSync(schemaSqlPath, 'utf8');
-      const statements = sqlContent
-        .split(';')
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0);
-      for (const stmt of statements) {
-        try {
-          await prisma.$executeRawUnsafe(stmt);
-        } catch (e) {
-          // table already exists is fine
-        }
-      }
-    }
+    if (fs.existsSync(schemaSqlPath)) await api.ensureSchema(prisma, fs.readFileSync(schemaSqlPath, 'utf8'));
 
     // Seed default items and settings
     await api.seedDefaults(prisma);
@@ -108,23 +95,8 @@ function registerCustomProtocol() {
   protocol.handle('app', async (request) => {
     const url = new URL(request.url);
 
-    // Intercept dynamic API requests in Electron static/offline mode
-    if (url.pathname.startsWith('/api/')) {
-      const routeName = url.pathname.replace(/^\/api\//, '').replace(/\/$/, '');
-      let body = {};
-      if (request.method === 'POST') {
-        try {
-          body = await request.json();
-        } catch {
-          body = {};
-        }
-      }
-      const res = await api.callRoute(ctx, request.method, routeName, body);
-      return new Response(JSON.stringify(res.json), {
-        status: res.status,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    // Dynamic API requests in Electron static/offline mode
+    if (url.pathname.startsWith('/api/')) return api.handleRequest(ctx, request);
 
     let filePath = path.join(outDir, decodeURIComponent(url.pathname));
 
@@ -143,7 +115,6 @@ function registerCustomProtocol() {
 }
 
 // Register IPC handlers
-ipcMain.handle('ping', () => 'pong');
 
 ipcMain.handle('db-query', async (_e, payload) => {
   if (!prisma) return { success: false, error: `Database not initialized: ${dbError}` };
@@ -155,33 +126,8 @@ ipcMain.handle('db-query', async (_e, payload) => {
   }
 });
 
-// Auth Handlers
-ipcMain.handle('auth-login', async (_e, data) => (await api.callRoute(ctx, 'POST', 'auth/login', data)).json);
-ipcMain.handle('auth-recover', async (_e, data) => (await api.callRoute(ctx, 'POST', 'auth/recover', data)).json);
-ipcMain.handle('auth-setup-status', async () => (await api.callRoute(ctx, 'GET', 'auth/setup-status')).json);
-ipcMain.handle('auth-setup', async (_e, data) => (await api.callRoute(ctx, 'POST', 'auth/setup', data)).json);
-
-ipcMain.handle('license-check', async () => {
-  if (!prisma) return { valid: true, status: 'TRIAL', daysRemaining: 30 };
-  return (await api.callRoute(ctx, 'GET', 'license/check')).json;
-});
-
-ipcMain.handle('license-activate', async (_e, key) => {
-  if (!prisma) return { success: false, error: 'Database not initialized' };
-  return (await api.callRoute(ctx, 'POST', 'license/activate', { licenseKey: key })).json;
-});
-
-ipcMain.handle('license-generate-admin-key', async (_e, data) => {
-  return (await api.callRoute(ctx, 'POST', 'license/generate-admin-key', data)).json;
-});
-
-ipcMain.handle('backup-export', async () => {
-  return (await api.callRoute(ctx, 'POST', 'backup/export')).json;
-});
-
-ipcMain.handle('backup-restore', async (_e, file) => {
-  return (await api.callRoute(ctx, 'POST', 'backup/restore', { file })).json;
-});
+// Every other backend route (auth, licence, backup, owner summary) goes through one channel.
+ipcMain.handle('api', async (_e, { route, body }) => (await api.callRoute(ctx, 'POST', route, body)).json);
 
 ipcMain.handle('print-receipt', async () => {
   if (!mainWindow) return false;

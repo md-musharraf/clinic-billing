@@ -1,11 +1,10 @@
 "use client";
-import { Sidebar } from '@/components/Sidebar';
-import { useState, useEffect } from 'react';
+import { Sidebar, navItems } from '@/components/Sidebar';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEnterAsTab } from '@/lib/useEnterAsTab';
-import { canOpen } from '@/lib/roles';
-import { Sun, Moon, Bell, Search, ShieldAlert, Sparkles, HeartPulse } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { canOpen, homeFor } from '@/lib/roles';
+import { Sun, Moon } from 'lucide-react';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -14,102 +13,89 @@ interface AppLayoutProps {
   actions?: React.ReactNode;
 }
 
-const SHORTCUTS: Record<string, string> = {
-  F2: '/billing',
-  F3: '/catalog',
-  F4: '/invoices',
-  F6: '/patients',
-};
+const THEME_KEY = 'medbilling_theme';
 
 export function AppLayout({ children, title, subtitle, actions }: AppLayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [role, setRole] = useState<string | null>(null);
 
-  // Activate keyboard Enter navigation globally
   useEnterAsTab();
 
-  // Keyboard shortcut listener
+  // Auth guard: signed out → login; screen not allowed for this role → that role's home.
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem('medbilling_current_user') || 'null');
+      if (!u) return router.replace('/login');
+      setRole(u.role);
+      if (!canOpen(u.role, pathname)) router.replace(homeFor(u.role));
+    } catch {
+      router.replace('/login');
+    }
+  }, [pathname, router]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light';
+    setTheme(saved);
+    document.documentElement.classList.toggle('dark', saved === 'dark');
+  }, []);
+
+  // Function-key shortcuts come from the sidebar, limited to screens this role can open.
+  const shortcuts = useMemo(() => (role ? navItems.filter((n) => n.shortcut && canOpen(role, n.href)) : []), [role]);
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (SHORTCUTS[e.key]) {
+      const hit = shortcuts.find((n) => n.shortcut === e.key);
+      if (hit) {
         e.preventDefault();
-        router.push(SHORTCUTS[e.key]);
+        router.push(hit.href);
       }
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [router]);
-
-  // Auth Guard
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('medbilling_current_user');
-      if (!stored && !pathname.startsWith('/login') && !pathname.startsWith('/setup')) {
-        router.push('/login');
-        return;
-      }
-      if (stored) {
-        const u = JSON.parse(stored);
-        if (!canOpen(u.role, pathname)) {
-          router.push('/dashboard');
-        }
-      }
-    } catch {
-      router.push('/login');
-    }
-  }, [pathname, router]);
+  }, [router, shortcuts]);
 
   const toggleTheme = () => {
     const next = theme === 'light' ? 'dark' : 'light';
     setTheme(next);
-    if (next === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    localStorage.setItem(THEME_KEY, next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
   };
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground">
-      {/* Collapsible Sidebar */}
       <Sidebar />
 
-      {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top Navbar */}
-        <header className="flex h-16 items-center justify-between border-b border-border bg-card px-6 shadow-sm no-print">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-foreground leading-tight">{title}</h1>
-            {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+        <header className="flex min-h-16 items-center justify-between gap-4 border-b border-border bg-card px-6 py-2 shadow-sm no-print">
+          <div className="min-w-0">
+            <h1 className="truncate text-xl font-bold tracking-tight text-foreground leading-tight">{title}</h1>
+            {subtitle && <p className="truncate text-xs text-muted-foreground">{subtitle}</p>}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3">
             {actions}
 
-            {/* Quick Shortcut Pills */}
-            <div className="hidden lg:flex items-center gap-1.5 text-xs text-muted-foreground mr-2 border-r border-border pr-4">
-              <span className="flex items-center gap-1"><kbd>F2</kbd> Bill</span>
-              <span className="flex items-center gap-1"><kbd>F3</kbd> Items</span>
-              <span className="flex items-center gap-1"><kbd>F4</kbd> Invoices</span>
-              <span className="flex items-center gap-1"><kbd>F6</kbd> Patients</span>
-            </div>
+            {shortcuts.length > 0 && (
+              <div className="hidden xl:flex items-center gap-2 text-xs text-muted-foreground border-l border-border pl-4">
+                {shortcuts.map((n) => (
+                  <span key={n.href} className="flex items-center gap-1"><kbd>{n.shortcut}</kbd> {n.name}</span>
+                ))}
+              </div>
+            )}
 
-            {/* Dark / Light Toggle */}
             <button
               onClick={toggleTheme}
               className="rounded-xl border border-border p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
-              title="Toggle Dark / Light Mode"
+              title="Toggle dark / light mode"
+              aria-label="Toggle dark / light mode"
             >
               {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
           </div>
         </header>
 
-        {/* Scrollable View Content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

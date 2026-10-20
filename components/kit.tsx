@@ -81,38 +81,52 @@ export function ToastView({ toast }: { toast: Toast }) {
   );
 }
 
-export function useRole(): string | null {
-  const [role, setRole] = useState<string | null>(null);
-  useEffect(() => {
-    try {
-      const u = JSON.parse(localStorage.getItem('medbilling_current_user') || 'null');
-      setRole(u?.role || null);
-    } catch {}
-  }, []);
-  return role;
-}
-
-export function useLive(load: () => void, models?: string[]) {
+// Runs load() now, whenever deps change, and whenever the desktop app reports a write to one of `models`.
+export function useLive(load: () => void, models: string[], deps: unknown[] = []) {
   const latest = useRef(load);
   latest.current = load;
+  const key = models.join(',');
   useEffect(() => {
     latest.current();
-    if (typeof window !== 'undefined' && (window as any).electronAPI?.onDbChanged) {
-      return (window as any).electronAPI.onDbChanged((model: string) => {
-        if (!models || models.includes(model)) latest.current();
-      });
-    }
-  }, [models]);
+    return (window as any).electronAPI?.onDbChanged?.((model: string) => {
+      if (key.split(',').includes(model)) latest.current();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, ...deps]);
 }
 
-export async function postApi(route: string, body?: any) {
-  if (typeof window !== 'undefined' && (window as any).electronAPI) {
-    if (route === 'auth/logout') return { success: true };
-  }
-  const res = await fetch(`/api/${route}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  return res.json();
+export function printPage() {
+  const bridge = (window as any).electronAPI;
+  if (bridge?.printReceipt) bridge.printReceipt();
+  else window.print();
+}
+
+// Number tile used on both dashboards.
+export function Stat({ label, value, hint, icon: Icon, tone = 'primary' }: {
+  label: string;
+  value: React.ReactNode;
+  hint?: React.ReactNode;
+  icon: React.ElementType;
+  tone?: 'primary' | 'emerald' | 'indigo' | 'amber' | 'rose' | 'sky';
+}) {
+  const tones = {
+    primary: 'bg-primary/10 text-primary',
+    emerald: 'bg-emerald-500/10 text-emerald-600',
+    indigo: 'bg-indigo-500/10 text-indigo-600',
+    amber: 'bg-amber-500/10 text-amber-600',
+    rose: 'bg-rose-500/10 text-rose-600',
+    sky: 'bg-sky-500/10 text-sky-600',
+  };
+  return (
+    <div className="rounded-2xl border border-border bg-card p-4 shadow-sm transition-colors hover:border-primary/40">
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{label}</span>
+        <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${tones[tone]}`}>
+          <Icon className="h-4 w-4" />
+        </span>
+      </div>
+      <div className="mt-2 text-2xl font-extrabold tracking-tight text-foreground tabular-nums">{value}</div>
+      {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
 }

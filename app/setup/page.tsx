@@ -4,21 +4,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { HeartPulse, ShieldCheck, Copy, Check, ArrowRight, AlertCircle, Building2, User, KeyRound } from 'lucide-react';
 import { inputCls, labelCls, btnPrimary, Field } from '@/components/kit';
+import { api } from '@/lib/db';
 
 export default function SetupPage() {
   const router = useRouter();
 
-  // Clinic profile
-  const [clinicName, setClinicName] = useState('Arogya Medical Clinic & Pharmacy');
-  const [doctorName, setDoctorName] = useState('Dr. Rajesh Verma');
-  const [phone, setPhone] = useState('+91 98765 43210');
-  const [address, setAddress] = useState('Main Market Road, Medical Square');
-  const [dlNumber, setDlNumber] = useState('DL-20B/21B-94821');
-  const [gstin, setGstin] = useState('20AABCU9603R1ZM');
+  // Clinic profile (printed on every invoice, so no sample values)
+  const [clinicName, setClinicName] = useState('');
+  const [doctorName, setDoctorName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [dlNumber, setDlNumber] = useState('');
+  const [gstin, setGstin] = useState('');
 
-  // Super Admin
-  const [adminName, setAdminName] = useState('Medical Administrator');
-  const [email, setEmail] = useState('admin@clinic.com');
+  // Owner login
+  const [adminName, setAdminName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -42,8 +43,7 @@ export default function SetupPage() {
 
     setLoading(true);
     try {
-      let data;
-      const payload = {
+      const data = await api('auth/setup', {
         name: adminName,
         email,
         password,
@@ -53,18 +53,7 @@ export default function SetupPage() {
         address,
         dlNumber,
         gstin,
-      };
-
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.authSetup) {
-        data = await (window as any).electronAPI.authSetup(payload);
-      } else {
-        const res = await fetch('/api/auth/setup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        data = await res.json();
-      }
+      });
 
       if (data && data.success) {
         setRecoveryCode(data.recoveryCode);
@@ -119,7 +108,7 @@ export default function SetupPage() {
           </div>
 
           <button
-            onClick={() => router.push('/dashboard')}
+            onClick={() => router.push('/owner')}
             className={`w-full ${btnPrimary}`}
           >
             Launch Medical Dashboard
@@ -162,6 +151,7 @@ export default function SetupPage() {
                 <input
                   type="text"
                   value={clinicName}
+                  placeholder="e.g. City Care Clinic"
                   onChange={(e) => setClinicName(e.target.value)}
                   className={inputCls}
                   required
@@ -171,6 +161,7 @@ export default function SetupPage() {
                 <input
                   type="text"
                   value={doctorName}
+                  placeholder="e.g. Dr. A. Kumar"
                   onChange={(e) => setDoctorName(e.target.value)}
                   className={inputCls}
                   required
@@ -198,6 +189,7 @@ export default function SetupPage() {
                 <input
                   type="text"
                   value={phone}
+                  placeholder="e.g. 98765 43210"
                   onChange={(e) => setPhone(e.target.value)}
                   className={inputCls}
                   required
@@ -207,6 +199,7 @@ export default function SetupPage() {
                 <input
                   type="text"
                   value={address}
+                  placeholder="Clinic address"
                   onChange={(e) => setAddress(e.target.value)}
                   className={inputCls}
                 />
@@ -225,6 +218,7 @@ export default function SetupPage() {
                 <input
                   type="text"
                   value={adminName}
+                  placeholder="Your name"
                   onChange={(e) => setAdminName(e.target.value)}
                   className={inputCls}
                   required
@@ -234,6 +228,7 @@ export default function SetupPage() {
                 <input
                   type="email"
                   value={email}
+                  placeholder="owner@yourclinic.com"
                   onChange={(e) => setEmail(e.target.value)}
                   className={inputCls}
                   required

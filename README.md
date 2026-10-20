@@ -6,8 +6,8 @@ Built using the exact same architecture, UI system, offline licensing, and datab
 - **Desktop Shell**: Electron 44+ with custom secure `app://-` static protocol and IPC bridge
 - **Frontend Stack**: Next.js 14 + React 18 + Tailwind CSS + Lucide React + Framer Motion
 - **Database Engine**: Prisma ORM with SQLite (`prisma/dev.db`), offline DDL auto-sync (`prisma/schema.sql`)
-- **Authentication & RBAC**: Owner, Clinic Manager, Pharmacist, Billing Counter/Receptionist, and Consultant Doctor
-- **Offline SaaS Licensing**: Hardware-locked (Windows `MachineGuid`), HMAC/AES-256 signed license keys, 30-day auto trial, and admin key generator
+- **Authentication & RBAC**: separate **Owner** and **Reception** logins (Owner/Manager → owner dashboard; Reception, Pharmacist, Doctor → counter dashboard), enforced by a backend session
+- **Licensing**: hardware-locked (Windows `MachineGuid`), 30-day auto trial, keys + pause/stop from the admin dashboard
 - **Printing**: Direct Thermal Receipt (80mm/58mm) and Vector A4/A5 Tax Invoice print
 
 ---
@@ -40,6 +40,13 @@ npm run electron:build
 
 ## 🚀 Key Modules & Capabilities
 
+### 0. 👑 Owner Dashboard (`/owner`, Owner login only)
+- Pick Today / Yesterday / This week / This month / Last month or any date range.
+- Patients (unique + new registrations), bills, money collected, due, discount, GST.
+- Money split into **Lab Tests, Medicine, Doctor Fee, Ultrasound, X-Ray, Other**; doctor-wise, payment-mode and day-wise totals.
+- Patient-wise billing table (every bill split by fee type, discount, GST, paid, due) with search and invoice preview.
+- **Download PDF**: the same report as an A4-landscape PDF, made on demand on this PC.
+
 ### 1. ⚡ Rapid Patient Billing Counter (`/billing` • F2)
 - Fast keyboard-optimized clinical entry (Enter key behaves like Tab via `useEnterAsTab`).
 - Live autocomplete matching 152+ pre-seeded Medicines, Lab Tests, OPD Doctor Fees, Minor Procedures, and Room Charges.
@@ -48,19 +55,20 @@ npm run electron:build
 - Real-time calculations: Subtotal, Flat/Percentage Discounts, GST rates (0%, 5%, 12%, 18%), and Grand Total.
 - Payment modes: Cash, UPI, Card, Net Banking.
 
-### 2. 🔐 Hardware-Locked Offline Licensing & SaaS Protection
-- Tamper-proof hardware identifier derived from Windows `MachineGuid`.
-- Automatic **30-Day Free Trial** on first installation.
-- Live status badge in the sidebar: `🟢 PRO ACTIVE` or `🟡 TRIAL (XXd left)`.
-- Built-in Developer/Admin Key Generator in Settings for offline lifetime or subscription activation keys.
+### 2. 🔐 Licence (managed from the JharLab admin dashboard)
+- Locked to the PC's Windows `MachineGuid`; automatic **30-day free trial** on first run.
+- Keys are made only on the admin dashboard (customer → Software: **MedBilling Clinic**); they end in `|MEDBILLING`,
+  so JharLab and MedBilling keys cannot unlock each other. The app has no key generator.
+- Every check (and once a minute while open) the app calls the same `GET /api/license/status` as JharLab, with
+  `product=medbilling`: pause / stop / delete on the dashboard lock the PC, a renewed key installs itself.
+  Without internet the last answer is kept. `NEXT_PUBLIC_ADMIN_DASHBOARD_URL` overrides the dashboard address.
 
-### 3. 🛡️ Role-Based Access Control (RBAC) & Authentication (`/staff`)
-- **SUPER_ADMIN (Owner)**: Full unrestricted access and database backup creation.
-- **ADMIN (Manager)**: Full access across billing, catalog, patients, and doctors.
-- **PHARMACIST**: Access to Billing, Invoices, Catalog, and Patients.
-- **RECEPTIONIST**: Restricted to Billing Counter and Patient Registration.
-- **DOCTOR**: Patient medical records, consultation notes, and invoice inspection.
-- Emergency 8-character recovery code for password recovery.
+### 3. 🛡️ Logins & Roles (`/staff`, rules in `lib/roles.js`)
+- **SUPER_ADMIN (Owner)** / **ADMIN (Manager)**: Owner login, owner dashboard, staff, backup, settings.
+- **RECEPTIONIST**: Reception login, today's counter, billing, invoices, patients.
+- **PHARMACIST**, **DOCTOR**: Reception login with their own screen lists.
+- The backend refuses DB access without a signed-in session; only owners can change logins, licences or make backups.
+- Owner sets new staff passwords in Staff Logins; the owner's own reset uses the 8-character recovery code from setup.
 
 ### 4. 💊 Master Item & Price Catalog (`/catalog` • F3)
 - Filter by categories: Medicine, Lab Test, Doctor Fee, Procedure, Room Charges, Ambulance, Miscellaneous.
@@ -75,6 +83,12 @@ npm run electron:build
 - One-click CSV transaction export for Excel/accounting.
 - Reprint invoices with Clinic Letterhead, D.L. No, GSTIN, and Doctor signature blocks.
 
-### 7. 💾 Automated Database Backups (`/backup`)
+### 7. ✅ Tests
+```bash
+npm test          # owner-report maths, roles, licence vs a fake dashboard
+node test_app.js  # end-to-end against prisma/dev.db
+```
+
+### 8. 💾 Automated Database Backups (`/backup`)
 - One-click timestamped backup of the local SQLite database.
 - 100% offline data isolation.

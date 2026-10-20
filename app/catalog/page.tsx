@@ -17,18 +17,10 @@ import {
   HeartPulse,
   Sparkles,
 } from 'lucide-react';
+import { CATEGORIES as ITEM_CATEGORIES } from '@/lib/billing-summary';
 import { inputCls, labelCls, btnPrimary, btnGhost, btnDanger, card, th, td, Modal, Field, useToast, ToastView } from '@/components/kit';
 
-const CATEGORIES = [
-  'All Categories',
-  'Medicine',
-  'Lab Test',
-  'Doctor Fee',
-  'Procedure',
-  'Room Charges',
-  'Ambulance',
-  'Miscellaneous',
-];
+const CATEGORIES = ['All Categories', ...ITEM_CATEGORIES];
 
 export default function CatalogPage() {
   const [toast, showToast] = useToast();
@@ -305,13 +297,7 @@ export default function CatalogPage() {
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   className={inputCls}
                 >
-                  <option value="Medicine">Medicine</option>
-                  <option value="Lab Test">Lab Test</option>
-                  <option value="Doctor Fee">Doctor Fee</option>
-                  <option value="Procedure">Procedure</option>
-                  <option value="Room Charges">Room Charges</option>
-                  <option value="Ambulance">Ambulance</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
+                  {ITEM_CATEGORIES.map((c: string) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </Field>
             </div>

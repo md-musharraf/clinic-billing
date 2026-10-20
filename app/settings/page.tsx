@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { AppLayout } from '@/components/AppLayout';
-import { db } from '@/lib/db';
+import { db, api } from '@/lib/db';
 import { useLicense } from '@/components/LicenseProvider';
 import {
   Settings,
@@ -16,9 +16,8 @@ import {
   Sparkles,
   ShieldCheck,
   AlertCircle,
-  Code2,
 } from 'lucide-react';
-import { inputCls, labelCls, btnPrimary, btnGhost, card, Field, useToast, ToastView } from '@/components/kit';
+import { inputCls, labelCls, btnPrimary, card, Field, useToast, ToastView } from '@/components/kit';
 
 export default function SettingsPage() {
   const [toast, showToast] = useToast();
@@ -44,11 +43,9 @@ export default function SettingsPage() {
     '1. Consultation validity: 7 days. 2. Medicines once sold cannot be returned without original cash memo.'
   );
 
-  // License Activation & Key Generator
+  // Licence activation (keys are made on the admin dashboard)
   const [licenseKeyInput, setLicenseKeyInput] = useState('');
   const [copiedId, setCopiedId] = useState(false);
-  const [generatedKey, setGeneratedKey] = useState('');
-  const [genExpiry, setGenExpiry] = useState('LIFETIME');
 
   useEffect(() => {
     async function loadSettings() {
@@ -130,17 +127,7 @@ export default function SettingsPage() {
     if (!licenseKeyInput.trim()) return;
 
     try {
-      let res: any;
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.licenseActivate) {
-        res = await (window as any).electronAPI.licenseActivate(licenseKeyInput.trim());
-      } else {
-        const fetchRes = await fetch('/api/license/activate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ licenseKey: licenseKeyInput.trim() }),
-        });
-        res = await fetchRes.json();
-      }
+      const res = await api('license/activate', { licenseKey: licenseKeyInput.trim() });
 
       if (res.success) {
         showToast('License activated successfully!', 'success');
@@ -151,33 +138,6 @@ export default function SettingsPage() {
       }
     } catch (e: any) {
       showToast(e.message || 'License activation failed', 'error');
-    }
-  };
-
-  const handleGenerateKey = async () => {
-    try {
-      let res: any;
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.licenseGenerateAdminKey) {
-        res = await (window as any).electronAPI.licenseGenerateAdminKey({
-          machineId,
-          expiryDate: genExpiry,
-          tier: 'PRO',
-        });
-      } else {
-        const fetchRes = await fetch('/api/license/generate-admin-key', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ machineId, expiryDate: genExpiry, tier: 'PRO' }),
-        });
-        res = await fetchRes.json();
-      }
-
-      if (res.success) {
-        setGeneratedKey(res.key);
-        showToast('License key generated!', 'success');
-      }
-    } catch (e: any) {
-      showToast(e.message || 'Failed to generate key', 'error');
     }
   };
 
@@ -345,8 +305,8 @@ export default function SettingsPage() {
           <div className="flex items-center gap-3 border-b border-border pb-4">
             <KeyRound className="h-6 w-6 text-primary" />
             <div>
-              <h3 className="text-base font-bold text-foreground">Hardware-Locked SaaS Licensing</h3>
-              <p className="text-xs text-muted-foreground">Manage offline machine locks, 30-day trials, and lifetime licenses</p>
+              <h3 className="text-base font-bold text-foreground">Licence</h3>
+              <p className="text-xs text-muted-foreground">Locked to this PC and managed from the administrator&apos;s dashboard</p>
             </div>
           </div>
 
@@ -378,7 +338,7 @@ export default function SettingsPage() {
               </span>
               <span className="text-base font-extrabold text-foreground mt-1 flex items-center gap-1.5">
                 <span className={`h-2.5 w-2.5 rounded-full ${status === 'ACTIVE' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                {status === 'ACTIVE' ? 'PRO ACTIVE' : '30-DAY TRIAL'}
+                {status === 'ACTIVE' ? 'PRO ACTIVE' : status === 'TRIAL' ? 'FREE TRIAL' : status}
               </span>
             </div>
 
@@ -387,7 +347,7 @@ export default function SettingsPage() {
                 Days Remaining
               </span>
               <span className="text-base font-extrabold text-foreground mt-1 font-mono">
-                {status === 'ACTIVE' ? 'Lifetime / Unlimited' : `${daysRemaining} Days`}
+                {daysRemaining} Days{expiryDate ? ` (till ${expiryDate})` : ''}
               </span>
             </div>
 
@@ -418,56 +378,10 @@ export default function SettingsPage() {
             </div>
           </form>
 
-          {/* Vendor Key Generator Tool */}
-          <div className="border-t border-border/60 pt-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <Code2 className="h-4 w-4 text-primary" />
-              <span className="text-xs font-bold uppercase tracking-wider text-foreground">
-                Developer / Admin Offline Key Generator
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Generate authenticated license keys for this machine or customer clinic machines offline.
-            </p>
-
-            <div className="flex gap-2 items-center">
-              <select
-                value={genExpiry}
-                onChange={(e) => setGenExpiry(e.target.value)}
-                className={`${inputCls} max-w-xs`}
-              >
-                <option value="LIFETIME">Lifetime Commercial Pro</option>
-                <option value="2027-12-31">1 Year Subscription (2027-12-31)</option>
-                <option value="2028-12-31">2 Year Subscription (2028-12-31)</option>
-              </select>
-              <button
-                type="button"
-                onClick={handleGenerateKey}
-                className={btnGhost}
-              >
-                Generate Key
-              </button>
-            </div>
-
-            {generatedKey && (
-              <div className="p-3 rounded-xl bg-muted/60 border border-border space-y-1">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">Generated Key:</span>
-                <code className="text-xs font-mono font-bold text-foreground block break-all select-all">
-                  {generatedKey}
-                </code>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLicenseKeyInput(generatedKey);
-                    showToast('Key pasted to activation input!', 'success');
-                  }}
-                  className="text-xs font-semibold text-primary hover:underline cursor-pointer pt-1"
-                >
-                  Apply this key to input ↑
-                </button>
-              </div>
-            )}
-          </div>
+          <p className="text-xs text-muted-foreground">
+            Licence keys come from your administrator. Send them the Machine ID above; when they renew or pause your
+            licence on their dashboard, this PC picks it up by itself while it is online.
+          </p>
         </div>
       </div>
     </AppLayout>

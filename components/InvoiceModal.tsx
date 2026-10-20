@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { formatCurrency, formatDateTime } from '@/lib/utils';
-import { Modal, btnPrimary, btnGhost } from '@/components/kit';
+import { Modal, btnPrimary, btnGhost, printPage } from '@/components/kit';
 import { Printer } from 'lucide-react';
 
 export interface InvoiceModalProps {
@@ -13,14 +13,6 @@ export interface InvoiceModalProps {
 
 export function InvoiceModal({ bill, clinicProfile, onClose }: InvoiceModalProps) {
   if (!bill) return null;
-
-  const handlePrint = () => {
-    if (typeof window !== 'undefined' && (window as any).electronAPI?.printReceipt) {
-      (window as any).electronAPI.printReceipt();
-    } else {
-      window.print();
-    }
-  };
 
   return (
     <Modal title={`Tax Invoice: ${bill.billNo}`} onClose={onClose} wide>
@@ -145,7 +137,7 @@ export function InvoiceModal({ bill, clinicProfile, onClose }: InvoiceModalProps
         </button>
         <button
           type="button"
-          onClick={handlePrint}
+          onClick={printPage}
           className={btnPrimary}
         >
           <Printer className="h-4 w-4" />

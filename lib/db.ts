@@ -1,9 +1,7 @@
 // lib/db.ts
-// Universal Database abstraction for Next.js and Electron IPC
+// One way to reach the backend: Electron IPC in the desktop app, /api/* fetch in `next dev`.
 
-function isElectron(): boolean {
-  return typeof window !== 'undefined' && !!(window as any).electronAPI?.dbQuery;
-}
+const bridge = () => (typeof window !== 'undefined' ? (window as any).electronAPI : undefined);
 
 function handleSignedOut(message: string) {
   if (typeof window !== 'undefined' && /sign in again/i.test(message) && !location.pathname.startsWith('/login')) {
@@ -12,30 +10,28 @@ function handleSignedOut(message: string) {
   }
 }
 
+async function post(route: string, body: any) {
+  const res = await fetch(`/api/${route}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body ?? {}),
+  });
+  return res.json().catch(() => ({ error: `Request failed (${res.status})` }));
+}
+
+// Named routes (auth/*, license/*, backup/*, owner/summary). Returns the route's JSON as-is.
+export async function api(route: string, body?: any): Promise<any> {
+  const data = bridge()?.api ? await bridge().api(route, body) : await post(route, body);
+  if (data?.error) handleSignedOut(data.error);
+  return data;
+}
+
 export const db = {
   query: async (model: string, action: string, args?: any): Promise<any> => {
-    // 1. Electron IPC mode
-    if (isElectron()) {
-      const response = await (window as any).electronAPI.dbQuery({ model, action, args });
-      if (response?.success) return response.data;
-      handleSignedOut(response?.error || '');
-      throw new Error(response?.error || 'Unknown database error');
-    }
-
-    // 2. Web / Next dev API route mode
-    try {
-      const response = await fetch('/api/db', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model, action, args }),
-      });
-      const body = await response.json().catch(() => ({}));
-      if (response.ok && body.success) return body.data;
-      handleSignedOut(body.error || '');
-      throw new Error(body.error || `Database request failed (${response.status})`);
-    } catch (e: any) {
-      console.error(`[db.query] ${model}.${action} error:`, e.message);
-      throw e;
-    }
+    const payload = { model, action, args };
+    const res = bridge()?.dbQuery ? await bridge().dbQuery(payload) : await post('db', payload);
+    if (res?.success) return res.data;
+    handleSignedOut(res?.error || '');
+    throw new Error(res?.error || 'Unknown database error');
   },
 };

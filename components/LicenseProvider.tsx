@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { KeyRound, Copy, Check, AlertCircle, Sparkles, ShieldAlert, Cpu } from 'lucide-react';
 import { inputCls, btnPrimary } from '@/components/kit';
+import { api } from '@/lib/db';
 
 interface LicenseContextType {
   machineId: string;
@@ -32,6 +33,7 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState('TRIAL');
   const [tier, setTier] = useState('PRO');
   const [daysRemaining, setDaysRemaining] = useState(30);
+  const [reason, setReason] = useState<string | null>(null);
 
   // Activation modal state
   const [keyInput, setKeyInput] = useState('');
@@ -42,14 +44,7 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
 
   const fetchLicense = async () => {
     try {
-      let data: any;
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.licenseCheck) {
-        data = await (window as any).electronAPI.licenseCheck();
-      } else {
-        const res = await fetch('/api/license/check');
-        data = await res.json();
-      }
-
+      const data = await api('license/check');
       if (data) {
         setMachineId(data.machineId || '');
         setExpiryDate(data.expiryDate || null);
@@ -57,6 +52,7 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
         setTier(data.tier || 'PRO');
         setDaysRemaining(data.daysRemaining ?? 30);
         setIsValid(data.valid !== false);
+        setReason(data.reason || null);
       }
     } catch (e) {
       console.warn('Failed to check license:', e);
@@ -65,8 +61,11 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // The backend asks the admin dashboard each time, so a pause/stop/renewal there applies within a minute.
   useEffect(() => {
     fetchLicense();
+    const timer = setInterval(fetchLicense, 60_000);
+    return () => clearInterval(timer);
   }, []);
 
   const handleCopy = () => {
@@ -85,17 +84,7 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
 
     setSubmitting(true);
     try {
-      let res: any;
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.licenseActivate) {
-        res = await (window as any).electronAPI.licenseActivate(keyInput.trim());
-      } else {
-        const fetchRes = await fetch('/api/license/activate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ licenseKey: keyInput.trim() }),
-        });
-        res = await fetchRes.json();
-      }
+      const res = await api('license/activate', { licenseKey: keyInput.trim() });
 
       if (res.success) {
         setSuccess(true);
@@ -135,13 +124,16 @@ export function LicenseProvider({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-3 text-destructive mb-4">
               <ShieldAlert className="h-8 w-8" />
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-foreground">License Expired</h2>
-                <p className="text-xs text-muted-foreground">30-Day Trial or Subscription Ended</p>
+                <h2 className="text-xl font-bold tracking-tight text-foreground">
+                  {status === 'EXPIRED' ? 'Licence expired' : 'Licence locked'}
+                </h2>
+                <p className="text-xs text-muted-foreground">Your billing data on this PC is safe</p>
               </div>
             </div>
 
             <p className="text-sm text-muted-foreground mb-4">
-              Your free trial period has concluded. To continue using MedBilling, please activate your copy with a valid license key.
+              {reason || 'Please activate MedBilling with a licence key.'} Send the Machine ID below to your administrator;
+              once they activate or renew it on their dashboard, this screen unlocks by itself (or paste the key they send).
             </p>
 
             <div className="rounded-xl bg-muted/60 border border-border p-3.5 mb-4">

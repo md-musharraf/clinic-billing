@@ -929,7 +929,7 @@
   {
     "code": "LAB-235",
     "name": "X-Ray Chest PA",
-    "category": "Lab Test",
+    "category": "X-Ray",
     "defaultPrice": 300.0,
     "unit": "test",
     "taxPercent": 0,
@@ -938,7 +938,7 @@
   {
     "code": "LAB-236",
     "name": "X-Ray Abdomen",
-    "category": "Lab Test",
+    "category": "X-Ray",
     "defaultPrice": 350.0,
     "unit": "test",
     "taxPercent": 0,
@@ -947,7 +947,7 @@
   {
     "code": "LAB-237",
     "name": "Ultrasound Abdomen",
-    "category": "Lab Test",
+    "category": "Ultrasound",
     "defaultPrice": 800.0,
     "unit": "test",
     "taxPercent": 0,
@@ -956,7 +956,7 @@
   {
     "code": "LAB-238",
     "name": "Ultrasound Pelvis",
-    "category": "Lab Test",
+    "category": "Ultrasound",
     "defaultPrice": 700.0,
     "unit": "test",
     "taxPercent": 0,

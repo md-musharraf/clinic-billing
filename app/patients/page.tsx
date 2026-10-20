@@ -66,13 +66,9 @@ export default function PatientsPage() {
     }
 
     try {
-      const year = new Date().getFullYear();
-      const pCount = await db.query('patient', 'count', {});
-      const id = `MED-${year}-${String(pCount + 1).padStart(5, '0')}`;
-
+      // Patient ID (MED-YYYY-00001) is assigned by the backend.
       await db.query('patient', 'create', {
         data: {
-          id,
           name: name.trim(),
           mobile: mobile.trim(),
           age: Number(age || 0),

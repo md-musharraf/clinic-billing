@@ -13,6 +13,7 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { btnPrimary, btnGhost, card, useToast, ToastView } from '@/components/kit';
+import { api } from '@/lib/db';
 
 export default function BackupPage() {
   const [toast, showToast] = useToast();
@@ -22,13 +23,7 @@ export default function BackupPage() {
   const handleExportBackup = async () => {
     setLoading(true);
     try {
-      let res: any;
-      if (typeof window !== 'undefined' && (window as any).electronAPI?.backupExport) {
-        res = await (window as any).electronAPI.backupExport();
-      } else {
-        const fetchRes = await fetch('/api/backup/export', { method: 'POST' });
-        res = await fetchRes.json();
-      }
+      const res = await api('backup/export');
 
       if (res.success) {
         setLastBackup(res);

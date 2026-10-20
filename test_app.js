@@ -1,4 +1,6 @@
 const assert = require('assert');
+// Keep this suite offline: the licence check would otherwise ask the real admin dashboard.
+process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL ||= 'http://127.0.0.1:9';
 const path = require('path');
 const fs = require('fs');
 const { PrismaClient } = require('./prisma/client');
@@ -34,23 +36,18 @@ async function runTests() {
     assert.strictEqual(lic.machineId, machineId, 'License machine ID must match PC');
     console.log('  Initial License Status:', lic.status, 'Days Remaining:', lic.daysRemaining);
 
-    // Generate authenticated key
-    const genRes = await api.callRoute(ctx, 'POST', 'license/generate-admin-key', {
-      machineId,
-      expiryDate: 'LIFETIME',
-      tier: 'PRO',
-    });
-    assert.strictEqual(genRes.status, 200, 'Key generator should return 200');
-    assert(genRes.json.key && genRes.json.key.length > 20, 'Key must be encrypted string');
-    console.log('  Generated Offline Key:', genRes.json.key);
+    // The app has no key generator any more; keys come from the admin dashboard in this format.
+    const gone = await api.callRoute(ctx, 'POST', 'license/generate-admin-key', { machineId });
+    assert.strictEqual(gone.status, 404, 'In-app key generator must be gone');
+    const expiry = new Date(Date.now() + 365 * 864e5).toISOString();
+    const key = api.encryptLicenseKey(machineId, expiry);
 
-    // Activate generated key
-    const actRes = await api.activateLicense(prisma, genRes.json.key);
+    const actRes = await api.activateLicense(prisma, key);
     assert.strictEqual(actRes.success, true, 'License activation should succeed');
 
     const updatedLic = await api.checkLicense(prisma);
     assert.strictEqual(updatedLic.status, 'ACTIVE', 'License status should be ACTIVE');
-    assert.strictEqual(updatedLic.expiryDate, 'Lifetime', 'License expiry should be Lifetime');
+    assert.strictEqual(updatedLic.expiryDate, expiry.slice(0, 10), 'License expiry should come from the key');
     console.log('✅ Offline hardware licensing verified successfully.\n');
 
     // Test 3: Catalog & Database Queries
@@ -80,6 +77,8 @@ async function runTests() {
 
     // Test 5: Patient Creation & Billing Flow
     console.log('Test 5: Verifying Patient Registration and Bill Generation...');
+    await assert.rejects(api.dbQuery(prisma, { model: 'bill', action: 'count', args: {} }, ctx), /sign in again/, 'DB must refuse callers with no session');
+    ctx.session = { id: 0, name: 'Test', role: 'SUPER_ADMIN' };
     const testPatient = await api.dbQuery(prisma, {
       model: 'patient',
       action: 'create',
@@ -92,7 +91,7 @@ async function runTests() {
           referredDoctor: 'Dr. Rajesh Verma',
         },
       },
-    });
+    }, ctx);
     assert(testPatient.id.startsWith('MED-'), 'Patient ID should follow MED-YYYY-XXXXX format');
     console.log('  Registered Patient:', testPatient.id, testPatient.name);
 
@@ -128,7 +127,7 @@ async function runTests() {
         },
         include: { items: true },
       },
-    });
+    }, ctx);
 
     assert(testBill.billNo.startsWith('MED-BIL-'), 'Bill No must start with MED-BIL-');
     assert.strictEqual(testBill.totalAmount, 500, 'Grand total must be 500');
@@ -167,10 +166,23 @@ async function runTests() {
       console.log('  Duplicate setup correctly blocked with 400.');
     }
 
-    // Test Login
+    // Test Login (own throwaway owner, so the result does not depend on earlier runs)
+    const bcrypt = require('bcryptjs');
+    const testEmail = 'test-owner@medbilling.test';
+    const testPassword = 'TestOwnerPass#1';
+    await prisma.user.upsert({
+      where: { email: testEmail },
+      update: { password: await bcrypt.hash(testPassword, 10), role: 'SUPER_ADMIN', isActive: true },
+      create: { name: 'Test Owner', email: testEmail, password: await bcrypt.hash(testPassword, 10), role: 'SUPER_ADMIN' },
+    });
+    const backdoor = await api.callRoute(ctx, 'POST', 'auth/login', { email: testEmail, password: 'SecureClinicPass2026!' });
+    assert.strictEqual(backdoor.status, 401, 'Old master password must not work');
+    const wrongPortal = await api.callRoute(ctx, 'POST', 'auth/login', { email: testEmail, password: testPassword, portal: 'reception' });
+    assert.strictEqual(wrongPortal.status, 403, 'Owner must use the Owner login');
     const loginRes = await api.callRoute(ctx, 'POST', 'auth/login', {
-      email: 'owner@arogyaclinic.com',
-      password: 'SecureClinicPass2026!',
+      email: testEmail,
+      password: testPassword,
+      portal: 'owner',
     });
     assert.strictEqual(loginRes.status, 200, 'Login should return 200');
     assert.strictEqual(loginRes.json.user.role, 'SUPER_ADMIN', 'Owner must have SUPER_ADMIN role');

@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { canOpen, roleLabel } from '@/lib/roles';
+import { canOpen, roleLabel, homeFor } from '@/lib/roles';
+import { api } from '@/lib/db';
+import { useLicense } from '@/components/LicenseProvider';
 import {
+  BarChart3,
   LayoutDashboard,
   Receipt,
   FileText,
@@ -35,18 +38,24 @@ interface NavSection {
 
 export const navSections: NavSection[] = [
   {
-    title: 'BILLING & OPD',
+    title: 'OVERVIEW',
     items: [
-      { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-      { name: 'Rapid Billing', href: '/billing', icon: Receipt, shortcut: 'F2' },
+      { name: 'Owner Dashboard', href: '/owner', icon: BarChart3 },
+      { name: 'Today at Counter', href: '/dashboard', icon: LayoutDashboard },
+    ],
+  },
+  {
+    title: 'BILLING',
+    items: [
+      { name: 'New Bill', href: '/billing', icon: Receipt, shortcut: 'F2' },
       { name: 'Invoices', href: '/invoices', icon: FileText, shortcut: 'F4' },
       { name: 'Patients', href: '/patients', icon: Users, shortcut: 'F6' },
     ],
   },
   {
-    title: 'CLINICAL MASTER',
+    title: 'MASTERS',
     items: [
-      { name: 'Item Catalog', href: '/catalog', icon: Package, shortcut: 'F3' },
+      { name: 'Item & Fee Catalog', href: '/catalog', icon: Package, shortcut: 'F3' },
       { name: 'Doctors', href: '/doctors', icon: Stethoscope },
     ],
   },
@@ -60,29 +69,24 @@ export const navSections: NavSection[] = [
   },
 ];
 
+export const navItems = navSections.flatMap((s) => s.items);
+
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState<{ name: string; role: string; email?: string } | null>(null);
-  const [license, setLicense] = useState<{ status: string; daysRemaining: number } | null>(null);
+  const license = useLicense();
 
   useEffect(() => {
     try {
-      const u = JSON.parse(localStorage.getItem('medbilling_current_user') || 'null');
-      setUser(u);
+      setUser(JSON.parse(localStorage.getItem('medbilling_current_user') || 'null'));
     } catch {}
-
-    if (typeof window !== 'undefined' && (window as any).electronAPI?.licenseCheck) {
-      (window as any).electronAPI.licenseCheck().then((res: any) => {
-        if (res) setLicense(res);
-      }).catch(() => {});
-    }
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('medbilling_current_user');
-    fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    await api('auth/logout').catch(() => {});
     router.push('/login');
   };
 
@@ -98,7 +102,7 @@ export function Sidebar() {
       {/* Clinic Header / Logo */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-border">
         {!collapsed ? (
-          <Link href="/dashboard" className="flex items-center gap-2.5">
+          <Link href={homeFor(userRole)} className="flex items-center gap-2.5">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20">
               <HeartPulse className="h-6 w-6" />
             </div>
@@ -125,7 +129,7 @@ export function Sidebar() {
       {/* Navigation Sections */}
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
         {navSections.map((sec) => {
-          const visibleItems = sec.items.filter((item) => canOpen(userRole, item.href));
+          const visibleItems = user ? sec.items.filter((item) => canOpen(userRole, item.href)) : [];
           if (visibleItems.length === 0) return null;
 
           return (
@@ -173,15 +177,15 @@ export function Sidebar() {
       </div>
 
       {/* License Status Pill */}
-      {!collapsed && (
+      {!collapsed && license.machineId && (
         <div className="px-3 py-2 mx-3 mb-2 rounded-xl bg-muted/60 border border-border/80 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-xs font-semibold text-foreground">
-              {license?.status === 'ACTIVE' ? 'PRO ACTIVE' : `TRIAL (${license?.daysRemaining ?? 30}d left)`}
+              {license.status === 'ACTIVE' ? 'PRO ACTIVE' : `TRIAL (${license.daysRemaining}d left)`}
             </span>
           </div>
-          <span className={cn('h-2 w-2 rounded-full', license?.status === 'ACTIVE' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse')} />
+          <span className={cn('h-2 w-2 rounded-full', license.status === 'ACTIVE' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse')} />
         </div>
       )}
 
@@ -190,8 +194,8 @@ export function Sidebar() {
         <div className={cn('flex items-center gap-3', collapsed ? 'justify-center' : 'justify-between')}>
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-foreground">{user?.name || 'Admin User'}</p>
-              <p className="truncate text-xs text-muted-foreground">{roleLabel(userRole)}</p>
+              <p className="truncate text-sm font-semibold text-foreground">{user?.name || ''}</p>
+              <p className="truncate text-xs text-muted-foreground">{user && roleLabel(userRole)}</p>
             </div>
           )}
           <button

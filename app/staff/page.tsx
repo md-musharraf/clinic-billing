@@ -28,6 +28,8 @@ export default function StaffPage() {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('RECEPTIONIST');
   const [password, setPassword] = useState('');
+  const [resetFor, setResetFor] = useState<any | null>(null);
+  const [newPassword, setNewPassword] = useState('');
 
   const loadUsers = async () => {
     try {
@@ -93,6 +95,19 @@ export default function StaffPage() {
       loadUsers();
     } catch (e: any) {
       showToast(e.message || 'Failed to update user', 'error');
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword.length < 6) return showToast('Password must be at least 6 characters', 'error');
+    try {
+      await db.query('user', 'update', { where: { id: resetFor.id }, data: { password: newPassword } });
+      showToast(`New password set for ${resetFor.name}`, 'success');
+      setResetFor(null);
+      setNewPassword('');
+    } catch (e: any) {
+      showToast(e.message || 'Failed to reset password', 'error');
     }
   };
 
@@ -170,7 +185,15 @@ export default function StaffPage() {
                     <td className={`${td} text-muted-foreground`}>
                       {u.lastLogin ? formatDateTime(u.lastLogin) : 'Never'}
                     </td>
-                    <td className={`${td} text-right`}>
+                    <td className={`${td} text-right whitespace-nowrap`}>
+                      <button
+                        onClick={() => setResetFor(u)}
+                        className="p-1.5 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors cursor-pointer"
+                        title="Set a new password"
+                        aria-label={`Set a new password for ${u.name}`}
+                      >
+                        <KeyRound className="h-4 w-4" />
+                      </button>
                       {u.role !== 'SUPER_ADMIN' && (
                         <button
                           onClick={() => handleDelete(u)}
@@ -188,6 +211,21 @@ export default function StaffPage() {
           </div>
         </div>
       </div>
+
+      {resetFor && (
+        <Modal title={`New password for ${resetFor.name}`} onClose={() => setResetFor(null)}>
+          <form onSubmit={handleResetPassword} className="space-y-4">
+            <Field label="New password (min. 6 chars)">
+              <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={inputCls} autoFocus required minLength={6} />
+            </Field>
+            <p className="text-xs text-muted-foreground">Tell {resetFor.name} the new password. They sign in with {resetFor.email}.</p>
+            <div className="flex justify-end gap-2 pt-2 border-t border-border">
+              <button type="button" onClick={() => setResetFor(null)} className={btnGhost}>Cancel</button>
+              <button type="submit" className={btnPrimary}>Save password</button>
+            </div>
+          </form>
+        </Modal>
+      )}
 
       {isModalOpen && (
         <Modal title="Create New Staff Account" onClose={() => setIsModalOpen(false)}>
@@ -220,10 +258,10 @@ export default function StaffPage() {
                 onChange={(e) => setRole(e.target.value)}
                 className={inputCls}
               >
-                <option value="RECEPTIONIST">Billing Counter / Receptionist (Billing & Patients only)</option>
+                <option value="RECEPTIONIST">Reception (Reception login: billing, patients, today's counter)</option>
                 <option value="PHARMACIST">Pharmacist (Billing, Invoices & Catalog)</option>
                 <option value="DOCTOR">Consultant Doctor (Patients & Invoices)</option>
-                <option value="ADMIN">Clinic Manager (Full access except owner backups)</option>
+                <option value="ADMIN">Clinic Manager (Owner login: full access + owner dashboard)</option>
               </select>
             </Field>
 

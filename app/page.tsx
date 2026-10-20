@@ -2,15 +2,16 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { homeFor } from '@/lib/roles';
 
 export default function RootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const user = localStorage.getItem('medbilling_current_user');
-    if (user) {
-      router.replace('/dashboard');
-    } else {
+    try {
+      const user = JSON.parse(localStorage.getItem('medbilling_current_user') || 'null');
+      router.replace(user ? homeFor(user.role) : '/login');
+    } catch {
       router.replace('/login');
     }
   }, [router]);
