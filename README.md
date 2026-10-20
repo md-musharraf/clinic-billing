@@ -105,6 +105,18 @@ catalog; an unknown item gets its category guessed and the cursor goes to its pr
 - Patient records with UHID, contact, age, gender, and blood group.
 - Complete patient history modal showing all past invoices and treatments.
 
+### Admitted patients (`/ipd` • F7)
+- **Admit**: existing or new patient, room type from the catalog's Room Charges (rate per 24 h), bed no., doctor,
+  reason, optional advance deposit. Number `IPD-<year>-0001`.
+- **During the stay**: add charges any day (they are listed day-wise); bed days count by themselves (every started
+  24 h, at least one). Take deposits as often as needed; each prints a receipt `RCPT-<date>-0001`.
+- **Running bill** any time (marked RUNNING BILL, not final) with deposits and the balance or advance.
+- **Discharge**: one final bill for the whole stay: dated lines, bed days (editable), discount, GST, every deposit,
+  and what is collected now (or refunded as a negative amount). A patient can also pay everything at discharge.
+- Reception can remove a charge only on the day it was added; deleting deposits, changing the bed rate and cancelling
+  an admission are owner-only (enforced in `lib/ipd.js`).
+- Owner dashboard counts IPD money on the day each deposit came in and shows who is admitted right now.
+
 ### Printing a bill
 **Print** opens the Windows print dialog (A4, A5 or 80 mm receipt, as chosen in Settings). **Download PDF** saves the
 same page as `Documents\MedBilling Bills\<bill no>.pdf` and offers to open it: the way out when no printer works.

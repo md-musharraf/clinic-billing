@@ -180,6 +180,54 @@ CREATE TABLE "ActivityLog" (
     CONSTRAINT "ActivityLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+-- CreateTable
+CREATE TABLE "Admission" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "admissionNo" TEXT NOT NULL,
+    "patientId" TEXT NOT NULL,
+    "doctorName" TEXT,
+    "ward" TEXT,
+    "bedNo" TEXT,
+    "bedRate" REAL NOT NULL DEFAULT 0,
+    "notes" TEXT,
+    "admittedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "dischargedAt" DATETIME,
+    "status" TEXT NOT NULL DEFAULT 'ADMITTED',
+    "billId" INTEGER,
+    "createdBy" INTEGER,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Admission_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "Patient" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Admission_billId_fkey" FOREIGN KEY ("billId") REFERENCES "Bill" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "AdmissionCharge" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "admissionId" INTEGER NOT NULL,
+    "itemName" TEXT NOT NULL,
+    "itemCategory" TEXT NOT NULL DEFAULT 'Medicine',
+    "quantity" INTEGER NOT NULL DEFAULT 1,
+    "unitPrice" REAL NOT NULL,
+    "total" REAL NOT NULL,
+    "chargedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdBy" INTEGER,
+    CONSTRAINT "AdmissionCharge_admissionId_fkey" FOREIGN KEY ("admissionId") REFERENCES "Admission" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "AdmissionDeposit" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "admissionId" INTEGER NOT NULL,
+    "receiptNo" TEXT NOT NULL,
+    "amount" REAL NOT NULL,
+    "method" TEXT NOT NULL DEFAULT 'CASH',
+    "reference" TEXT,
+    "receivedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "receivedBy" INTEGER,
+    CONSTRAINT "AdmissionDeposit_admissionId_fkey" FOREIGN KEY ("admissionId") REFERENCES "Admission" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -230,4 +278,28 @@ CREATE INDEX "ActivityLog_userId_idx" ON "ActivityLog"("userId");
 
 -- CreateIndex
 CREATE INDEX "ActivityLog_createdAt_idx" ON "ActivityLog"("createdAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admission_admissionNo_key" ON "Admission"("admissionNo");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admission_billId_key" ON "Admission"("billId");
+
+-- CreateIndex
+CREATE INDEX "Admission_patientId_idx" ON "Admission"("patientId");
+
+-- CreateIndex
+CREATE INDEX "Admission_status_idx" ON "Admission"("status");
+
+-- CreateIndex
+CREATE INDEX "AdmissionCharge_admissionId_idx" ON "AdmissionCharge"("admissionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "AdmissionDeposit_receiptNo_key" ON "AdmissionDeposit"("receiptNo");
+
+-- CreateIndex
+CREATE INDEX "AdmissionDeposit_admissionId_idx" ON "AdmissionDeposit"("admissionId");
+
+-- CreateIndex
+CREATE INDEX "AdmissionDeposit_receivedAt_idx" ON "AdmissionDeposit"("receivedAt");
 

@@ -4,7 +4,8 @@ import { formatDate } from './utils';
 import { FEE_GROUPS, SHORT } from './billing-summary';
 
 export type Summary = {
-  totals: Record<'bills' | 'patients' | 'newPatients' | 'gross' | 'discount' | 'gst' | 'net' | 'paid' | 'due', number>;
+  totals: Record<'bills' | 'patients' | 'newPatients' | 'gross' | 'discount' | 'gst' | 'net' | 'paid' | 'due' | 'ipdDeposits', number>;
+  inHospital?: { patients: number; billed: number; deposits: number; due: number };
   groups: { name: string; amount: number }[];
   methods: { name: string; bills: number; amount: number }[];
   doctors: { name: string; bills: number; patients: number; doctorFee: number; total: number }[];
@@ -34,8 +35,8 @@ export function ownerReportPdf(data: Summary, clinic: PdfClinic | null, period: 
           ['New registrations', t.newPatients, 'Discount given', r(t.discount)],
           ['Bills', t.bills, 'GST', r(t.gst)],
           ['Average bill', r(t.bills ? t.net / t.bills : 0), 'Net billed', r(t.net)],
-          ['', '', 'Money collected', r(t.paid)],
-          ['', '', 'Due (not collected)', r(t.due)],
+          ['IPD deposits received', r(t.ipdDeposits), 'Money collected (incl. deposits)', r(t.paid)],
+          ['Admitted now', data.inHospital ? `${data.inHospital.patients} (balance ${r(data.inHospital.due)})` : '-', 'Due (not collected)', r(t.due)],
         ],
       },
       {
@@ -51,7 +52,7 @@ export function ownerReportPdf(data: Summary, clinic: PdfClinic | null, period: 
       },
       {
         title: 'Payment modes',
-        columns: [{ header: 'Mode', width: 4 }, { header: 'Bills', width: 2, align: 'right' }, { header: 'Collected', width: 3, align: 'right' }],
+        columns: [{ header: 'Mode', width: 4 }, { header: 'Payments', width: 2, align: 'right' }, { header: 'Collected', width: 3, align: 'right' }],
         rows: data.methods.map((m) => [m.name.replace('_', ' '), m.bills, r(m.amount)]),
         totals: ['Total', t.bills, r(t.paid)],
       },

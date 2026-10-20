@@ -57,11 +57,11 @@ model User {
 }
 
 model Patient {
-  id               String    @id // e.g. MED-2026-00001
-  uhid             String?   @unique
+  id               String      @id // e.g. MED-2026-00001
+  uhid             String?     @unique
   name             String
   age              Int
-  ageUnit          String    @default("YEARS") // YEARS, MONTHS, DAYS
+  ageUnit          String      @default("YEARS") // YEARS, MONTHS, DAYS
   gender           String // MALE, FEMALE, OTHER
   mobile           String
   email            String?
@@ -70,11 +70,12 @@ model Patient {
   emergencyContact String?
   referredDoctor   String?
   createdBy        Int?
-  user             User?     @relation(fields: [createdBy], references: [id])
-  registeredAt     DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  user             User?       @relation(fields: [createdBy], references: [id])
+  registeredAt     DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   deletedAt        DateTime?
   bills            Bill[]
+  admissions       Admission[]
 
   @@index([name])
   @@index([mobile])
@@ -145,6 +146,7 @@ model Bill {
   updatedAt      DateTime   @updatedAt
   items          BillItem[]
   payments       Payment[]
+  admission      Admission?
 
   @@index([patientId])
   @@index([createdAt])
@@ -202,4 +204,61 @@ model ActivityLog {
 
   @@index([userId])
   @@index([createdAt])
+}
+
+// In-patient stay (IPD). Charges and deposits pile up while admitted; discharge turns them into one Bill.
+model Admission {
+  id           Int                @id @default(autoincrement())
+  admissionNo  String             @unique // IPD-2026-0001
+  patientId    String
+  patient      Patient            @relation(fields: [patientId], references: [id])
+  doctorName   String?
+  ward         String? // room type, e.g. General Ward Bed (Per 24h)
+  bedNo        String?
+  bedRate      Float              @default(0) // per 24 hours
+  notes        String? // diagnosis / reason
+  admittedAt   DateTime           @default(now())
+  dischargedAt DateTime?
+  status       String             @default("ADMITTED") // ADMITTED, DISCHARGED
+  billId       Int?               @unique // the final bill made at discharge
+  bill         Bill?              @relation(fields: [billId], references: [id])
+  createdBy    Int?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  charges      AdmissionCharge[]
+  deposits     AdmissionDeposit[]
+
+  @@index([patientId])
+  @@index([status])
+}
+
+model AdmissionCharge {
+  id           Int       @id @default(autoincrement())
+  admissionId  Int
+  admission    Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  itemName     String
+  itemCategory String    @default("Medicine")
+  quantity     Int       @default(1)
+  unitPrice    Float
+  total        Float
+  chargedAt    DateTime  @default(now())
+  createdBy    Int?
+
+  @@index([admissionId])
+}
+
+// Money received during the stay. A refund at discharge is a negative amount.
+model AdmissionDeposit {
+  id          Int       @id @default(autoincrement())
+  admissionId Int
+  admission   Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  receiptNo   String    @unique // RCPT-20261020-0001
+  amount      Float
+  method      String    @default("CASH")
+  reference   String?
+  receivedAt  DateTime  @default(now())
+  receivedBy  Int?
+
+  @@index([admissionId])
+  @@index([receivedAt])
 }

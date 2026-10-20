@@ -11,7 +11,7 @@ import { FEE_GROUPS, SHORT } from '@/lib/billing-summary';
 import { inputCls, btnPrimary, th, td, Stat, useLive, useToast, ToastView } from '@/components/kit';
 import {
   Users, Receipt, Wallet, AlertTriangle, BadgePercent, Landmark, FileDown, Search, Eye,
-  FlaskConical, Pill, Stethoscope, Waves, ScanLine, Package, CheckCircle2, Circle, X,
+  FlaskConical, Pill, Stethoscope, Waves, ScanLine, Package, CheckCircle2, Circle, X, BedDouble,
 } from 'lucide-react';
 
 const READY_KEY = 'medbilling_setup_checklist_hidden';
@@ -219,11 +219,20 @@ export default function OwnerDashboard() {
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
               <Stat label="Patients" value={t!.patients} hint={`${t!.newPatients} new registrations`} icon={Users} tone="amber" />
               <Stat label="Bills" value={t!.bills} hint={`Avg ${money(t!.bills ? t!.net / t!.bills : 0)}`} icon={Receipt} tone="indigo" />
-              <Stat label="Money collected" value={money(t!.paid)} hint={`Net billed ${money(t!.net)}`} icon={Wallet} tone="emerald" />
+              <Stat label="Money collected" value={money(t!.paid)} hint={t!.ipdDeposits ? `incl. ${money(t!.ipdDeposits)} IPD deposits` : `Net billed ${money(t!.net)}`} icon={Wallet} tone="emerald" />
               <Stat label="Due" value={money(t!.due)} hint={t!.due ? 'Not yet collected' : 'Nothing pending'} icon={AlertTriangle} tone="rose" />
               <Stat label="Discount" value={money(t!.discount)} hint={`${pct(t!.discount, t!.gross)}% of gross`} icon={BadgePercent} tone="sky" />
               <Stat label="GST" value={money(t!.gst)} hint="Tax on bills" icon={Landmark} tone="primary" />
             </div>
+
+            {data.inHospital && data.inHospital.patients > 0 && (
+              <Link href="/ipd" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/5 px-5 py-3 text-sm hover:border-indigo-500/60">
+                <span className="flex items-center gap-2 font-semibold"><BedDouble className="h-5 w-5 text-indigo-600" /> {data.inHospital.patients} admitted right now</span>
+                <span className="text-muted-foreground">
+                  Bill so far <b className="text-foreground">{money(data.inHospital.billed)}</b> · deposited <b className="text-foreground">{money(data.inHospital.deposits)}</b> · balance <b className="text-rose-600">{money(data.inHospital.due)}</b>
+                </span>
+              </Link>
+            )}
 
             {/* Fee breakdown */}
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
@@ -289,7 +298,7 @@ export default function OwnerDashboard() {
                 <div className="space-y-2">
                   {data.methods.map((m) => (
                     <div key={m.name} className="flex items-center justify-between text-sm">
-                      <span className="font-medium">{m.name.replace('_', ' ')} <span className="text-xs text-muted-foreground">· {m.bills} {m.bills === 1 ? 'bill' : 'bills'}</span></span>
+                      <span className="font-medium">{m.name.replace('_', ' ')} <span className="text-xs text-muted-foreground">· {m.bills} {m.bills === 1 ? 'payment' : 'payments'}</span></span>
                       <span className="font-bold tabular-nums">{money(m.amount)}</span>
                     </div>
                   ))}

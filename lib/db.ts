@@ -35,3 +35,14 @@ export const db = {
     throw new Error(res?.error || 'Unknown database error');
   },
 };
+
+// Existing patients matching a name, mobile or patient ID (newest first), with visit count and last visit.
+export const findPatients = (q: string, take = 6) => {
+  const digits = q.replace(/\D/g, '');
+  return db.query('patient', 'findMany', {
+    where: { deletedAt: null, OR: [{ name: { contains: q } }, { mobile: { contains: digits || q } }, { id: { contains: q.toUpperCase() } }] },
+    orderBy: { registeredAt: 'desc' },
+    take,
+    include: { _count: { select: { bills: true } }, bills: { select: { createdAt: true }, orderBy: { createdAt: 'desc' }, take: 1 } },
+  });
+};

@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { AppLayout } from '@/components/AppLayout';
 import { InvoiceModal } from '@/components/InvoiceModal';
-import { db } from '@/lib/db';
+import { db, findPatients } from '@/lib/db';
 import { formatCurrency, formatDate } from '@/lib/utils';
-import { CATEGORIES, FEE_GROUPS, feeGroup, guessCategory } from '@/lib/billing-summary';
+import { CATEGORIES, FEE_GROUPS, feeGroup } from '@/lib/billing-summary';
+import { ItemSearch } from '@/components/ItemSearch';
 import { inputCls, btnPrimary, useToast, ToastView } from '@/components/kit';
-import { Trash2, Save, Search, User, UserCheck, UserPlus, Plus, Minus, X, Receipt, Stethoscope } from 'lucide-react';
+import { Trash2, Save, User, UserCheck, UserPlus, Plus, Minus, X, Receipt, Stethoscope } from 'lucide-react';
 
 interface LineItem {
   key: number;
@@ -53,9 +54,6 @@ export default function BillingPage() {
   const [notes, setNotes] = useState('');
 
   const [items, setItems] = useState<LineItem[]>([]);
-  const [search, setSearch] = useState('');
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [active, setActive] = useState(0);
   const [flashKey, setFlashKey] = useState<number | null>(null);
   const [focusPriceKey, setFocusPriceKey] = useState<number | null>(null);
   const nextKey = useRef(1);
@@ -103,12 +101,7 @@ export default function BillingPage() {
     const t = setTimeout(async () => {
       try {
         const digits = q.replace(/\D/g, '');
-        const found = await db.query('patient', 'findMany', {
-          where: { deletedAt: null, OR: [{ name: { contains: q } }, { mobile: { contains: digits || q } }, { id: { contains: q.toUpperCase() } }] },
-          orderBy: { registeredAt: 'desc' },
-          take: 6,
-          include: { _count: { select: { bills: true } }, bills: { select: { createdAt: true }, orderBy: { createdAt: 'desc' }, take: 1 } },
-        });
+        const found = await findPatients(q);
         setMatches(found || []);
         // A full mobile number that belongs to exactly one patient: take them straight away.
         if (digits.length >= 10 && found?.length === 1 && found[0].mobile?.endsWith(digits.slice(-10)) && !patient.name.trim()) pickPatient(found[0]);
@@ -142,8 +135,6 @@ export default function BillingPage() {
 
   // ---------- items ----------
   const findCatalog = (name: string) => catalog.find((c) => c.name.toLowerCase() === name.toLowerCase());
-  const q = search.trim().toLowerCase();
-  const results = q ? catalog.filter((c) => c.name.toLowerCase().includes(q) || c.code?.toLowerCase().includes(q)).slice(0, 8) : [];
 
   const updateLine = (key: number, patch: Partial<LineItem>) =>
     setItems((prev) => prev.map((it) => (it.key === key ? { ...it, ...patch, total: (patch.quantity ?? it.quantity) * (patch.unitPrice ?? it.unitPrice) } : it)));
@@ -160,12 +151,9 @@ export default function BillingPage() {
       setFlashKey(key);
       if (!price) setFocusPriceKey(key);
     }
-    setSearch('');
-    setActive(0);
     if (item.price) searchRef.current?.focus();
   };
 
-  const addFromCatalog = (c: any) => addItem({ name: c.name, category: c.category, price: c.defaultPrice });
   const removeItem = (key: number) => setItems((prev) => prev.filter((it) => it.key !== key));
 
   // The newest line scrolls into view and flashes, so nothing hides below the fold.
@@ -184,23 +172,6 @@ export default function BillingPage() {
     el?.select();
     setFocusPriceKey(null);
   }, [focusPriceKey, items.length]);
-
-  const onSearchKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setActive((a) => Math.min(a + 1, results.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setActive((a) => Math.max(a - 1, 0));
-    } else if (e.key === 'Escape') {
-      setSearch('');
-    } else if (e.key === 'Enter' && search.trim()) {
-      e.preventDefault();
-      const pick = results[active];
-      if (pick) addFromCatalog(pick);
-      else addItem({ name: search.trim(), category: guessCategory(search), price: 0 });
-    }
-  };
 
   // ---------- totals ----------
   const subtotal = items.reduce((sum, it) => sum + it.total, 0);
@@ -452,51 +423,7 @@ export default function BillingPage() {
 
           {/* Add items */}
           <section className="rounded-2xl border border-border bg-card p-3 shadow-sm">
-            <div className="relative">
-              <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
-              <input
-                ref={searchRef}
-                data-enter-native
-                aria-label="Search items"
-                autoComplete="off"
-                placeholder="Add medicine, test, USG, X-Ray or fee… ↑↓ to choose, Enter to add"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setActive(0);
-                  setSearchOpen(true);
-                }}
-                onFocus={() => setSearchOpen(true)}
-                onBlur={() => setSearchOpen(false)}
-                onKeyDown={onSearchKey}
-                className={`${inputCls} h-10 pl-10`}
-              />
-              {searchOpen && search.trim() && (
-                <div className="absolute left-0 right-0 top-11 z-40 overflow-hidden rounded-xl border border-border bg-card py-1 shadow-2xl">
-                  {results.map((r, i) => (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onMouseEnter={() => setActive(i)}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => addFromCatalog(r)}
-                      className={`flex w-full items-center justify-between px-4 py-2 text-left text-sm cursor-pointer ${i === active ? 'bg-primary/10' : ''}`}
-                    >
-                      <span>
-                        <span className="font-semibold">{r.name}</span>
-                        <span className="ml-2 text-[11px] text-muted-foreground">{r.category}</span>
-                      </span>
-                      <span className="font-mono font-bold text-primary">{formatCurrency(r.defaultPrice)}</span>
-                    </button>
-                  ))}
-                  {!results.length && (
-                    <p className="px-4 py-2 text-xs text-muted-foreground">
-                      Not in the catalog. <b>Enter</b> adds “{search.trim()}” as {guessCategory(search)}, then type its price.
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+            <ItemSearch ref={searchRef} catalog={catalog} onAdd={addItem} />
             <div className="mt-2 flex max-h-[3.6rem] flex-wrap gap-1.5 overflow-hidden">
               {QUICK_ITEMS.map((qi) => {
                 const c = findCatalog(qi.name);
@@ -504,7 +431,7 @@ export default function BillingPage() {
                   <button
                     key={qi.name}
                     type="button"
-                    onClick={() => (c ? addFromCatalog(c) : addItem(qi))}
+                    onClick={() => addItem(c ? { name: c.name, category: c.category, price: c.defaultPrice } : qi)}
                     className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 py-1 text-xs font-medium hover:border-primary/70 hover:bg-primary/5 hover:text-primary cursor-pointer"
                   >
                     {qi.name}

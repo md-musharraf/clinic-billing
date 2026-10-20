@@ -13,6 +13,8 @@ import { Receipt, Users, Wallet, Banknote, PlusCircle, Eye, FileText } from 'luc
 export default function CounterDashboard() {
   const [bills, setBills] = useState<any[]>([]);
   const [newPatients, setNewPatients] = useState(0);
+  const [deposits, setDeposits] = useState<any[]>([]);
+  const [admitted, setAdmitted] = useState(0);
   const [clinic, setClinic] = useState<any>(null);
   const [openBill, setOpenBill] = useState<any>(null);
 
@@ -20,21 +22,30 @@ export default function CounterDashboard() {
     const now = new Date();
     const today = { gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()) };
     try {
-      const [b, p, c] = await Promise.all([
-        db.query('bill', 'findMany', { where: { createdAt: today }, orderBy: { createdAt: 'desc' }, include: { items: true } }),
+      const [b, p, c, d, a] = await Promise.all([
+        db.query('bill', 'findMany', { where: { createdAt: today }, orderBy: { createdAt: 'desc' }, include: { items: true, admission: { select: { id: true } } } }),
         db.query('patient', 'count', { where: { registeredAt: today, deletedAt: null } }),
         clinic ? clinic : db.query('clinicSettings', 'findFirst', { where: { id: 1 } }),
+        db.query('admissionDeposit', 'findMany', { where: { receivedAt: today } }),
+        db.query('admission', 'count', { where: { status: 'ADMITTED' } }),
       ]);
+      setDeposits(d || []);
+      setAdmitted(a || 0);
       setBills(b || []);
       setNewPatients(p || 0);
       setClinic(c);
     } catch (e) {
       console.error('Failed to load dashboard:', e);
     }
-  }, ['bill', 'patient']);
+  }, ['bill', 'patient', 'admission']);
 
-  const collected = bills.reduce((a, b) => a + (b.paidAmount || 0), 0);
-  const cash = bills.filter((b) => b.paymentMethod === 'CASH').reduce((a, b) => a + (b.paidAmount || 0), 0);
+  // Admitted patients' money counts when each deposit is received (their discharge bill would count it twice).
+  const money = [
+    ...bills.filter((b) => !b.admission).map((b) => ({ amount: b.paidAmount || 0, method: b.paymentMethod })),
+    ...deposits.map((d) => ({ amount: d.amount, method: d.method })),
+  ];
+  const collected = money.reduce((a, m) => a + m.amount, 0);
+  const cash = money.filter((m) => m.method === 'CASH').reduce((a, m) => a + m.amount, 0);
   const patients = new Set(bills.map((b) => b.patientId)).size;
 
   return (
@@ -52,7 +63,7 @@ export default function CounterDashboard() {
           <Stat label="Bills today" value={bills.length} icon={Receipt} tone="indigo" />
           <Stat label="Patients billed" value={patients} hint={`${newPatients} new registrations`} icon={Users} tone="amber" />
           <Stat label="Collected today" value={formatCurrency(collected)} icon={Wallet} tone="emerald" />
-          <Stat label="Cash in drawer" value={formatCurrency(cash)} hint="Cash bills only" icon={Banknote} tone="primary" />
+          <Stat label="Cash in drawer" value={formatCurrency(cash)} hint={`Cash bills + deposits · ${admitted} admitted now`} icon={Banknote} tone="primary" />
         </div>
 
         <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">

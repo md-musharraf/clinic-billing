@@ -63,6 +63,21 @@ export type License = $Result.DefaultSelection<Prisma.$LicensePayload>
  * 
  */
 export type ActivityLog = $Result.DefaultSelection<Prisma.$ActivityLogPayload>
+/**
+ * Model Admission
+ * 
+ */
+export type Admission = $Result.DefaultSelection<Prisma.$AdmissionPayload>
+/**
+ * Model AdmissionCharge
+ * 
+ */
+export type AdmissionCharge = $Result.DefaultSelection<Prisma.$AdmissionChargePayload>
+/**
+ * Model AdmissionDeposit
+ * 
+ */
+export type AdmissionDeposit = $Result.DefaultSelection<Prisma.$AdmissionDepositPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -286,6 +301,36 @@ export class PrismaClient<
     * ```
     */
   get activityLog(): Prisma.ActivityLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.admission`: Exposes CRUD operations for the **Admission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Admissions
+    * const admissions = await prisma.admission.findMany()
+    * ```
+    */
+  get admission(): Prisma.AdmissionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.admissionCharge`: Exposes CRUD operations for the **AdmissionCharge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdmissionCharges
+    * const admissionCharges = await prisma.admissionCharge.findMany()
+    * ```
+    */
+  get admissionCharge(): Prisma.AdmissionChargeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.admissionDeposit`: Exposes CRUD operations for the **AdmissionDeposit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdmissionDeposits
+    * const admissionDeposits = await prisma.admissionDeposit.findMany()
+    * ```
+    */
+  get admissionDeposit(): Prisma.AdmissionDepositDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -736,7 +781,10 @@ export namespace Prisma {
     BillItem: 'BillItem',
     Payment: 'Payment',
     License: 'License',
-    ActivityLog: 'ActivityLog'
+    ActivityLog: 'ActivityLog',
+    Admission: 'Admission',
+    AdmissionCharge: 'AdmissionCharge',
+    AdmissionDeposit: 'AdmissionDeposit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -752,7 +800,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "clinicSettings" | "user" | "patient" | "doctor" | "catalogItem" | "bill" | "billItem" | "payment" | "license" | "activityLog"
+      modelProps: "clinicSettings" | "user" | "patient" | "doctor" | "catalogItem" | "bill" | "billItem" | "payment" | "license" | "activityLog" | "admission" | "admissionCharge" | "admissionDeposit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1456,6 +1504,216 @@ export namespace Prisma {
           }
         }
       }
+      Admission: {
+        payload: Prisma.$AdmissionPayload<ExtArgs>
+        fields: Prisma.AdmissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdmissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdmissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          findFirst: {
+            args: Prisma.AdmissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdmissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          findMany: {
+            args: Prisma.AdmissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>[]
+          }
+          create: {
+            args: Prisma.AdmissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          createMany: {
+            args: Prisma.AdmissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdmissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>[]
+          }
+          delete: {
+            args: Prisma.AdmissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          update: {
+            args: Prisma.AdmissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdmissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdmissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdmissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionPayload>
+          }
+          aggregate: {
+            args: Prisma.AdmissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmission>
+          }
+          groupBy: {
+            args: Prisma.AdmissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdmissionCountArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      AdmissionCharge: {
+        payload: Prisma.$AdmissionChargePayload<ExtArgs>
+        fields: Prisma.AdmissionChargeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdmissionChargeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdmissionChargeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          findFirst: {
+            args: Prisma.AdmissionChargeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdmissionChargeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          findMany: {
+            args: Prisma.AdmissionChargeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>[]
+          }
+          create: {
+            args: Prisma.AdmissionChargeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          createMany: {
+            args: Prisma.AdmissionChargeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdmissionChargeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>[]
+          }
+          delete: {
+            args: Prisma.AdmissionChargeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          update: {
+            args: Prisma.AdmissionChargeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          deleteMany: {
+            args: Prisma.AdmissionChargeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdmissionChargeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdmissionChargeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionChargePayload>
+          }
+          aggregate: {
+            args: Prisma.AdmissionChargeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmissionCharge>
+          }
+          groupBy: {
+            args: Prisma.AdmissionChargeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionChargeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdmissionChargeCountArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionChargeCountAggregateOutputType> | number
+          }
+        }
+      }
+      AdmissionDeposit: {
+        payload: Prisma.$AdmissionDepositPayload<ExtArgs>
+        fields: Prisma.AdmissionDepositFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdmissionDepositFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdmissionDepositFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          findFirst: {
+            args: Prisma.AdmissionDepositFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdmissionDepositFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          findMany: {
+            args: Prisma.AdmissionDepositFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>[]
+          }
+          create: {
+            args: Prisma.AdmissionDepositCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          createMany: {
+            args: Prisma.AdmissionDepositCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdmissionDepositCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>[]
+          }
+          delete: {
+            args: Prisma.AdmissionDepositDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          update: {
+            args: Prisma.AdmissionDepositUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdmissionDepositDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdmissionDepositUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdmissionDepositUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmissionDepositPayload>
+          }
+          aggregate: {
+            args: Prisma.AdmissionDepositAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmissionDeposit>
+          }
+          groupBy: {
+            args: Prisma.AdmissionDepositGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionDepositGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdmissionDepositCountArgs<ExtArgs>
+            result: $Utils.Optional<AdmissionDepositCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1667,10 +1925,12 @@ export namespace Prisma {
 
   export type PatientCountOutputType = {
     bills: number
+    admissions: number
   }
 
   export type PatientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bills?: boolean | PatientCountOutputTypeCountBillsArgs
+    admissions?: boolean | PatientCountOutputTypeCountAdmissionsArgs
   }
 
   // Custom InputTypes
@@ -1689,6 +1949,13 @@ export namespace Prisma {
    */
   export type PatientCountOutputTypeCountBillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BillWhereInput
+  }
+
+  /**
+   * PatientCountOutputType without action
+   */
+  export type PatientCountOutputTypeCountAdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionWhereInput
   }
 
 
@@ -1729,6 +1996,46 @@ export namespace Prisma {
    */
   export type BillCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentWhereInput
+  }
+
+
+  /**
+   * Count Type AdmissionCountOutputType
+   */
+
+  export type AdmissionCountOutputType = {
+    charges: number
+    deposits: number
+  }
+
+  export type AdmissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    charges?: boolean | AdmissionCountOutputTypeCountChargesArgs
+    deposits?: boolean | AdmissionCountOutputTypeCountDepositsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AdmissionCountOutputType without action
+   */
+  export type AdmissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCountOutputType
+     */
+    select?: AdmissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AdmissionCountOutputType without action
+   */
+  export type AdmissionCountOutputTypeCountChargesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionChargeWhereInput
+  }
+
+  /**
+   * AdmissionCountOutputType without action
+   */
+  export type AdmissionCountOutputTypeCountDepositsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionDepositWhereInput
   }
 
 
@@ -4314,6 +4621,7 @@ export namespace Prisma {
     deletedAt?: boolean
     user?: boolean | Patient$userArgs<ExtArgs>
     bills?: boolean | Patient$billsArgs<ExtArgs>
+    admissions?: boolean | Patient$admissionsArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["patient"]>
 
@@ -4359,6 +4667,7 @@ export namespace Prisma {
   export type PatientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Patient$userArgs<ExtArgs>
     bills?: boolean | Patient$billsArgs<ExtArgs>
+    admissions?: boolean | Patient$admissionsArgs<ExtArgs>
     _count?: boolean | PatientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PatientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4370,6 +4679,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs> | null
       bills: Prisma.$BillPayload<ExtArgs>[]
+      admissions: Prisma.$AdmissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4754,6 +5064,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends Patient$userArgs<ExtArgs> = {}>(args?: Subset<T, Patient$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     bills<T extends Patient$billsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$billsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillPayload<ExtArgs>, T, "findMany"> | Null>
+    admissions<T extends Patient$admissionsArgs<ExtArgs> = {}>(args?: Subset<T, Patient$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5147,6 +5458,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BillScalarFieldEnum | BillScalarFieldEnum[]
+  }
+
+  /**
+   * Patient.admissions
+   */
+  export type Patient$admissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    where?: AdmissionWhereInput
+    orderBy?: AdmissionOrderByWithRelationInput | AdmissionOrderByWithRelationInput[]
+    cursor?: AdmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmissionScalarFieldEnum | AdmissionScalarFieldEnum[]
   }
 
   /**
@@ -7594,6 +7925,7 @@ export namespace Prisma {
     user?: boolean | Bill$userArgs<ExtArgs>
     items?: boolean | Bill$itemsArgs<ExtArgs>
     payments?: boolean | Bill$paymentsArgs<ExtArgs>
+    admission?: boolean | Bill$admissionArgs<ExtArgs>
     _count?: boolean | BillCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bill"]>
 
@@ -7658,6 +7990,7 @@ export namespace Prisma {
     user?: boolean | Bill$userArgs<ExtArgs>
     items?: boolean | Bill$itemsArgs<ExtArgs>
     payments?: boolean | Bill$paymentsArgs<ExtArgs>
+    admission?: boolean | Bill$admissionArgs<ExtArgs>
     _count?: boolean | BillCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7672,6 +8005,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs> | null
       items: Prisma.$BillItemPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
+      admission: Prisma.$AdmissionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8066,6 +8400,7 @@ export namespace Prisma {
     user<T extends Bill$userArgs<ExtArgs> = {}>(args?: Subset<T, Bill$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     items<T extends Bill$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Bill$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillItemPayload<ExtArgs>, T, "findMany"> | Null>
     payments<T extends Bill$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Bill$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany"> | Null>
+    admission<T extends Bill$admissionArgs<ExtArgs> = {}>(args?: Subset<T, Bill$admissionArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8487,6 +8822,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Bill.admission
+   */
+  export type Bill$admissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    where?: AdmissionWhereInput
   }
 
   /**
@@ -12497,6 +12847,3220 @@ export namespace Prisma {
 
 
   /**
+   * Model Admission
+   */
+
+  export type AggregateAdmission = {
+    _count: AdmissionCountAggregateOutputType | null
+    _avg: AdmissionAvgAggregateOutputType | null
+    _sum: AdmissionSumAggregateOutputType | null
+    _min: AdmissionMinAggregateOutputType | null
+    _max: AdmissionMaxAggregateOutputType | null
+  }
+
+  export type AdmissionAvgAggregateOutputType = {
+    id: number | null
+    bedRate: number | null
+    billId: number | null
+    createdBy: number | null
+  }
+
+  export type AdmissionSumAggregateOutputType = {
+    id: number | null
+    bedRate: number | null
+    billId: number | null
+    createdBy: number | null
+  }
+
+  export type AdmissionMinAggregateOutputType = {
+    id: number | null
+    admissionNo: string | null
+    patientId: string | null
+    doctorName: string | null
+    ward: string | null
+    bedNo: string | null
+    bedRate: number | null
+    notes: string | null
+    admittedAt: Date | null
+    dischargedAt: Date | null
+    status: string | null
+    billId: number | null
+    createdBy: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmissionMaxAggregateOutputType = {
+    id: number | null
+    admissionNo: string | null
+    patientId: string | null
+    doctorName: string | null
+    ward: string | null
+    bedNo: string | null
+    bedRate: number | null
+    notes: string | null
+    admittedAt: Date | null
+    dischargedAt: Date | null
+    status: string | null
+    billId: number | null
+    createdBy: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmissionCountAggregateOutputType = {
+    id: number
+    admissionNo: number
+    patientId: number
+    doctorName: number
+    ward: number
+    bedNo: number
+    bedRate: number
+    notes: number
+    admittedAt: number
+    dischargedAt: number
+    status: number
+    billId: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdmissionAvgAggregateInputType = {
+    id?: true
+    bedRate?: true
+    billId?: true
+    createdBy?: true
+  }
+
+  export type AdmissionSumAggregateInputType = {
+    id?: true
+    bedRate?: true
+    billId?: true
+    createdBy?: true
+  }
+
+  export type AdmissionMinAggregateInputType = {
+    id?: true
+    admissionNo?: true
+    patientId?: true
+    doctorName?: true
+    ward?: true
+    bedNo?: true
+    bedRate?: true
+    notes?: true
+    admittedAt?: true
+    dischargedAt?: true
+    status?: true
+    billId?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmissionMaxAggregateInputType = {
+    id?: true
+    admissionNo?: true
+    patientId?: true
+    doctorName?: true
+    ward?: true
+    bedNo?: true
+    bedRate?: true
+    notes?: true
+    admittedAt?: true
+    dischargedAt?: true
+    status?: true
+    billId?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmissionCountAggregateInputType = {
+    id?: true
+    admissionNo?: true
+    patientId?: true
+    doctorName?: true
+    ward?: true
+    bedNo?: true
+    bedRate?: true
+    notes?: true
+    admittedAt?: true
+    dischargedAt?: true
+    status?: true
+    billId?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Admission to aggregate.
+     */
+    where?: AdmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admissions to fetch.
+     */
+    orderBy?: AdmissionOrderByWithRelationInput | AdmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Admissions
+    **/
+    _count?: true | AdmissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdmissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdmissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdmissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdmissionMaxAggregateInputType
+  }
+
+  export type GetAdmissionAggregateType<T extends AdmissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmission[P]>
+      : GetScalarType<T[P], AggregateAdmission[P]>
+  }
+
+
+
+
+  export type AdmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionWhereInput
+    orderBy?: AdmissionOrderByWithAggregationInput | AdmissionOrderByWithAggregationInput[]
+    by: AdmissionScalarFieldEnum[] | AdmissionScalarFieldEnum
+    having?: AdmissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdmissionCountAggregateInputType | true
+    _avg?: AdmissionAvgAggregateInputType
+    _sum?: AdmissionSumAggregateInputType
+    _min?: AdmissionMinAggregateInputType
+    _max?: AdmissionMaxAggregateInputType
+  }
+
+  export type AdmissionGroupByOutputType = {
+    id: number
+    admissionNo: string
+    patientId: string
+    doctorName: string | null
+    ward: string | null
+    bedNo: string | null
+    bedRate: number
+    notes: string | null
+    admittedAt: Date
+    dischargedAt: Date | null
+    status: string
+    billId: number | null
+    createdBy: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AdmissionCountAggregateOutputType | null
+    _avg: AdmissionAvgAggregateOutputType | null
+    _sum: AdmissionSumAggregateOutputType | null
+    _min: AdmissionMinAggregateOutputType | null
+    _max: AdmissionMaxAggregateOutputType | null
+  }
+
+  type GetAdmissionGroupByPayload<T extends AdmissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdmissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdmissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdmissionGroupByOutputType[P]>
+            : GetScalarType<T[P], AdmissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionNo?: boolean
+    patientId?: boolean
+    doctorName?: boolean
+    ward?: boolean
+    bedNo?: boolean
+    bedRate?: boolean
+    notes?: boolean
+    admittedAt?: boolean
+    dischargedAt?: boolean
+    status?: boolean
+    billId?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | PatientDefaultArgs<ExtArgs>
+    bill?: boolean | Admission$billArgs<ExtArgs>
+    charges?: boolean | Admission$chargesArgs<ExtArgs>
+    deposits?: boolean | Admission$depositsArgs<ExtArgs>
+    _count?: boolean | AdmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admission"]>
+
+  export type AdmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionNo?: boolean
+    patientId?: boolean
+    doctorName?: boolean
+    ward?: boolean
+    bedNo?: boolean
+    bedRate?: boolean
+    notes?: boolean
+    admittedAt?: boolean
+    dischargedAt?: boolean
+    status?: boolean
+    billId?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    patient?: boolean | PatientDefaultArgs<ExtArgs>
+    bill?: boolean | Admission$billArgs<ExtArgs>
+  }, ExtArgs["result"]["admission"]>
+
+  export type AdmissionSelectScalar = {
+    id?: boolean
+    admissionNo?: boolean
+    patientId?: boolean
+    doctorName?: boolean
+    ward?: boolean
+    bedNo?: boolean
+    bedRate?: boolean
+    notes?: boolean
+    admittedAt?: boolean
+    dischargedAt?: boolean
+    status?: boolean
+    billId?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | PatientDefaultArgs<ExtArgs>
+    bill?: boolean | Admission$billArgs<ExtArgs>
+    charges?: boolean | Admission$chargesArgs<ExtArgs>
+    deposits?: boolean | Admission$depositsArgs<ExtArgs>
+    _count?: boolean | AdmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AdmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    patient?: boolean | PatientDefaultArgs<ExtArgs>
+    bill?: boolean | Admission$billArgs<ExtArgs>
+  }
+
+  export type $AdmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Admission"
+    objects: {
+      patient: Prisma.$PatientPayload<ExtArgs>
+      bill: Prisma.$BillPayload<ExtArgs> | null
+      charges: Prisma.$AdmissionChargePayload<ExtArgs>[]
+      deposits: Prisma.$AdmissionDepositPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      admissionNo: string
+      patientId: string
+      doctorName: string | null
+      ward: string | null
+      bedNo: string | null
+      bedRate: number
+      notes: string | null
+      admittedAt: Date
+      dischargedAt: Date | null
+      status: string
+      billId: number | null
+      createdBy: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["admission"]>
+    composites: {}
+  }
+
+  type AdmissionGetPayload<S extends boolean | null | undefined | AdmissionDefaultArgs> = $Result.GetResult<Prisma.$AdmissionPayload, S>
+
+  type AdmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AdmissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AdmissionCountAggregateInputType | true
+    }
+
+  export interface AdmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Admission'], meta: { name: 'Admission' } }
+    /**
+     * Find zero or one Admission that matches the filter.
+     * @param {AdmissionFindUniqueArgs} args - Arguments to find a Admission
+     * @example
+     * // Get one Admission
+     * const admission = await prisma.admission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdmissionFindUniqueArgs>(args: SelectSubset<T, AdmissionFindUniqueArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Admission that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AdmissionFindUniqueOrThrowArgs} args - Arguments to find a Admission
+     * @example
+     * // Get one Admission
+     * const admission = await prisma.admission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, AdmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Admission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionFindFirstArgs} args - Arguments to find a Admission
+     * @example
+     * // Get one Admission
+     * const admission = await prisma.admission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdmissionFindFirstArgs>(args?: SelectSubset<T, AdmissionFindFirstArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Admission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionFindFirstOrThrowArgs} args - Arguments to find a Admission
+     * @example
+     * // Get one Admission
+     * const admission = await prisma.admission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, AdmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Admissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Admissions
+     * const admissions = await prisma.admission.findMany()
+     * 
+     * // Get first 10 Admissions
+     * const admissions = await prisma.admission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const admissionWithIdOnly = await prisma.admission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdmissionFindManyArgs>(args?: SelectSubset<T, AdmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Admission.
+     * @param {AdmissionCreateArgs} args - Arguments to create a Admission.
+     * @example
+     * // Create one Admission
+     * const Admission = await prisma.admission.create({
+     *   data: {
+     *     // ... data to create a Admission
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdmissionCreateArgs>(args: SelectSubset<T, AdmissionCreateArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Admissions.
+     * @param {AdmissionCreateManyArgs} args - Arguments to create many Admissions.
+     * @example
+     * // Create many Admissions
+     * const admission = await prisma.admission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdmissionCreateManyArgs>(args?: SelectSubset<T, AdmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Admissions and returns the data saved in the database.
+     * @param {AdmissionCreateManyAndReturnArgs} args - Arguments to create many Admissions.
+     * @example
+     * // Create many Admissions
+     * const admission = await prisma.admission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Admissions and only return the `id`
+     * const admissionWithIdOnly = await prisma.admission.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, AdmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Admission.
+     * @param {AdmissionDeleteArgs} args - Arguments to delete one Admission.
+     * @example
+     * // Delete one Admission
+     * const Admission = await prisma.admission.delete({
+     *   where: {
+     *     // ... filter to delete one Admission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdmissionDeleteArgs>(args: SelectSubset<T, AdmissionDeleteArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Admission.
+     * @param {AdmissionUpdateArgs} args - Arguments to update one Admission.
+     * @example
+     * // Update one Admission
+     * const admission = await prisma.admission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdmissionUpdateArgs>(args: SelectSubset<T, AdmissionUpdateArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Admissions.
+     * @param {AdmissionDeleteManyArgs} args - Arguments to filter Admissions to delete.
+     * @example
+     * // Delete a few Admissions
+     * const { count } = await prisma.admission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdmissionDeleteManyArgs>(args?: SelectSubset<T, AdmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Admissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Admissions
+     * const admission = await prisma.admission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdmissionUpdateManyArgs>(args: SelectSubset<T, AdmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Admission.
+     * @param {AdmissionUpsertArgs} args - Arguments to update or create a Admission.
+     * @example
+     * // Update or create a Admission
+     * const admission = await prisma.admission.upsert({
+     *   create: {
+     *     // ... data to create a Admission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Admission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdmissionUpsertArgs>(args: SelectSubset<T, AdmissionUpsertArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Admissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionCountArgs} args - Arguments to filter Admissions to count.
+     * @example
+     * // Count the number of Admissions
+     * const count = await prisma.admission.count({
+     *   where: {
+     *     // ... the filter for the Admissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdmissionCountArgs>(
+      args?: Subset<T, AdmissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdmissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Admission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdmissionAggregateArgs>(args: Subset<T, AdmissionAggregateArgs>): Prisma.PrismaPromise<GetAdmissionAggregateType<T>>
+
+    /**
+     * Group by Admission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdmissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdmissionGroupByArgs['orderBy'] }
+        : { orderBy?: AdmissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Admission model
+   */
+  readonly fields: AdmissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Admission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    patient<T extends PatientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PatientDefaultArgs<ExtArgs>>): Prisma__PatientClient<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    bill<T extends Admission$billArgs<ExtArgs> = {}>(args?: Subset<T, Admission$billArgs<ExtArgs>>): Prisma__BillClient<$Result.GetResult<Prisma.$BillPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    charges<T extends Admission$chargesArgs<ExtArgs> = {}>(args?: Subset<T, Admission$chargesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findMany"> | Null>
+    deposits<T extends Admission$depositsArgs<ExtArgs> = {}>(args?: Subset<T, Admission$depositsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Admission model
+   */ 
+  interface AdmissionFieldRefs {
+    readonly id: FieldRef<"Admission", 'Int'>
+    readonly admissionNo: FieldRef<"Admission", 'String'>
+    readonly patientId: FieldRef<"Admission", 'String'>
+    readonly doctorName: FieldRef<"Admission", 'String'>
+    readonly ward: FieldRef<"Admission", 'String'>
+    readonly bedNo: FieldRef<"Admission", 'String'>
+    readonly bedRate: FieldRef<"Admission", 'Float'>
+    readonly notes: FieldRef<"Admission", 'String'>
+    readonly admittedAt: FieldRef<"Admission", 'DateTime'>
+    readonly dischargedAt: FieldRef<"Admission", 'DateTime'>
+    readonly status: FieldRef<"Admission", 'String'>
+    readonly billId: FieldRef<"Admission", 'Int'>
+    readonly createdBy: FieldRef<"Admission", 'Int'>
+    readonly createdAt: FieldRef<"Admission", 'DateTime'>
+    readonly updatedAt: FieldRef<"Admission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Admission findUnique
+   */
+  export type AdmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Admission to fetch.
+     */
+    where: AdmissionWhereUniqueInput
+  }
+
+  /**
+   * Admission findUniqueOrThrow
+   */
+  export type AdmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Admission to fetch.
+     */
+    where: AdmissionWhereUniqueInput
+  }
+
+  /**
+   * Admission findFirst
+   */
+  export type AdmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Admission to fetch.
+     */
+    where?: AdmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admissions to fetch.
+     */
+    orderBy?: AdmissionOrderByWithRelationInput | AdmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Admissions.
+     */
+    cursor?: AdmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Admissions.
+     */
+    distinct?: AdmissionScalarFieldEnum | AdmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Admission findFirstOrThrow
+   */
+  export type AdmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Admission to fetch.
+     */
+    where?: AdmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admissions to fetch.
+     */
+    orderBy?: AdmissionOrderByWithRelationInput | AdmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Admissions.
+     */
+    cursor?: AdmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Admissions.
+     */
+    distinct?: AdmissionScalarFieldEnum | AdmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Admission findMany
+   */
+  export type AdmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Admissions to fetch.
+     */
+    where?: AdmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admissions to fetch.
+     */
+    orderBy?: AdmissionOrderByWithRelationInput | AdmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Admissions.
+     */
+    cursor?: AdmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admissions.
+     */
+    skip?: number
+    distinct?: AdmissionScalarFieldEnum | AdmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Admission create
+   */
+  export type AdmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Admission.
+     */
+    data: XOR<AdmissionCreateInput, AdmissionUncheckedCreateInput>
+  }
+
+  /**
+   * Admission createMany
+   */
+  export type AdmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Admissions.
+     */
+    data: AdmissionCreateManyInput | AdmissionCreateManyInput[]
+  }
+
+  /**
+   * Admission createManyAndReturn
+   */
+  export type AdmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Admissions.
+     */
+    data: AdmissionCreateManyInput | AdmissionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Admission update
+   */
+  export type AdmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Admission.
+     */
+    data: XOR<AdmissionUpdateInput, AdmissionUncheckedUpdateInput>
+    /**
+     * Choose, which Admission to update.
+     */
+    where: AdmissionWhereUniqueInput
+  }
+
+  /**
+   * Admission updateMany
+   */
+  export type AdmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Admissions.
+     */
+    data: XOR<AdmissionUpdateManyMutationInput, AdmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Admissions to update
+     */
+    where?: AdmissionWhereInput
+  }
+
+  /**
+   * Admission upsert
+   */
+  export type AdmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Admission to update in case it exists.
+     */
+    where: AdmissionWhereUniqueInput
+    /**
+     * In case the Admission found by the `where` argument doesn't exist, create a new Admission with this data.
+     */
+    create: XOR<AdmissionCreateInput, AdmissionUncheckedCreateInput>
+    /**
+     * In case the Admission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdmissionUpdateInput, AdmissionUncheckedUpdateInput>
+  }
+
+  /**
+   * Admission delete
+   */
+  export type AdmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+    /**
+     * Filter which Admission to delete.
+     */
+    where: AdmissionWhereUniqueInput
+  }
+
+  /**
+   * Admission deleteMany
+   */
+  export type AdmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Admissions to delete
+     */
+    where?: AdmissionWhereInput
+  }
+
+  /**
+   * Admission.bill
+   */
+  export type Admission$billArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bill
+     */
+    select?: BillSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BillInclude<ExtArgs> | null
+    where?: BillWhereInput
+  }
+
+  /**
+   * Admission.charges
+   */
+  export type Admission$chargesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    where?: AdmissionChargeWhereInput
+    orderBy?: AdmissionChargeOrderByWithRelationInput | AdmissionChargeOrderByWithRelationInput[]
+    cursor?: AdmissionChargeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmissionChargeScalarFieldEnum | AdmissionChargeScalarFieldEnum[]
+  }
+
+  /**
+   * Admission.deposits
+   */
+  export type Admission$depositsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    where?: AdmissionDepositWhereInput
+    orderBy?: AdmissionDepositOrderByWithRelationInput | AdmissionDepositOrderByWithRelationInput[]
+    cursor?: AdmissionDepositWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmissionDepositScalarFieldEnum | AdmissionDepositScalarFieldEnum[]
+  }
+
+  /**
+   * Admission without action
+   */
+  export type AdmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admission
+     */
+    select?: AdmissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AdmissionCharge
+   */
+
+  export type AggregateAdmissionCharge = {
+    _count: AdmissionChargeCountAggregateOutputType | null
+    _avg: AdmissionChargeAvgAggregateOutputType | null
+    _sum: AdmissionChargeSumAggregateOutputType | null
+    _min: AdmissionChargeMinAggregateOutputType | null
+    _max: AdmissionChargeMaxAggregateOutputType | null
+  }
+
+  export type AdmissionChargeAvgAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    quantity: number | null
+    unitPrice: number | null
+    total: number | null
+    createdBy: number | null
+  }
+
+  export type AdmissionChargeSumAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    quantity: number | null
+    unitPrice: number | null
+    total: number | null
+    createdBy: number | null
+  }
+
+  export type AdmissionChargeMinAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    itemName: string | null
+    itemCategory: string | null
+    quantity: number | null
+    unitPrice: number | null
+    total: number | null
+    chargedAt: Date | null
+    createdBy: number | null
+  }
+
+  export type AdmissionChargeMaxAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    itemName: string | null
+    itemCategory: string | null
+    quantity: number | null
+    unitPrice: number | null
+    total: number | null
+    chargedAt: Date | null
+    createdBy: number | null
+  }
+
+  export type AdmissionChargeCountAggregateOutputType = {
+    id: number
+    admissionId: number
+    itemName: number
+    itemCategory: number
+    quantity: number
+    unitPrice: number
+    total: number
+    chargedAt: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type AdmissionChargeAvgAggregateInputType = {
+    id?: true
+    admissionId?: true
+    quantity?: true
+    unitPrice?: true
+    total?: true
+    createdBy?: true
+  }
+
+  export type AdmissionChargeSumAggregateInputType = {
+    id?: true
+    admissionId?: true
+    quantity?: true
+    unitPrice?: true
+    total?: true
+    createdBy?: true
+  }
+
+  export type AdmissionChargeMinAggregateInputType = {
+    id?: true
+    admissionId?: true
+    itemName?: true
+    itemCategory?: true
+    quantity?: true
+    unitPrice?: true
+    total?: true
+    chargedAt?: true
+    createdBy?: true
+  }
+
+  export type AdmissionChargeMaxAggregateInputType = {
+    id?: true
+    admissionId?: true
+    itemName?: true
+    itemCategory?: true
+    quantity?: true
+    unitPrice?: true
+    total?: true
+    chargedAt?: true
+    createdBy?: true
+  }
+
+  export type AdmissionChargeCountAggregateInputType = {
+    id?: true
+    admissionId?: true
+    itemName?: true
+    itemCategory?: true
+    quantity?: true
+    unitPrice?: true
+    total?: true
+    chargedAt?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type AdmissionChargeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmissionCharge to aggregate.
+     */
+    where?: AdmissionChargeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionCharges to fetch.
+     */
+    orderBy?: AdmissionChargeOrderByWithRelationInput | AdmissionChargeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdmissionChargeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionCharges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionCharges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdmissionCharges
+    **/
+    _count?: true | AdmissionChargeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdmissionChargeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdmissionChargeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdmissionChargeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdmissionChargeMaxAggregateInputType
+  }
+
+  export type GetAdmissionChargeAggregateType<T extends AdmissionChargeAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmissionCharge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmissionCharge[P]>
+      : GetScalarType<T[P], AggregateAdmissionCharge[P]>
+  }
+
+
+
+
+  export type AdmissionChargeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionChargeWhereInput
+    orderBy?: AdmissionChargeOrderByWithAggregationInput | AdmissionChargeOrderByWithAggregationInput[]
+    by: AdmissionChargeScalarFieldEnum[] | AdmissionChargeScalarFieldEnum
+    having?: AdmissionChargeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdmissionChargeCountAggregateInputType | true
+    _avg?: AdmissionChargeAvgAggregateInputType
+    _sum?: AdmissionChargeSumAggregateInputType
+    _min?: AdmissionChargeMinAggregateInputType
+    _max?: AdmissionChargeMaxAggregateInputType
+  }
+
+  export type AdmissionChargeGroupByOutputType = {
+    id: number
+    admissionId: number
+    itemName: string
+    itemCategory: string
+    quantity: number
+    unitPrice: number
+    total: number
+    chargedAt: Date
+    createdBy: number | null
+    _count: AdmissionChargeCountAggregateOutputType | null
+    _avg: AdmissionChargeAvgAggregateOutputType | null
+    _sum: AdmissionChargeSumAggregateOutputType | null
+    _min: AdmissionChargeMinAggregateOutputType | null
+    _max: AdmissionChargeMaxAggregateOutputType | null
+  }
+
+  type GetAdmissionChargeGroupByPayload<T extends AdmissionChargeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdmissionChargeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdmissionChargeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdmissionChargeGroupByOutputType[P]>
+            : GetScalarType<T[P], AdmissionChargeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdmissionChargeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionId?: boolean
+    itemName?: boolean
+    itemCategory?: boolean
+    quantity?: boolean
+    unitPrice?: boolean
+    total?: boolean
+    chargedAt?: boolean
+    createdBy?: boolean
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admissionCharge"]>
+
+  export type AdmissionChargeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionId?: boolean
+    itemName?: boolean
+    itemCategory?: boolean
+    quantity?: boolean
+    unitPrice?: boolean
+    total?: boolean
+    chargedAt?: boolean
+    createdBy?: boolean
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admissionCharge"]>
+
+  export type AdmissionChargeSelectScalar = {
+    id?: boolean
+    admissionId?: boolean
+    itemName?: boolean
+    itemCategory?: boolean
+    quantity?: boolean
+    unitPrice?: boolean
+    total?: boolean
+    chargedAt?: boolean
+    createdBy?: boolean
+  }
+
+  export type AdmissionChargeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }
+  export type AdmissionChargeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }
+
+  export type $AdmissionChargePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdmissionCharge"
+    objects: {
+      admission: Prisma.$AdmissionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      admissionId: number
+      itemName: string
+      itemCategory: string
+      quantity: number
+      unitPrice: number
+      total: number
+      chargedAt: Date
+      createdBy: number | null
+    }, ExtArgs["result"]["admissionCharge"]>
+    composites: {}
+  }
+
+  type AdmissionChargeGetPayload<S extends boolean | null | undefined | AdmissionChargeDefaultArgs> = $Result.GetResult<Prisma.$AdmissionChargePayload, S>
+
+  type AdmissionChargeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AdmissionChargeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AdmissionChargeCountAggregateInputType | true
+    }
+
+  export interface AdmissionChargeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdmissionCharge'], meta: { name: 'AdmissionCharge' } }
+    /**
+     * Find zero or one AdmissionCharge that matches the filter.
+     * @param {AdmissionChargeFindUniqueArgs} args - Arguments to find a AdmissionCharge
+     * @example
+     * // Get one AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdmissionChargeFindUniqueArgs>(args: SelectSubset<T, AdmissionChargeFindUniqueArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AdmissionCharge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AdmissionChargeFindUniqueOrThrowArgs} args - Arguments to find a AdmissionCharge
+     * @example
+     * // Get one AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdmissionChargeFindUniqueOrThrowArgs>(args: SelectSubset<T, AdmissionChargeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AdmissionCharge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeFindFirstArgs} args - Arguments to find a AdmissionCharge
+     * @example
+     * // Get one AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdmissionChargeFindFirstArgs>(args?: SelectSubset<T, AdmissionChargeFindFirstArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AdmissionCharge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeFindFirstOrThrowArgs} args - Arguments to find a AdmissionCharge
+     * @example
+     * // Get one AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdmissionChargeFindFirstOrThrowArgs>(args?: SelectSubset<T, AdmissionChargeFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AdmissionCharges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdmissionCharges
+     * const admissionCharges = await prisma.admissionCharge.findMany()
+     * 
+     * // Get first 10 AdmissionCharges
+     * const admissionCharges = await prisma.admissionCharge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const admissionChargeWithIdOnly = await prisma.admissionCharge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdmissionChargeFindManyArgs>(args?: SelectSubset<T, AdmissionChargeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AdmissionCharge.
+     * @param {AdmissionChargeCreateArgs} args - Arguments to create a AdmissionCharge.
+     * @example
+     * // Create one AdmissionCharge
+     * const AdmissionCharge = await prisma.admissionCharge.create({
+     *   data: {
+     *     // ... data to create a AdmissionCharge
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdmissionChargeCreateArgs>(args: SelectSubset<T, AdmissionChargeCreateArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AdmissionCharges.
+     * @param {AdmissionChargeCreateManyArgs} args - Arguments to create many AdmissionCharges.
+     * @example
+     * // Create many AdmissionCharges
+     * const admissionCharge = await prisma.admissionCharge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdmissionChargeCreateManyArgs>(args?: SelectSubset<T, AdmissionChargeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AdmissionCharges and returns the data saved in the database.
+     * @param {AdmissionChargeCreateManyAndReturnArgs} args - Arguments to create many AdmissionCharges.
+     * @example
+     * // Create many AdmissionCharges
+     * const admissionCharge = await prisma.admissionCharge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AdmissionCharges and only return the `id`
+     * const admissionChargeWithIdOnly = await prisma.admissionCharge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdmissionChargeCreateManyAndReturnArgs>(args?: SelectSubset<T, AdmissionChargeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a AdmissionCharge.
+     * @param {AdmissionChargeDeleteArgs} args - Arguments to delete one AdmissionCharge.
+     * @example
+     * // Delete one AdmissionCharge
+     * const AdmissionCharge = await prisma.admissionCharge.delete({
+     *   where: {
+     *     // ... filter to delete one AdmissionCharge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdmissionChargeDeleteArgs>(args: SelectSubset<T, AdmissionChargeDeleteArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AdmissionCharge.
+     * @param {AdmissionChargeUpdateArgs} args - Arguments to update one AdmissionCharge.
+     * @example
+     * // Update one AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdmissionChargeUpdateArgs>(args: SelectSubset<T, AdmissionChargeUpdateArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AdmissionCharges.
+     * @param {AdmissionChargeDeleteManyArgs} args - Arguments to filter AdmissionCharges to delete.
+     * @example
+     * // Delete a few AdmissionCharges
+     * const { count } = await prisma.admissionCharge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdmissionChargeDeleteManyArgs>(args?: SelectSubset<T, AdmissionChargeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdmissionCharges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdmissionCharges
+     * const admissionCharge = await prisma.admissionCharge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdmissionChargeUpdateManyArgs>(args: SelectSubset<T, AdmissionChargeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AdmissionCharge.
+     * @param {AdmissionChargeUpsertArgs} args - Arguments to update or create a AdmissionCharge.
+     * @example
+     * // Update or create a AdmissionCharge
+     * const admissionCharge = await prisma.admissionCharge.upsert({
+     *   create: {
+     *     // ... data to create a AdmissionCharge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdmissionCharge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdmissionChargeUpsertArgs>(args: SelectSubset<T, AdmissionChargeUpsertArgs<ExtArgs>>): Prisma__AdmissionChargeClient<$Result.GetResult<Prisma.$AdmissionChargePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AdmissionCharges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeCountArgs} args - Arguments to filter AdmissionCharges to count.
+     * @example
+     * // Count the number of AdmissionCharges
+     * const count = await prisma.admissionCharge.count({
+     *   where: {
+     *     // ... the filter for the AdmissionCharges we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdmissionChargeCountArgs>(
+      args?: Subset<T, AdmissionChargeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdmissionChargeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdmissionCharge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdmissionChargeAggregateArgs>(args: Subset<T, AdmissionChargeAggregateArgs>): Prisma.PrismaPromise<GetAdmissionChargeAggregateType<T>>
+
+    /**
+     * Group by AdmissionCharge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionChargeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdmissionChargeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdmissionChargeGroupByArgs['orderBy'] }
+        : { orderBy?: AdmissionChargeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdmissionChargeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmissionChargeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdmissionCharge model
+   */
+  readonly fields: AdmissionChargeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdmissionCharge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdmissionChargeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    admission<T extends AdmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdmissionDefaultArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdmissionCharge model
+   */ 
+  interface AdmissionChargeFieldRefs {
+    readonly id: FieldRef<"AdmissionCharge", 'Int'>
+    readonly admissionId: FieldRef<"AdmissionCharge", 'Int'>
+    readonly itemName: FieldRef<"AdmissionCharge", 'String'>
+    readonly itemCategory: FieldRef<"AdmissionCharge", 'String'>
+    readonly quantity: FieldRef<"AdmissionCharge", 'Int'>
+    readonly unitPrice: FieldRef<"AdmissionCharge", 'Float'>
+    readonly total: FieldRef<"AdmissionCharge", 'Float'>
+    readonly chargedAt: FieldRef<"AdmissionCharge", 'DateTime'>
+    readonly createdBy: FieldRef<"AdmissionCharge", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdmissionCharge findUnique
+   */
+  export type AdmissionChargeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionCharge to fetch.
+     */
+    where: AdmissionChargeWhereUniqueInput
+  }
+
+  /**
+   * AdmissionCharge findUniqueOrThrow
+   */
+  export type AdmissionChargeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionCharge to fetch.
+     */
+    where: AdmissionChargeWhereUniqueInput
+  }
+
+  /**
+   * AdmissionCharge findFirst
+   */
+  export type AdmissionChargeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionCharge to fetch.
+     */
+    where?: AdmissionChargeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionCharges to fetch.
+     */
+    orderBy?: AdmissionChargeOrderByWithRelationInput | AdmissionChargeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmissionCharges.
+     */
+    cursor?: AdmissionChargeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionCharges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionCharges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmissionCharges.
+     */
+    distinct?: AdmissionChargeScalarFieldEnum | AdmissionChargeScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionCharge findFirstOrThrow
+   */
+  export type AdmissionChargeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionCharge to fetch.
+     */
+    where?: AdmissionChargeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionCharges to fetch.
+     */
+    orderBy?: AdmissionChargeOrderByWithRelationInput | AdmissionChargeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmissionCharges.
+     */
+    cursor?: AdmissionChargeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionCharges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionCharges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmissionCharges.
+     */
+    distinct?: AdmissionChargeScalarFieldEnum | AdmissionChargeScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionCharge findMany
+   */
+  export type AdmissionChargeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionCharges to fetch.
+     */
+    where?: AdmissionChargeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionCharges to fetch.
+     */
+    orderBy?: AdmissionChargeOrderByWithRelationInput | AdmissionChargeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdmissionCharges.
+     */
+    cursor?: AdmissionChargeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionCharges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionCharges.
+     */
+    skip?: number
+    distinct?: AdmissionChargeScalarFieldEnum | AdmissionChargeScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionCharge create
+   */
+  export type AdmissionChargeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdmissionCharge.
+     */
+    data: XOR<AdmissionChargeCreateInput, AdmissionChargeUncheckedCreateInput>
+  }
+
+  /**
+   * AdmissionCharge createMany
+   */
+  export type AdmissionChargeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdmissionCharges.
+     */
+    data: AdmissionChargeCreateManyInput | AdmissionChargeCreateManyInput[]
+  }
+
+  /**
+   * AdmissionCharge createManyAndReturn
+   */
+  export type AdmissionChargeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many AdmissionCharges.
+     */
+    data: AdmissionChargeCreateManyInput | AdmissionChargeCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AdmissionCharge update
+   */
+  export type AdmissionChargeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdmissionCharge.
+     */
+    data: XOR<AdmissionChargeUpdateInput, AdmissionChargeUncheckedUpdateInput>
+    /**
+     * Choose, which AdmissionCharge to update.
+     */
+    where: AdmissionChargeWhereUniqueInput
+  }
+
+  /**
+   * AdmissionCharge updateMany
+   */
+  export type AdmissionChargeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdmissionCharges.
+     */
+    data: XOR<AdmissionChargeUpdateManyMutationInput, AdmissionChargeUncheckedUpdateManyInput>
+    /**
+     * Filter which AdmissionCharges to update
+     */
+    where?: AdmissionChargeWhereInput
+  }
+
+  /**
+   * AdmissionCharge upsert
+   */
+  export type AdmissionChargeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdmissionCharge to update in case it exists.
+     */
+    where: AdmissionChargeWhereUniqueInput
+    /**
+     * In case the AdmissionCharge found by the `where` argument doesn't exist, create a new AdmissionCharge with this data.
+     */
+    create: XOR<AdmissionChargeCreateInput, AdmissionChargeUncheckedCreateInput>
+    /**
+     * In case the AdmissionCharge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdmissionChargeUpdateInput, AdmissionChargeUncheckedUpdateInput>
+  }
+
+  /**
+   * AdmissionCharge delete
+   */
+  export type AdmissionChargeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+    /**
+     * Filter which AdmissionCharge to delete.
+     */
+    where: AdmissionChargeWhereUniqueInput
+  }
+
+  /**
+   * AdmissionCharge deleteMany
+   */
+  export type AdmissionChargeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmissionCharges to delete
+     */
+    where?: AdmissionChargeWhereInput
+  }
+
+  /**
+   * AdmissionCharge without action
+   */
+  export type AdmissionChargeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionCharge
+     */
+    select?: AdmissionChargeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionChargeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AdmissionDeposit
+   */
+
+  export type AggregateAdmissionDeposit = {
+    _count: AdmissionDepositCountAggregateOutputType | null
+    _avg: AdmissionDepositAvgAggregateOutputType | null
+    _sum: AdmissionDepositSumAggregateOutputType | null
+    _min: AdmissionDepositMinAggregateOutputType | null
+    _max: AdmissionDepositMaxAggregateOutputType | null
+  }
+
+  export type AdmissionDepositAvgAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    amount: number | null
+    receivedBy: number | null
+  }
+
+  export type AdmissionDepositSumAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    amount: number | null
+    receivedBy: number | null
+  }
+
+  export type AdmissionDepositMinAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    receiptNo: string | null
+    amount: number | null
+    method: string | null
+    reference: string | null
+    receivedAt: Date | null
+    receivedBy: number | null
+  }
+
+  export type AdmissionDepositMaxAggregateOutputType = {
+    id: number | null
+    admissionId: number | null
+    receiptNo: string | null
+    amount: number | null
+    method: string | null
+    reference: string | null
+    receivedAt: Date | null
+    receivedBy: number | null
+  }
+
+  export type AdmissionDepositCountAggregateOutputType = {
+    id: number
+    admissionId: number
+    receiptNo: number
+    amount: number
+    method: number
+    reference: number
+    receivedAt: number
+    receivedBy: number
+    _all: number
+  }
+
+
+  export type AdmissionDepositAvgAggregateInputType = {
+    id?: true
+    admissionId?: true
+    amount?: true
+    receivedBy?: true
+  }
+
+  export type AdmissionDepositSumAggregateInputType = {
+    id?: true
+    admissionId?: true
+    amount?: true
+    receivedBy?: true
+  }
+
+  export type AdmissionDepositMinAggregateInputType = {
+    id?: true
+    admissionId?: true
+    receiptNo?: true
+    amount?: true
+    method?: true
+    reference?: true
+    receivedAt?: true
+    receivedBy?: true
+  }
+
+  export type AdmissionDepositMaxAggregateInputType = {
+    id?: true
+    admissionId?: true
+    receiptNo?: true
+    amount?: true
+    method?: true
+    reference?: true
+    receivedAt?: true
+    receivedBy?: true
+  }
+
+  export type AdmissionDepositCountAggregateInputType = {
+    id?: true
+    admissionId?: true
+    receiptNo?: true
+    amount?: true
+    method?: true
+    reference?: true
+    receivedAt?: true
+    receivedBy?: true
+    _all?: true
+  }
+
+  export type AdmissionDepositAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmissionDeposit to aggregate.
+     */
+    where?: AdmissionDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionDeposits to fetch.
+     */
+    orderBy?: AdmissionDepositOrderByWithRelationInput | AdmissionDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdmissionDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdmissionDeposits
+    **/
+    _count?: true | AdmissionDepositCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdmissionDepositAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdmissionDepositSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdmissionDepositMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdmissionDepositMaxAggregateInputType
+  }
+
+  export type GetAdmissionDepositAggregateType<T extends AdmissionDepositAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmissionDeposit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmissionDeposit[P]>
+      : GetScalarType<T[P], AggregateAdmissionDeposit[P]>
+  }
+
+
+
+
+  export type AdmissionDepositGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionDepositWhereInput
+    orderBy?: AdmissionDepositOrderByWithAggregationInput | AdmissionDepositOrderByWithAggregationInput[]
+    by: AdmissionDepositScalarFieldEnum[] | AdmissionDepositScalarFieldEnum
+    having?: AdmissionDepositScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdmissionDepositCountAggregateInputType | true
+    _avg?: AdmissionDepositAvgAggregateInputType
+    _sum?: AdmissionDepositSumAggregateInputType
+    _min?: AdmissionDepositMinAggregateInputType
+    _max?: AdmissionDepositMaxAggregateInputType
+  }
+
+  export type AdmissionDepositGroupByOutputType = {
+    id: number
+    admissionId: number
+    receiptNo: string
+    amount: number
+    method: string
+    reference: string | null
+    receivedAt: Date
+    receivedBy: number | null
+    _count: AdmissionDepositCountAggregateOutputType | null
+    _avg: AdmissionDepositAvgAggregateOutputType | null
+    _sum: AdmissionDepositSumAggregateOutputType | null
+    _min: AdmissionDepositMinAggregateOutputType | null
+    _max: AdmissionDepositMaxAggregateOutputType | null
+  }
+
+  type GetAdmissionDepositGroupByPayload<T extends AdmissionDepositGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdmissionDepositGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdmissionDepositGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdmissionDepositGroupByOutputType[P]>
+            : GetScalarType<T[P], AdmissionDepositGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdmissionDepositSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionId?: boolean
+    receiptNo?: boolean
+    amount?: boolean
+    method?: boolean
+    reference?: boolean
+    receivedAt?: boolean
+    receivedBy?: boolean
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admissionDeposit"]>
+
+  export type AdmissionDepositSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    admissionId?: boolean
+    receiptNo?: boolean
+    amount?: boolean
+    method?: boolean
+    reference?: boolean
+    receivedAt?: boolean
+    receivedBy?: boolean
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admissionDeposit"]>
+
+  export type AdmissionDepositSelectScalar = {
+    id?: boolean
+    admissionId?: boolean
+    receiptNo?: boolean
+    amount?: boolean
+    method?: boolean
+    reference?: boolean
+    receivedAt?: boolean
+    receivedBy?: boolean
+  }
+
+  export type AdmissionDepositInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }
+  export type AdmissionDepositIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admission?: boolean | AdmissionDefaultArgs<ExtArgs>
+  }
+
+  export type $AdmissionDepositPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdmissionDeposit"
+    objects: {
+      admission: Prisma.$AdmissionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      admissionId: number
+      receiptNo: string
+      amount: number
+      method: string
+      reference: string | null
+      receivedAt: Date
+      receivedBy: number | null
+    }, ExtArgs["result"]["admissionDeposit"]>
+    composites: {}
+  }
+
+  type AdmissionDepositGetPayload<S extends boolean | null | undefined | AdmissionDepositDefaultArgs> = $Result.GetResult<Prisma.$AdmissionDepositPayload, S>
+
+  type AdmissionDepositCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AdmissionDepositFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AdmissionDepositCountAggregateInputType | true
+    }
+
+  export interface AdmissionDepositDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdmissionDeposit'], meta: { name: 'AdmissionDeposit' } }
+    /**
+     * Find zero or one AdmissionDeposit that matches the filter.
+     * @param {AdmissionDepositFindUniqueArgs} args - Arguments to find a AdmissionDeposit
+     * @example
+     * // Get one AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdmissionDepositFindUniqueArgs>(args: SelectSubset<T, AdmissionDepositFindUniqueArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AdmissionDeposit that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AdmissionDepositFindUniqueOrThrowArgs} args - Arguments to find a AdmissionDeposit
+     * @example
+     * // Get one AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdmissionDepositFindUniqueOrThrowArgs>(args: SelectSubset<T, AdmissionDepositFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AdmissionDeposit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositFindFirstArgs} args - Arguments to find a AdmissionDeposit
+     * @example
+     * // Get one AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdmissionDepositFindFirstArgs>(args?: SelectSubset<T, AdmissionDepositFindFirstArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AdmissionDeposit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositFindFirstOrThrowArgs} args - Arguments to find a AdmissionDeposit
+     * @example
+     * // Get one AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdmissionDepositFindFirstOrThrowArgs>(args?: SelectSubset<T, AdmissionDepositFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AdmissionDeposits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdmissionDeposits
+     * const admissionDeposits = await prisma.admissionDeposit.findMany()
+     * 
+     * // Get first 10 AdmissionDeposits
+     * const admissionDeposits = await prisma.admissionDeposit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const admissionDepositWithIdOnly = await prisma.admissionDeposit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdmissionDepositFindManyArgs>(args?: SelectSubset<T, AdmissionDepositFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AdmissionDeposit.
+     * @param {AdmissionDepositCreateArgs} args - Arguments to create a AdmissionDeposit.
+     * @example
+     * // Create one AdmissionDeposit
+     * const AdmissionDeposit = await prisma.admissionDeposit.create({
+     *   data: {
+     *     // ... data to create a AdmissionDeposit
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdmissionDepositCreateArgs>(args: SelectSubset<T, AdmissionDepositCreateArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AdmissionDeposits.
+     * @param {AdmissionDepositCreateManyArgs} args - Arguments to create many AdmissionDeposits.
+     * @example
+     * // Create many AdmissionDeposits
+     * const admissionDeposit = await prisma.admissionDeposit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdmissionDepositCreateManyArgs>(args?: SelectSubset<T, AdmissionDepositCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AdmissionDeposits and returns the data saved in the database.
+     * @param {AdmissionDepositCreateManyAndReturnArgs} args - Arguments to create many AdmissionDeposits.
+     * @example
+     * // Create many AdmissionDeposits
+     * const admissionDeposit = await prisma.admissionDeposit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AdmissionDeposits and only return the `id`
+     * const admissionDepositWithIdOnly = await prisma.admissionDeposit.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdmissionDepositCreateManyAndReturnArgs>(args?: SelectSubset<T, AdmissionDepositCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a AdmissionDeposit.
+     * @param {AdmissionDepositDeleteArgs} args - Arguments to delete one AdmissionDeposit.
+     * @example
+     * // Delete one AdmissionDeposit
+     * const AdmissionDeposit = await prisma.admissionDeposit.delete({
+     *   where: {
+     *     // ... filter to delete one AdmissionDeposit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdmissionDepositDeleteArgs>(args: SelectSubset<T, AdmissionDepositDeleteArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AdmissionDeposit.
+     * @param {AdmissionDepositUpdateArgs} args - Arguments to update one AdmissionDeposit.
+     * @example
+     * // Update one AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdmissionDepositUpdateArgs>(args: SelectSubset<T, AdmissionDepositUpdateArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AdmissionDeposits.
+     * @param {AdmissionDepositDeleteManyArgs} args - Arguments to filter AdmissionDeposits to delete.
+     * @example
+     * // Delete a few AdmissionDeposits
+     * const { count } = await prisma.admissionDeposit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdmissionDepositDeleteManyArgs>(args?: SelectSubset<T, AdmissionDepositDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdmissionDeposits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdmissionDeposits
+     * const admissionDeposit = await prisma.admissionDeposit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdmissionDepositUpdateManyArgs>(args: SelectSubset<T, AdmissionDepositUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AdmissionDeposit.
+     * @param {AdmissionDepositUpsertArgs} args - Arguments to update or create a AdmissionDeposit.
+     * @example
+     * // Update or create a AdmissionDeposit
+     * const admissionDeposit = await prisma.admissionDeposit.upsert({
+     *   create: {
+     *     // ... data to create a AdmissionDeposit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdmissionDeposit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdmissionDepositUpsertArgs>(args: SelectSubset<T, AdmissionDepositUpsertArgs<ExtArgs>>): Prisma__AdmissionDepositClient<$Result.GetResult<Prisma.$AdmissionDepositPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AdmissionDeposits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositCountArgs} args - Arguments to filter AdmissionDeposits to count.
+     * @example
+     * // Count the number of AdmissionDeposits
+     * const count = await prisma.admissionDeposit.count({
+     *   where: {
+     *     // ... the filter for the AdmissionDeposits we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdmissionDepositCountArgs>(
+      args?: Subset<T, AdmissionDepositCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdmissionDepositCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdmissionDeposit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdmissionDepositAggregateArgs>(args: Subset<T, AdmissionDepositAggregateArgs>): Prisma.PrismaPromise<GetAdmissionDepositAggregateType<T>>
+
+    /**
+     * Group by AdmissionDeposit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmissionDepositGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdmissionDepositGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdmissionDepositGroupByArgs['orderBy'] }
+        : { orderBy?: AdmissionDepositGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdmissionDepositGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmissionDepositGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdmissionDeposit model
+   */
+  readonly fields: AdmissionDepositFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdmissionDeposit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdmissionDepositClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    admission<T extends AdmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdmissionDefaultArgs<ExtArgs>>): Prisma__AdmissionClient<$Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdmissionDeposit model
+   */ 
+  interface AdmissionDepositFieldRefs {
+    readonly id: FieldRef<"AdmissionDeposit", 'Int'>
+    readonly admissionId: FieldRef<"AdmissionDeposit", 'Int'>
+    readonly receiptNo: FieldRef<"AdmissionDeposit", 'String'>
+    readonly amount: FieldRef<"AdmissionDeposit", 'Float'>
+    readonly method: FieldRef<"AdmissionDeposit", 'String'>
+    readonly reference: FieldRef<"AdmissionDeposit", 'String'>
+    readonly receivedAt: FieldRef<"AdmissionDeposit", 'DateTime'>
+    readonly receivedBy: FieldRef<"AdmissionDeposit", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdmissionDeposit findUnique
+   */
+  export type AdmissionDepositFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionDeposit to fetch.
+     */
+    where: AdmissionDepositWhereUniqueInput
+  }
+
+  /**
+   * AdmissionDeposit findUniqueOrThrow
+   */
+  export type AdmissionDepositFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionDeposit to fetch.
+     */
+    where: AdmissionDepositWhereUniqueInput
+  }
+
+  /**
+   * AdmissionDeposit findFirst
+   */
+  export type AdmissionDepositFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionDeposit to fetch.
+     */
+    where?: AdmissionDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionDeposits to fetch.
+     */
+    orderBy?: AdmissionDepositOrderByWithRelationInput | AdmissionDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmissionDeposits.
+     */
+    cursor?: AdmissionDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmissionDeposits.
+     */
+    distinct?: AdmissionDepositScalarFieldEnum | AdmissionDepositScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionDeposit findFirstOrThrow
+   */
+  export type AdmissionDepositFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionDeposit to fetch.
+     */
+    where?: AdmissionDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionDeposits to fetch.
+     */
+    orderBy?: AdmissionDepositOrderByWithRelationInput | AdmissionDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmissionDeposits.
+     */
+    cursor?: AdmissionDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmissionDeposits.
+     */
+    distinct?: AdmissionDepositScalarFieldEnum | AdmissionDepositScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionDeposit findMany
+   */
+  export type AdmissionDepositFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmissionDeposits to fetch.
+     */
+    where?: AdmissionDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmissionDeposits to fetch.
+     */
+    orderBy?: AdmissionDepositOrderByWithRelationInput | AdmissionDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdmissionDeposits.
+     */
+    cursor?: AdmissionDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmissionDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmissionDeposits.
+     */
+    skip?: number
+    distinct?: AdmissionDepositScalarFieldEnum | AdmissionDepositScalarFieldEnum[]
+  }
+
+  /**
+   * AdmissionDeposit create
+   */
+  export type AdmissionDepositCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdmissionDeposit.
+     */
+    data: XOR<AdmissionDepositCreateInput, AdmissionDepositUncheckedCreateInput>
+  }
+
+  /**
+   * AdmissionDeposit createMany
+   */
+  export type AdmissionDepositCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdmissionDeposits.
+     */
+    data: AdmissionDepositCreateManyInput | AdmissionDepositCreateManyInput[]
+  }
+
+  /**
+   * AdmissionDeposit createManyAndReturn
+   */
+  export type AdmissionDepositCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many AdmissionDeposits.
+     */
+    data: AdmissionDepositCreateManyInput | AdmissionDepositCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AdmissionDeposit update
+   */
+  export type AdmissionDepositUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdmissionDeposit.
+     */
+    data: XOR<AdmissionDepositUpdateInput, AdmissionDepositUncheckedUpdateInput>
+    /**
+     * Choose, which AdmissionDeposit to update.
+     */
+    where: AdmissionDepositWhereUniqueInput
+  }
+
+  /**
+   * AdmissionDeposit updateMany
+   */
+  export type AdmissionDepositUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdmissionDeposits.
+     */
+    data: XOR<AdmissionDepositUpdateManyMutationInput, AdmissionDepositUncheckedUpdateManyInput>
+    /**
+     * Filter which AdmissionDeposits to update
+     */
+    where?: AdmissionDepositWhereInput
+  }
+
+  /**
+   * AdmissionDeposit upsert
+   */
+  export type AdmissionDepositUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdmissionDeposit to update in case it exists.
+     */
+    where: AdmissionDepositWhereUniqueInput
+    /**
+     * In case the AdmissionDeposit found by the `where` argument doesn't exist, create a new AdmissionDeposit with this data.
+     */
+    create: XOR<AdmissionDepositCreateInput, AdmissionDepositUncheckedCreateInput>
+    /**
+     * In case the AdmissionDeposit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdmissionDepositUpdateInput, AdmissionDepositUncheckedUpdateInput>
+  }
+
+  /**
+   * AdmissionDeposit delete
+   */
+  export type AdmissionDepositDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+    /**
+     * Filter which AdmissionDeposit to delete.
+     */
+    where: AdmissionDepositWhereUniqueInput
+  }
+
+  /**
+   * AdmissionDeposit deleteMany
+   */
+  export type AdmissionDepositDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmissionDeposits to delete
+     */
+    where?: AdmissionDepositWhereInput
+  }
+
+  /**
+   * AdmissionDeposit without action
+   */
+  export type AdmissionDepositDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmissionDeposit
+     */
+    select?: AdmissionDepositSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionDepositInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12701,6 +16265,56 @@ export namespace Prisma {
   };
 
   export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
+
+
+  export const AdmissionScalarFieldEnum: {
+    id: 'id',
+    admissionNo: 'admissionNo',
+    patientId: 'patientId',
+    doctorName: 'doctorName',
+    ward: 'ward',
+    bedNo: 'bedNo',
+    bedRate: 'bedRate',
+    notes: 'notes',
+    admittedAt: 'admittedAt',
+    dischargedAt: 'dischargedAt',
+    status: 'status',
+    billId: 'billId',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdmissionScalarFieldEnum = (typeof AdmissionScalarFieldEnum)[keyof typeof AdmissionScalarFieldEnum]
+
+
+  export const AdmissionChargeScalarFieldEnum: {
+    id: 'id',
+    admissionId: 'admissionId',
+    itemName: 'itemName',
+    itemCategory: 'itemCategory',
+    quantity: 'quantity',
+    unitPrice: 'unitPrice',
+    total: 'total',
+    chargedAt: 'chargedAt',
+    createdBy: 'createdBy'
+  };
+
+  export type AdmissionChargeScalarFieldEnum = (typeof AdmissionChargeScalarFieldEnum)[keyof typeof AdmissionChargeScalarFieldEnum]
+
+
+  export const AdmissionDepositScalarFieldEnum: {
+    id: 'id',
+    admissionId: 'admissionId',
+    receiptNo: 'receiptNo',
+    amount: 'amount',
+    method: 'method',
+    reference: 'reference',
+    receivedAt: 'receivedAt',
+    receivedBy: 'receivedBy'
+  };
+
+  export type AdmissionDepositScalarFieldEnum = (typeof AdmissionDepositScalarFieldEnum)[keyof typeof AdmissionDepositScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13053,6 +16667,7 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     bills?: BillListRelationFilter
+    admissions?: AdmissionListRelationFilter
   }
 
   export type PatientOrderByWithRelationInput = {
@@ -13074,6 +16689,7 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     bills?: BillOrderByRelationAggregateInput
+    admissions?: AdmissionOrderByRelationAggregateInput
   }
 
   export type PatientWhereUniqueInput = Prisma.AtLeast<{
@@ -13098,6 +16714,7 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"Patient"> | Date | string | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     bills?: BillListRelationFilter
+    admissions?: AdmissionListRelationFilter
   }, "id" | "uhid">
 
   export type PatientOrderByWithAggregationInput = {
@@ -13366,6 +16983,7 @@ export namespace Prisma {
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     items?: BillItemListRelationFilter
     payments?: PaymentListRelationFilter
+    admission?: XOR<AdmissionNullableRelationFilter, AdmissionWhereInput> | null
   }
 
   export type BillOrderByWithRelationInput = {
@@ -13397,6 +17015,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     items?: BillItemOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
+    admission?: AdmissionOrderByWithRelationInput
   }
 
   export type BillWhereUniqueInput = Prisma.AtLeast<{
@@ -13431,6 +17050,7 @@ export namespace Prisma {
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     items?: BillItemListRelationFilter
     payments?: PaymentListRelationFilter
+    admission?: XOR<AdmissionNullableRelationFilter, AdmissionWhereInput> | null
   }, "id" | "billNo">
 
   export type BillOrderByWithAggregationInput = {
@@ -13775,6 +17395,271 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
   }
 
+  export type AdmissionWhereInput = {
+    AND?: AdmissionWhereInput | AdmissionWhereInput[]
+    OR?: AdmissionWhereInput[]
+    NOT?: AdmissionWhereInput | AdmissionWhereInput[]
+    id?: IntFilter<"Admission"> | number
+    admissionNo?: StringFilter<"Admission"> | string
+    patientId?: StringFilter<"Admission"> | string
+    doctorName?: StringNullableFilter<"Admission"> | string | null
+    ward?: StringNullableFilter<"Admission"> | string | null
+    bedNo?: StringNullableFilter<"Admission"> | string | null
+    bedRate?: FloatFilter<"Admission"> | number
+    notes?: StringNullableFilter<"Admission"> | string | null
+    admittedAt?: DateTimeFilter<"Admission"> | Date | string
+    dischargedAt?: DateTimeNullableFilter<"Admission"> | Date | string | null
+    status?: StringFilter<"Admission"> | string
+    billId?: IntNullableFilter<"Admission"> | number | null
+    createdBy?: IntNullableFilter<"Admission"> | number | null
+    createdAt?: DateTimeFilter<"Admission"> | Date | string
+    updatedAt?: DateTimeFilter<"Admission"> | Date | string
+    patient?: XOR<PatientRelationFilter, PatientWhereInput>
+    bill?: XOR<BillNullableRelationFilter, BillWhereInput> | null
+    charges?: AdmissionChargeListRelationFilter
+    deposits?: AdmissionDepositListRelationFilter
+  }
+
+  export type AdmissionOrderByWithRelationInput = {
+    id?: SortOrder
+    admissionNo?: SortOrder
+    patientId?: SortOrder
+    doctorName?: SortOrderInput | SortOrder
+    ward?: SortOrderInput | SortOrder
+    bedNo?: SortOrderInput | SortOrder
+    bedRate?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    admittedAt?: SortOrder
+    dischargedAt?: SortOrderInput | SortOrder
+    status?: SortOrder
+    billId?: SortOrderInput | SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    patient?: PatientOrderByWithRelationInput
+    bill?: BillOrderByWithRelationInput
+    charges?: AdmissionChargeOrderByRelationAggregateInput
+    deposits?: AdmissionDepositOrderByRelationAggregateInput
+  }
+
+  export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    admissionNo?: string
+    billId?: number
+    AND?: AdmissionWhereInput | AdmissionWhereInput[]
+    OR?: AdmissionWhereInput[]
+    NOT?: AdmissionWhereInput | AdmissionWhereInput[]
+    patientId?: StringFilter<"Admission"> | string
+    doctorName?: StringNullableFilter<"Admission"> | string | null
+    ward?: StringNullableFilter<"Admission"> | string | null
+    bedNo?: StringNullableFilter<"Admission"> | string | null
+    bedRate?: FloatFilter<"Admission"> | number
+    notes?: StringNullableFilter<"Admission"> | string | null
+    admittedAt?: DateTimeFilter<"Admission"> | Date | string
+    dischargedAt?: DateTimeNullableFilter<"Admission"> | Date | string | null
+    status?: StringFilter<"Admission"> | string
+    createdBy?: IntNullableFilter<"Admission"> | number | null
+    createdAt?: DateTimeFilter<"Admission"> | Date | string
+    updatedAt?: DateTimeFilter<"Admission"> | Date | string
+    patient?: XOR<PatientRelationFilter, PatientWhereInput>
+    bill?: XOR<BillNullableRelationFilter, BillWhereInput> | null
+    charges?: AdmissionChargeListRelationFilter
+    deposits?: AdmissionDepositListRelationFilter
+  }, "id" | "admissionNo" | "billId">
+
+  export type AdmissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    admissionNo?: SortOrder
+    patientId?: SortOrder
+    doctorName?: SortOrderInput | SortOrder
+    ward?: SortOrderInput | SortOrder
+    bedNo?: SortOrderInput | SortOrder
+    bedRate?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    admittedAt?: SortOrder
+    dischargedAt?: SortOrderInput | SortOrder
+    status?: SortOrder
+    billId?: SortOrderInput | SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdmissionCountOrderByAggregateInput
+    _avg?: AdmissionAvgOrderByAggregateInput
+    _max?: AdmissionMaxOrderByAggregateInput
+    _min?: AdmissionMinOrderByAggregateInput
+    _sum?: AdmissionSumOrderByAggregateInput
+  }
+
+  export type AdmissionScalarWhereWithAggregatesInput = {
+    AND?: AdmissionScalarWhereWithAggregatesInput | AdmissionScalarWhereWithAggregatesInput[]
+    OR?: AdmissionScalarWhereWithAggregatesInput[]
+    NOT?: AdmissionScalarWhereWithAggregatesInput | AdmissionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Admission"> | number
+    admissionNo?: StringWithAggregatesFilter<"Admission"> | string
+    patientId?: StringWithAggregatesFilter<"Admission"> | string
+    doctorName?: StringNullableWithAggregatesFilter<"Admission"> | string | null
+    ward?: StringNullableWithAggregatesFilter<"Admission"> | string | null
+    bedNo?: StringNullableWithAggregatesFilter<"Admission"> | string | null
+    bedRate?: FloatWithAggregatesFilter<"Admission"> | number
+    notes?: StringNullableWithAggregatesFilter<"Admission"> | string | null
+    admittedAt?: DateTimeWithAggregatesFilter<"Admission"> | Date | string
+    dischargedAt?: DateTimeNullableWithAggregatesFilter<"Admission"> | Date | string | null
+    status?: StringWithAggregatesFilter<"Admission"> | string
+    billId?: IntNullableWithAggregatesFilter<"Admission"> | number | null
+    createdBy?: IntNullableWithAggregatesFilter<"Admission"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Admission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Admission"> | Date | string
+  }
+
+  export type AdmissionChargeWhereInput = {
+    AND?: AdmissionChargeWhereInput | AdmissionChargeWhereInput[]
+    OR?: AdmissionChargeWhereInput[]
+    NOT?: AdmissionChargeWhereInput | AdmissionChargeWhereInput[]
+    id?: IntFilter<"AdmissionCharge"> | number
+    admissionId?: IntFilter<"AdmissionCharge"> | number
+    itemName?: StringFilter<"AdmissionCharge"> | string
+    itemCategory?: StringFilter<"AdmissionCharge"> | string
+    quantity?: IntFilter<"AdmissionCharge"> | number
+    unitPrice?: FloatFilter<"AdmissionCharge"> | number
+    total?: FloatFilter<"AdmissionCharge"> | number
+    chargedAt?: DateTimeFilter<"AdmissionCharge"> | Date | string
+    createdBy?: IntNullableFilter<"AdmissionCharge"> | number | null
+    admission?: XOR<AdmissionRelationFilter, AdmissionWhereInput>
+  }
+
+  export type AdmissionChargeOrderByWithRelationInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    itemName?: SortOrder
+    itemCategory?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    chargedAt?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    admission?: AdmissionOrderByWithRelationInput
+  }
+
+  export type AdmissionChargeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AdmissionChargeWhereInput | AdmissionChargeWhereInput[]
+    OR?: AdmissionChargeWhereInput[]
+    NOT?: AdmissionChargeWhereInput | AdmissionChargeWhereInput[]
+    admissionId?: IntFilter<"AdmissionCharge"> | number
+    itemName?: StringFilter<"AdmissionCharge"> | string
+    itemCategory?: StringFilter<"AdmissionCharge"> | string
+    quantity?: IntFilter<"AdmissionCharge"> | number
+    unitPrice?: FloatFilter<"AdmissionCharge"> | number
+    total?: FloatFilter<"AdmissionCharge"> | number
+    chargedAt?: DateTimeFilter<"AdmissionCharge"> | Date | string
+    createdBy?: IntNullableFilter<"AdmissionCharge"> | number | null
+    admission?: XOR<AdmissionRelationFilter, AdmissionWhereInput>
+  }, "id">
+
+  export type AdmissionChargeOrderByWithAggregationInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    itemName?: SortOrder
+    itemCategory?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    chargedAt?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    _count?: AdmissionChargeCountOrderByAggregateInput
+    _avg?: AdmissionChargeAvgOrderByAggregateInput
+    _max?: AdmissionChargeMaxOrderByAggregateInput
+    _min?: AdmissionChargeMinOrderByAggregateInput
+    _sum?: AdmissionChargeSumOrderByAggregateInput
+  }
+
+  export type AdmissionChargeScalarWhereWithAggregatesInput = {
+    AND?: AdmissionChargeScalarWhereWithAggregatesInput | AdmissionChargeScalarWhereWithAggregatesInput[]
+    OR?: AdmissionChargeScalarWhereWithAggregatesInput[]
+    NOT?: AdmissionChargeScalarWhereWithAggregatesInput | AdmissionChargeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AdmissionCharge"> | number
+    admissionId?: IntWithAggregatesFilter<"AdmissionCharge"> | number
+    itemName?: StringWithAggregatesFilter<"AdmissionCharge"> | string
+    itemCategory?: StringWithAggregatesFilter<"AdmissionCharge"> | string
+    quantity?: IntWithAggregatesFilter<"AdmissionCharge"> | number
+    unitPrice?: FloatWithAggregatesFilter<"AdmissionCharge"> | number
+    total?: FloatWithAggregatesFilter<"AdmissionCharge"> | number
+    chargedAt?: DateTimeWithAggregatesFilter<"AdmissionCharge"> | Date | string
+    createdBy?: IntNullableWithAggregatesFilter<"AdmissionCharge"> | number | null
+  }
+
+  export type AdmissionDepositWhereInput = {
+    AND?: AdmissionDepositWhereInput | AdmissionDepositWhereInput[]
+    OR?: AdmissionDepositWhereInput[]
+    NOT?: AdmissionDepositWhereInput | AdmissionDepositWhereInput[]
+    id?: IntFilter<"AdmissionDeposit"> | number
+    admissionId?: IntFilter<"AdmissionDeposit"> | number
+    receiptNo?: StringFilter<"AdmissionDeposit"> | string
+    amount?: FloatFilter<"AdmissionDeposit"> | number
+    method?: StringFilter<"AdmissionDeposit"> | string
+    reference?: StringNullableFilter<"AdmissionDeposit"> | string | null
+    receivedAt?: DateTimeFilter<"AdmissionDeposit"> | Date | string
+    receivedBy?: IntNullableFilter<"AdmissionDeposit"> | number | null
+    admission?: XOR<AdmissionRelationFilter, AdmissionWhereInput>
+  }
+
+  export type AdmissionDepositOrderByWithRelationInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    receiptNo?: SortOrder
+    amount?: SortOrder
+    method?: SortOrder
+    reference?: SortOrderInput | SortOrder
+    receivedAt?: SortOrder
+    receivedBy?: SortOrderInput | SortOrder
+    admission?: AdmissionOrderByWithRelationInput
+  }
+
+  export type AdmissionDepositWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    receiptNo?: string
+    AND?: AdmissionDepositWhereInput | AdmissionDepositWhereInput[]
+    OR?: AdmissionDepositWhereInput[]
+    NOT?: AdmissionDepositWhereInput | AdmissionDepositWhereInput[]
+    admissionId?: IntFilter<"AdmissionDeposit"> | number
+    amount?: FloatFilter<"AdmissionDeposit"> | number
+    method?: StringFilter<"AdmissionDeposit"> | string
+    reference?: StringNullableFilter<"AdmissionDeposit"> | string | null
+    receivedAt?: DateTimeFilter<"AdmissionDeposit"> | Date | string
+    receivedBy?: IntNullableFilter<"AdmissionDeposit"> | number | null
+    admission?: XOR<AdmissionRelationFilter, AdmissionWhereInput>
+  }, "id" | "receiptNo">
+
+  export type AdmissionDepositOrderByWithAggregationInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    receiptNo?: SortOrder
+    amount?: SortOrder
+    method?: SortOrder
+    reference?: SortOrderInput | SortOrder
+    receivedAt?: SortOrder
+    receivedBy?: SortOrderInput | SortOrder
+    _count?: AdmissionDepositCountOrderByAggregateInput
+    _avg?: AdmissionDepositAvgOrderByAggregateInput
+    _max?: AdmissionDepositMaxOrderByAggregateInput
+    _min?: AdmissionDepositMinOrderByAggregateInput
+    _sum?: AdmissionDepositSumOrderByAggregateInput
+  }
+
+  export type AdmissionDepositScalarWhereWithAggregatesInput = {
+    AND?: AdmissionDepositScalarWhereWithAggregatesInput | AdmissionDepositScalarWhereWithAggregatesInput[]
+    OR?: AdmissionDepositScalarWhereWithAggregatesInput[]
+    NOT?: AdmissionDepositScalarWhereWithAggregatesInput | AdmissionDepositScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AdmissionDeposit"> | number
+    admissionId?: IntWithAggregatesFilter<"AdmissionDeposit"> | number
+    receiptNo?: StringWithAggregatesFilter<"AdmissionDeposit"> | string
+    amount?: FloatWithAggregatesFilter<"AdmissionDeposit"> | number
+    method?: StringWithAggregatesFilter<"AdmissionDeposit"> | string
+    reference?: StringNullableWithAggregatesFilter<"AdmissionDeposit"> | string | null
+    receivedAt?: DateTimeWithAggregatesFilter<"AdmissionDeposit"> | Date | string
+    receivedBy?: IntNullableWithAggregatesFilter<"AdmissionDeposit"> | number | null
+  }
+
   export type ClinicSettingsCreateInput = {
     clinicName?: string
     tagline?: string | null
@@ -14114,6 +17999,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutPatientsInput
     bills?: BillCreateNestedManyWithoutPatientInput
+    admissions?: AdmissionCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateInput = {
@@ -14134,6 +18020,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     bills?: BillUncheckedCreateNestedManyWithoutPatientInput
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUpdateInput = {
@@ -14154,6 +18041,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutPatientsNestedInput
     bills?: BillUpdateManyWithoutPatientNestedInput
+    admissions?: AdmissionUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateInput = {
@@ -14174,6 +18062,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bills?: BillUncheckedUpdateManyWithoutPatientNestedInput
+    admissions?: AdmissionUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientCreateManyInput = {
@@ -14476,6 +18365,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutBillsInput
     items?: BillItemCreateNestedManyWithoutBillInput
     payments?: PaymentCreateNestedManyWithoutBillInput
+    admission?: AdmissionCreateNestedOneWithoutBillInput
   }
 
   export type BillUncheckedCreateInput = {
@@ -14505,6 +18395,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: BillItemUncheckedCreateNestedManyWithoutBillInput
     payments?: PaymentUncheckedCreateNestedManyWithoutBillInput
+    admission?: AdmissionUncheckedCreateNestedOneWithoutBillInput
   }
 
   export type BillUpdateInput = {
@@ -14533,6 +18424,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutBillsNestedInput
     items?: BillItemUpdateManyWithoutBillNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateInput = {
@@ -14562,6 +18454,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: BillItemUncheckedUpdateManyWithoutBillNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUncheckedUpdateOneWithoutBillNestedInput
   }
 
   export type BillCreateManyInput = {
@@ -14926,6 +18819,288 @@ export namespace Prisma {
     action?: StringFieldUpdateOperationsInput | string
     details?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmissionCreateInput = {
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutAdmissionsInput
+    bill?: BillCreateNestedOneWithoutAdmissionInput
+    charges?: AdmissionChargeCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUncheckedCreateInput = {
+    id?: number
+    admissionNo: string
+    patientId: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    charges?: AdmissionChargeUncheckedCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositUncheckedCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUpdateInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutAdmissionsNestedInput
+    bill?: BillUpdateOneWithoutAdmissionNestedInput
+    charges?: AdmissionChargeUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    charges?: AdmissionChargeUncheckedUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUncheckedUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionCreateManyInput = {
+    id?: number
+    admissionNo: string
+    patientId: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmissionUpdateManyMutationInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmissionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmissionChargeCreateInput = {
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+    admission: AdmissionCreateNestedOneWithoutChargesInput
+  }
+
+  export type AdmissionChargeUncheckedCreateInput = {
+    id?: number
+    admissionId: number
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+  }
+
+  export type AdmissionChargeUpdateInput = {
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    admission?: AdmissionUpdateOneRequiredWithoutChargesNestedInput
+  }
+
+  export type AdmissionChargeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionId?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionChargeCreateManyInput = {
+    id?: number
+    admissionId: number
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+  }
+
+  export type AdmissionChargeUpdateManyMutationInput = {
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionChargeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionId?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositCreateInput = {
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+    admission: AdmissionCreateNestedOneWithoutDepositsInput
+  }
+
+  export type AdmissionDepositUncheckedCreateInput = {
+    id?: number
+    admissionId: number
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+  }
+
+  export type AdmissionDepositUpdateInput = {
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    admission?: AdmissionUpdateOneRequiredWithoutDepositsNestedInput
+  }
+
+  export type AdmissionDepositUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionId?: IntFieldUpdateOperationsInput | number
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositCreateManyInput = {
+    id?: number
+    admissionId: number
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+  }
+
+  export type AdmissionDepositUpdateManyMutationInput = {
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionId?: IntFieldUpdateOperationsInput | number
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -15299,6 +19474,16 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
+  export type AdmissionListRelationFilter = {
+    every?: AdmissionWhereInput
+    some?: AdmissionWhereInput
+    none?: AdmissionWhereInput
+  }
+
+  export type AdmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PatientCountOrderByAggregateInput = {
     id?: SortOrder
     uhid?: SortOrder
@@ -15575,6 +19760,11 @@ export namespace Prisma {
     every?: PaymentWhereInput
     some?: PaymentWhereInput
     none?: PaymentWhereInput
+  }
+
+  export type AdmissionNullableRelationFilter = {
+    is?: AdmissionWhereInput | null
+    isNot?: AdmissionWhereInput | null
   }
 
   export type BillItemOrderByRelationAggregateInput = {
@@ -15880,6 +20070,205 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type BillNullableRelationFilter = {
+    is?: BillWhereInput | null
+    isNot?: BillWhereInput | null
+  }
+
+  export type AdmissionChargeListRelationFilter = {
+    every?: AdmissionChargeWhereInput
+    some?: AdmissionChargeWhereInput
+    none?: AdmissionChargeWhereInput
+  }
+
+  export type AdmissionDepositListRelationFilter = {
+    every?: AdmissionDepositWhereInput
+    some?: AdmissionDepositWhereInput
+    none?: AdmissionDepositWhereInput
+  }
+
+  export type AdmissionChargeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdmissionDepositOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdmissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    admissionNo?: SortOrder
+    patientId?: SortOrder
+    doctorName?: SortOrder
+    ward?: SortOrder
+    bedNo?: SortOrder
+    bedRate?: SortOrder
+    notes?: SortOrder
+    admittedAt?: SortOrder
+    dischargedAt?: SortOrder
+    status?: SortOrder
+    billId?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmissionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    bedRate?: SortOrder
+    billId?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    admissionNo?: SortOrder
+    patientId?: SortOrder
+    doctorName?: SortOrder
+    ward?: SortOrder
+    bedNo?: SortOrder
+    bedRate?: SortOrder
+    notes?: SortOrder
+    admittedAt?: SortOrder
+    dischargedAt?: SortOrder
+    status?: SortOrder
+    billId?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    admissionNo?: SortOrder
+    patientId?: SortOrder
+    doctorName?: SortOrder
+    ward?: SortOrder
+    bedNo?: SortOrder
+    bedRate?: SortOrder
+    notes?: SortOrder
+    admittedAt?: SortOrder
+    dischargedAt?: SortOrder
+    status?: SortOrder
+    billId?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmissionSumOrderByAggregateInput = {
+    id?: SortOrder
+    bedRate?: SortOrder
+    billId?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionRelationFilter = {
+    is?: AdmissionWhereInput
+    isNot?: AdmissionWhereInput
+  }
+
+  export type AdmissionChargeCountOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    itemName?: SortOrder
+    itemCategory?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    chargedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionChargeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionChargeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    itemName?: SortOrder
+    itemCategory?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    chargedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionChargeMinOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    itemName?: SortOrder
+    itemCategory?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    chargedAt?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionChargeSumOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    quantity?: SortOrder
+    unitPrice?: SortOrder
+    total?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type AdmissionDepositCountOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    receiptNo?: SortOrder
+    amount?: SortOrder
+    method?: SortOrder
+    reference?: SortOrder
+    receivedAt?: SortOrder
+    receivedBy?: SortOrder
+  }
+
+  export type AdmissionDepositAvgOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    amount?: SortOrder
+    receivedBy?: SortOrder
+  }
+
+  export type AdmissionDepositMaxOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    receiptNo?: SortOrder
+    amount?: SortOrder
+    method?: SortOrder
+    reference?: SortOrder
+    receivedAt?: SortOrder
+    receivedBy?: SortOrder
+  }
+
+  export type AdmissionDepositMinOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    receiptNo?: SortOrder
+    amount?: SortOrder
+    method?: SortOrder
+    reference?: SortOrder
+    receivedAt?: SortOrder
+    receivedBy?: SortOrder
+  }
+
+  export type AdmissionDepositSumOrderByAggregateInput = {
+    id?: SortOrder
+    admissionId?: SortOrder
+    amount?: SortOrder
+    receivedBy?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -16051,11 +20440,25 @@ export namespace Prisma {
     connect?: BillWhereUniqueInput | BillWhereUniqueInput[]
   }
 
+  export type AdmissionCreateNestedManyWithoutPatientInput = {
+    create?: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput> | AdmissionCreateWithoutPatientInput[] | AdmissionUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: AdmissionCreateOrConnectWithoutPatientInput | AdmissionCreateOrConnectWithoutPatientInput[]
+    createMany?: AdmissionCreateManyPatientInputEnvelope
+    connect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+  }
+
   export type BillUncheckedCreateNestedManyWithoutPatientInput = {
     create?: XOR<BillCreateWithoutPatientInput, BillUncheckedCreateWithoutPatientInput> | BillCreateWithoutPatientInput[] | BillUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: BillCreateOrConnectWithoutPatientInput | BillCreateOrConnectWithoutPatientInput[]
     createMany?: BillCreateManyPatientInputEnvelope
     connect?: BillWhereUniqueInput | BillWhereUniqueInput[]
+  }
+
+  export type AdmissionUncheckedCreateNestedManyWithoutPatientInput = {
+    create?: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput> | AdmissionCreateWithoutPatientInput[] | AdmissionUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: AdmissionCreateOrConnectWithoutPatientInput | AdmissionCreateOrConnectWithoutPatientInput[]
+    createMany?: AdmissionCreateManyPatientInputEnvelope
+    connect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
   }
 
   export type UserUpdateOneWithoutPatientsNestedInput = {
@@ -16082,6 +20485,20 @@ export namespace Prisma {
     deleteMany?: BillScalarWhereInput | BillScalarWhereInput[]
   }
 
+  export type AdmissionUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput> | AdmissionCreateWithoutPatientInput[] | AdmissionUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: AdmissionCreateOrConnectWithoutPatientInput | AdmissionCreateOrConnectWithoutPatientInput[]
+    upsert?: AdmissionUpsertWithWhereUniqueWithoutPatientInput | AdmissionUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: AdmissionCreateManyPatientInputEnvelope
+    set?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    disconnect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    delete?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    connect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    update?: AdmissionUpdateWithWhereUniqueWithoutPatientInput | AdmissionUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: AdmissionUpdateManyWithWhereWithoutPatientInput | AdmissionUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: AdmissionScalarWhereInput | AdmissionScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -16102,6 +20519,20 @@ export namespace Prisma {
     update?: BillUpdateWithWhereUniqueWithoutPatientInput | BillUpdateWithWhereUniqueWithoutPatientInput[]
     updateMany?: BillUpdateManyWithWhereWithoutPatientInput | BillUpdateManyWithWhereWithoutPatientInput[]
     deleteMany?: BillScalarWhereInput | BillScalarWhereInput[]
+  }
+
+  export type AdmissionUncheckedUpdateManyWithoutPatientNestedInput = {
+    create?: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput> | AdmissionCreateWithoutPatientInput[] | AdmissionUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: AdmissionCreateOrConnectWithoutPatientInput | AdmissionCreateOrConnectWithoutPatientInput[]
+    upsert?: AdmissionUpsertWithWhereUniqueWithoutPatientInput | AdmissionUpsertWithWhereUniqueWithoutPatientInput[]
+    createMany?: AdmissionCreateManyPatientInputEnvelope
+    set?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    disconnect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    delete?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    connect?: AdmissionWhereUniqueInput | AdmissionWhereUniqueInput[]
+    update?: AdmissionUpdateWithWhereUniqueWithoutPatientInput | AdmissionUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: AdmissionUpdateManyWithWhereWithoutPatientInput | AdmissionUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: AdmissionScalarWhereInput | AdmissionScalarWhereInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -16146,6 +20577,12 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
+  export type AdmissionCreateNestedOneWithoutBillInput = {
+    create?: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutBillInput
+    connect?: AdmissionWhereUniqueInput
+  }
+
   export type BillItemUncheckedCreateNestedManyWithoutBillInput = {
     create?: XOR<BillItemCreateWithoutBillInput, BillItemUncheckedCreateWithoutBillInput> | BillItemCreateWithoutBillInput[] | BillItemUncheckedCreateWithoutBillInput[]
     connectOrCreate?: BillItemCreateOrConnectWithoutBillInput | BillItemCreateOrConnectWithoutBillInput[]
@@ -16158,6 +20595,12 @@ export namespace Prisma {
     connectOrCreate?: PaymentCreateOrConnectWithoutBillInput | PaymentCreateOrConnectWithoutBillInput[]
     createMany?: PaymentCreateManyBillInputEnvelope
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type AdmissionUncheckedCreateNestedOneWithoutBillInput = {
+    create?: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutBillInput
+    connect?: AdmissionWhereUniqueInput
   }
 
   export type PatientUpdateOneRequiredWithoutBillsNestedInput = {
@@ -16206,6 +20649,16 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type AdmissionUpdateOneWithoutBillNestedInput = {
+    create?: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutBillInput
+    upsert?: AdmissionUpsertWithoutBillInput
+    disconnect?: AdmissionWhereInput | boolean
+    delete?: AdmissionWhereInput | boolean
+    connect?: AdmissionWhereUniqueInput
+    update?: XOR<XOR<AdmissionUpdateToOneWithWhereWithoutBillInput, AdmissionUpdateWithoutBillInput>, AdmissionUncheckedUpdateWithoutBillInput>
+  }
+
   export type BillItemUncheckedUpdateManyWithoutBillNestedInput = {
     create?: XOR<BillItemCreateWithoutBillInput, BillItemUncheckedCreateWithoutBillInput> | BillItemCreateWithoutBillInput[] | BillItemUncheckedCreateWithoutBillInput[]
     connectOrCreate?: BillItemCreateOrConnectWithoutBillInput | BillItemCreateOrConnectWithoutBillInput[]
@@ -16232,6 +20685,16 @@ export namespace Prisma {
     update?: PaymentUpdateWithWhereUniqueWithoutBillInput | PaymentUpdateWithWhereUniqueWithoutBillInput[]
     updateMany?: PaymentUpdateManyWithWhereWithoutBillInput | PaymentUpdateManyWithWhereWithoutBillInput[]
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type AdmissionUncheckedUpdateOneWithoutBillNestedInput = {
+    create?: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutBillInput
+    upsert?: AdmissionUpsertWithoutBillInput
+    disconnect?: AdmissionWhereInput | boolean
+    delete?: AdmissionWhereInput | boolean
+    connect?: AdmissionWhereUniqueInput
+    update?: XOR<XOR<AdmissionUpdateToOneWithWhereWithoutBillInput, AdmissionUpdateWithoutBillInput>, AdmissionUncheckedUpdateWithoutBillInput>
   }
 
   export type BillCreateNestedOneWithoutItemsInput = {
@@ -16276,6 +20739,148 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivityLogsInput, UserUpdateWithoutActivityLogsInput>, UserUncheckedUpdateWithoutActivityLogsInput>
+  }
+
+  export type PatientCreateNestedOneWithoutAdmissionsInput = {
+    create?: XOR<PatientCreateWithoutAdmissionsInput, PatientUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutAdmissionsInput
+    connect?: PatientWhereUniqueInput
+  }
+
+  export type BillCreateNestedOneWithoutAdmissionInput = {
+    create?: XOR<BillCreateWithoutAdmissionInput, BillUncheckedCreateWithoutAdmissionInput>
+    connectOrCreate?: BillCreateOrConnectWithoutAdmissionInput
+    connect?: BillWhereUniqueInput
+  }
+
+  export type AdmissionChargeCreateNestedManyWithoutAdmissionInput = {
+    create?: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput> | AdmissionChargeCreateWithoutAdmissionInput[] | AdmissionChargeUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionChargeCreateOrConnectWithoutAdmissionInput | AdmissionChargeCreateOrConnectWithoutAdmissionInput[]
+    createMany?: AdmissionChargeCreateManyAdmissionInputEnvelope
+    connect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+  }
+
+  export type AdmissionDepositCreateNestedManyWithoutAdmissionInput = {
+    create?: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput> | AdmissionDepositCreateWithoutAdmissionInput[] | AdmissionDepositUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionDepositCreateOrConnectWithoutAdmissionInput | AdmissionDepositCreateOrConnectWithoutAdmissionInput[]
+    createMany?: AdmissionDepositCreateManyAdmissionInputEnvelope
+    connect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+  }
+
+  export type AdmissionChargeUncheckedCreateNestedManyWithoutAdmissionInput = {
+    create?: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput> | AdmissionChargeCreateWithoutAdmissionInput[] | AdmissionChargeUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionChargeCreateOrConnectWithoutAdmissionInput | AdmissionChargeCreateOrConnectWithoutAdmissionInput[]
+    createMany?: AdmissionChargeCreateManyAdmissionInputEnvelope
+    connect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+  }
+
+  export type AdmissionDepositUncheckedCreateNestedManyWithoutAdmissionInput = {
+    create?: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput> | AdmissionDepositCreateWithoutAdmissionInput[] | AdmissionDepositUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionDepositCreateOrConnectWithoutAdmissionInput | AdmissionDepositCreateOrConnectWithoutAdmissionInput[]
+    createMany?: AdmissionDepositCreateManyAdmissionInputEnvelope
+    connect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+  }
+
+  export type PatientUpdateOneRequiredWithoutAdmissionsNestedInput = {
+    create?: XOR<PatientCreateWithoutAdmissionsInput, PatientUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: PatientCreateOrConnectWithoutAdmissionsInput
+    upsert?: PatientUpsertWithoutAdmissionsInput
+    connect?: PatientWhereUniqueInput
+    update?: XOR<XOR<PatientUpdateToOneWithWhereWithoutAdmissionsInput, PatientUpdateWithoutAdmissionsInput>, PatientUncheckedUpdateWithoutAdmissionsInput>
+  }
+
+  export type BillUpdateOneWithoutAdmissionNestedInput = {
+    create?: XOR<BillCreateWithoutAdmissionInput, BillUncheckedCreateWithoutAdmissionInput>
+    connectOrCreate?: BillCreateOrConnectWithoutAdmissionInput
+    upsert?: BillUpsertWithoutAdmissionInput
+    disconnect?: BillWhereInput | boolean
+    delete?: BillWhereInput | boolean
+    connect?: BillWhereUniqueInput
+    update?: XOR<XOR<BillUpdateToOneWithWhereWithoutAdmissionInput, BillUpdateWithoutAdmissionInput>, BillUncheckedUpdateWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeUpdateManyWithoutAdmissionNestedInput = {
+    create?: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput> | AdmissionChargeCreateWithoutAdmissionInput[] | AdmissionChargeUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionChargeCreateOrConnectWithoutAdmissionInput | AdmissionChargeCreateOrConnectWithoutAdmissionInput[]
+    upsert?: AdmissionChargeUpsertWithWhereUniqueWithoutAdmissionInput | AdmissionChargeUpsertWithWhereUniqueWithoutAdmissionInput[]
+    createMany?: AdmissionChargeCreateManyAdmissionInputEnvelope
+    set?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    disconnect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    delete?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    connect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    update?: AdmissionChargeUpdateWithWhereUniqueWithoutAdmissionInput | AdmissionChargeUpdateWithWhereUniqueWithoutAdmissionInput[]
+    updateMany?: AdmissionChargeUpdateManyWithWhereWithoutAdmissionInput | AdmissionChargeUpdateManyWithWhereWithoutAdmissionInput[]
+    deleteMany?: AdmissionChargeScalarWhereInput | AdmissionChargeScalarWhereInput[]
+  }
+
+  export type AdmissionDepositUpdateManyWithoutAdmissionNestedInput = {
+    create?: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput> | AdmissionDepositCreateWithoutAdmissionInput[] | AdmissionDepositUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionDepositCreateOrConnectWithoutAdmissionInput | AdmissionDepositCreateOrConnectWithoutAdmissionInput[]
+    upsert?: AdmissionDepositUpsertWithWhereUniqueWithoutAdmissionInput | AdmissionDepositUpsertWithWhereUniqueWithoutAdmissionInput[]
+    createMany?: AdmissionDepositCreateManyAdmissionInputEnvelope
+    set?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    disconnect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    delete?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    connect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    update?: AdmissionDepositUpdateWithWhereUniqueWithoutAdmissionInput | AdmissionDepositUpdateWithWhereUniqueWithoutAdmissionInput[]
+    updateMany?: AdmissionDepositUpdateManyWithWhereWithoutAdmissionInput | AdmissionDepositUpdateManyWithWhereWithoutAdmissionInput[]
+    deleteMany?: AdmissionDepositScalarWhereInput | AdmissionDepositScalarWhereInput[]
+  }
+
+  export type AdmissionChargeUncheckedUpdateManyWithoutAdmissionNestedInput = {
+    create?: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput> | AdmissionChargeCreateWithoutAdmissionInput[] | AdmissionChargeUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionChargeCreateOrConnectWithoutAdmissionInput | AdmissionChargeCreateOrConnectWithoutAdmissionInput[]
+    upsert?: AdmissionChargeUpsertWithWhereUniqueWithoutAdmissionInput | AdmissionChargeUpsertWithWhereUniqueWithoutAdmissionInput[]
+    createMany?: AdmissionChargeCreateManyAdmissionInputEnvelope
+    set?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    disconnect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    delete?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    connect?: AdmissionChargeWhereUniqueInput | AdmissionChargeWhereUniqueInput[]
+    update?: AdmissionChargeUpdateWithWhereUniqueWithoutAdmissionInput | AdmissionChargeUpdateWithWhereUniqueWithoutAdmissionInput[]
+    updateMany?: AdmissionChargeUpdateManyWithWhereWithoutAdmissionInput | AdmissionChargeUpdateManyWithWhereWithoutAdmissionInput[]
+    deleteMany?: AdmissionChargeScalarWhereInput | AdmissionChargeScalarWhereInput[]
+  }
+
+  export type AdmissionDepositUncheckedUpdateManyWithoutAdmissionNestedInput = {
+    create?: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput> | AdmissionDepositCreateWithoutAdmissionInput[] | AdmissionDepositUncheckedCreateWithoutAdmissionInput[]
+    connectOrCreate?: AdmissionDepositCreateOrConnectWithoutAdmissionInput | AdmissionDepositCreateOrConnectWithoutAdmissionInput[]
+    upsert?: AdmissionDepositUpsertWithWhereUniqueWithoutAdmissionInput | AdmissionDepositUpsertWithWhereUniqueWithoutAdmissionInput[]
+    createMany?: AdmissionDepositCreateManyAdmissionInputEnvelope
+    set?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    disconnect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    delete?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    connect?: AdmissionDepositWhereUniqueInput | AdmissionDepositWhereUniqueInput[]
+    update?: AdmissionDepositUpdateWithWhereUniqueWithoutAdmissionInput | AdmissionDepositUpdateWithWhereUniqueWithoutAdmissionInput[]
+    updateMany?: AdmissionDepositUpdateManyWithWhereWithoutAdmissionInput | AdmissionDepositUpdateManyWithWhereWithoutAdmissionInput[]
+    deleteMany?: AdmissionDepositScalarWhereInput | AdmissionDepositScalarWhereInput[]
+  }
+
+  export type AdmissionCreateNestedOneWithoutChargesInput = {
+    create?: XOR<AdmissionCreateWithoutChargesInput, AdmissionUncheckedCreateWithoutChargesInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutChargesInput
+    connect?: AdmissionWhereUniqueInput
+  }
+
+  export type AdmissionUpdateOneRequiredWithoutChargesNestedInput = {
+    create?: XOR<AdmissionCreateWithoutChargesInput, AdmissionUncheckedCreateWithoutChargesInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutChargesInput
+    upsert?: AdmissionUpsertWithoutChargesInput
+    connect?: AdmissionWhereUniqueInput
+    update?: XOR<XOR<AdmissionUpdateToOneWithWhereWithoutChargesInput, AdmissionUpdateWithoutChargesInput>, AdmissionUncheckedUpdateWithoutChargesInput>
+  }
+
+  export type AdmissionCreateNestedOneWithoutDepositsInput = {
+    create?: XOR<AdmissionCreateWithoutDepositsInput, AdmissionUncheckedCreateWithoutDepositsInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutDepositsInput
+    connect?: AdmissionWhereUniqueInput
+  }
+
+  export type AdmissionUpdateOneRequiredWithoutDepositsNestedInput = {
+    create?: XOR<AdmissionCreateWithoutDepositsInput, AdmissionUncheckedCreateWithoutDepositsInput>
+    connectOrCreate?: AdmissionCreateOrConnectWithoutDepositsInput
+    upsert?: AdmissionUpsertWithoutDepositsInput
+    connect?: AdmissionWhereUniqueInput
+    update?: XOR<XOR<AdmissionUpdateToOneWithWhereWithoutDepositsInput, AdmissionUpdateWithoutDepositsInput>, AdmissionUncheckedUpdateWithoutDepositsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -16545,6 +21150,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     bills?: BillCreateNestedManyWithoutPatientInput
+    admissions?: AdmissionCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutUserInput = {
@@ -16564,6 +21170,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     bills?: BillUncheckedCreateNestedManyWithoutPatientInput
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutUserInput = {
@@ -16600,6 +21207,7 @@ export namespace Prisma {
     patient: PatientCreateNestedOneWithoutBillsInput
     items?: BillItemCreateNestedManyWithoutBillInput
     payments?: PaymentCreateNestedManyWithoutBillInput
+    admission?: AdmissionCreateNestedOneWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutUserInput = {
@@ -16628,6 +21236,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: BillItemUncheckedCreateNestedManyWithoutBillInput
     payments?: PaymentUncheckedCreateNestedManyWithoutBillInput
+    admission?: AdmissionUncheckedCreateNestedOneWithoutBillInput
   }
 
   export type BillCreateOrConnectWithoutUserInput = {
@@ -16835,6 +21444,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutBillsInput
     items?: BillItemCreateNestedManyWithoutBillInput
     payments?: PaymentCreateNestedManyWithoutBillInput
+    admission?: AdmissionCreateNestedOneWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutPatientInput = {
@@ -16863,6 +21473,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: BillItemUncheckedCreateNestedManyWithoutBillInput
     payments?: PaymentUncheckedCreateNestedManyWithoutBillInput
+    admission?: AdmissionUncheckedCreateNestedOneWithoutBillInput
   }
 
   export type BillCreateOrConnectWithoutPatientInput = {
@@ -16872,6 +21483,52 @@ export namespace Prisma {
 
   export type BillCreateManyPatientInputEnvelope = {
     data: BillCreateManyPatientInput | BillCreateManyPatientInput[]
+  }
+
+  export type AdmissionCreateWithoutPatientInput = {
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bill?: BillCreateNestedOneWithoutAdmissionInput
+    charges?: AdmissionChargeCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUncheckedCreateWithoutPatientInput = {
+    id?: number
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    charges?: AdmissionChargeUncheckedCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositUncheckedCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionCreateOrConnectWithoutPatientInput = {
+    where: AdmissionWhereUniqueInput
+    create: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput>
+  }
+
+  export type AdmissionCreateManyPatientInputEnvelope = {
+    data: AdmissionCreateManyPatientInput | AdmissionCreateManyPatientInput[]
   }
 
   export type UserUpsertWithoutPatientsInput = {
@@ -16934,6 +21591,43 @@ export namespace Prisma {
     data: XOR<BillUpdateManyMutationInput, BillUncheckedUpdateManyWithoutPatientInput>
   }
 
+  export type AdmissionUpsertWithWhereUniqueWithoutPatientInput = {
+    where: AdmissionWhereUniqueInput
+    update: XOR<AdmissionUpdateWithoutPatientInput, AdmissionUncheckedUpdateWithoutPatientInput>
+    create: XOR<AdmissionCreateWithoutPatientInput, AdmissionUncheckedCreateWithoutPatientInput>
+  }
+
+  export type AdmissionUpdateWithWhereUniqueWithoutPatientInput = {
+    where: AdmissionWhereUniqueInput
+    data: XOR<AdmissionUpdateWithoutPatientInput, AdmissionUncheckedUpdateWithoutPatientInput>
+  }
+
+  export type AdmissionUpdateManyWithWhereWithoutPatientInput = {
+    where: AdmissionScalarWhereInput
+    data: XOR<AdmissionUpdateManyMutationInput, AdmissionUncheckedUpdateManyWithoutPatientInput>
+  }
+
+  export type AdmissionScalarWhereInput = {
+    AND?: AdmissionScalarWhereInput | AdmissionScalarWhereInput[]
+    OR?: AdmissionScalarWhereInput[]
+    NOT?: AdmissionScalarWhereInput | AdmissionScalarWhereInput[]
+    id?: IntFilter<"Admission"> | number
+    admissionNo?: StringFilter<"Admission"> | string
+    patientId?: StringFilter<"Admission"> | string
+    doctorName?: StringNullableFilter<"Admission"> | string | null
+    ward?: StringNullableFilter<"Admission"> | string | null
+    bedNo?: StringNullableFilter<"Admission"> | string | null
+    bedRate?: FloatFilter<"Admission"> | number
+    notes?: StringNullableFilter<"Admission"> | string | null
+    admittedAt?: DateTimeFilter<"Admission"> | Date | string
+    dischargedAt?: DateTimeNullableFilter<"Admission"> | Date | string | null
+    status?: StringFilter<"Admission"> | string
+    billId?: IntNullableFilter<"Admission"> | number | null
+    createdBy?: IntNullableFilter<"Admission"> | number | null
+    createdAt?: DateTimeFilter<"Admission"> | Date | string
+    updatedAt?: DateTimeFilter<"Admission"> | Date | string
+  }
+
   export type PatientCreateWithoutBillsInput = {
     id: string
     uhid?: string | null
@@ -16951,6 +21645,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutPatientsInput
+    admissions?: AdmissionCreateNestedManyWithoutPatientInput
   }
 
   export type PatientUncheckedCreateWithoutBillsInput = {
@@ -16970,6 +21665,7 @@ export namespace Prisma {
     registeredAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientCreateOrConnectWithoutBillsInput = {
@@ -17073,6 +21769,48 @@ export namespace Prisma {
     data: PaymentCreateManyBillInput | PaymentCreateManyBillInput[]
   }
 
+  export type AdmissionCreateWithoutBillInput = {
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutAdmissionsInput
+    charges?: AdmissionChargeCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUncheckedCreateWithoutBillInput = {
+    id?: number
+    admissionNo: string
+    patientId: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    charges?: AdmissionChargeUncheckedCreateNestedManyWithoutAdmissionInput
+    deposits?: AdmissionDepositUncheckedCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionCreateOrConnectWithoutBillInput = {
+    where: AdmissionWhereUniqueInput
+    create: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+  }
+
   export type PatientUpsertWithoutBillsInput = {
     update: XOR<PatientUpdateWithoutBillsInput, PatientUncheckedUpdateWithoutBillsInput>
     create: XOR<PatientCreateWithoutBillsInput, PatientUncheckedCreateWithoutBillsInput>
@@ -17101,6 +21839,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutPatientsNestedInput
+    admissions?: AdmissionUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutBillsInput = {
@@ -17120,6 +21859,7 @@ export namespace Prisma {
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    admissions?: AdmissionUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type UserUpsertWithoutBillsInput = {
@@ -17227,6 +21967,54 @@ export namespace Prisma {
     paidAt?: DateTimeFilter<"Payment"> | Date | string
   }
 
+  export type AdmissionUpsertWithoutBillInput = {
+    update: XOR<AdmissionUpdateWithoutBillInput, AdmissionUncheckedUpdateWithoutBillInput>
+    create: XOR<AdmissionCreateWithoutBillInput, AdmissionUncheckedCreateWithoutBillInput>
+    where?: AdmissionWhereInput
+  }
+
+  export type AdmissionUpdateToOneWithWhereWithoutBillInput = {
+    where?: AdmissionWhereInput
+    data: XOR<AdmissionUpdateWithoutBillInput, AdmissionUncheckedUpdateWithoutBillInput>
+  }
+
+  export type AdmissionUpdateWithoutBillInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutAdmissionsNestedInput
+    charges?: AdmissionChargeUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateWithoutBillInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    charges?: AdmissionChargeUncheckedUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUncheckedUpdateManyWithoutAdmissionNestedInput
+  }
+
   export type BillCreateWithoutItemsInput = {
     billNo: string
     patientName: string
@@ -17252,6 +22040,7 @@ export namespace Prisma {
     patient: PatientCreateNestedOneWithoutBillsInput
     user?: UserCreateNestedOneWithoutBillsInput
     payments?: PaymentCreateNestedManyWithoutBillInput
+    admission?: AdmissionCreateNestedOneWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutItemsInput = {
@@ -17280,6 +22069,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutBillInput
+    admission?: AdmissionUncheckedCreateNestedOneWithoutBillInput
   }
 
   export type BillCreateOrConnectWithoutItemsInput = {
@@ -17323,6 +22113,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneRequiredWithoutBillsNestedInput
     user?: UserUpdateOneWithoutBillsNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutItemsInput = {
@@ -17351,6 +22142,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUncheckedUpdateOneWithoutBillNestedInput
   }
 
   export type BillCreateWithoutPaymentsInput = {
@@ -17378,6 +22170,7 @@ export namespace Prisma {
     patient: PatientCreateNestedOneWithoutBillsInput
     user?: UserCreateNestedOneWithoutBillsInput
     items?: BillItemCreateNestedManyWithoutBillInput
+    admission?: AdmissionCreateNestedOneWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutPaymentsInput = {
@@ -17406,6 +22199,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: BillItemUncheckedCreateNestedManyWithoutBillInput
+    admission?: AdmissionUncheckedCreateNestedOneWithoutBillInput
   }
 
   export type BillCreateOrConnectWithoutPaymentsInput = {
@@ -17449,6 +22243,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneRequiredWithoutBillsNestedInput
     user?: UserUpdateOneWithoutBillsNestedInput
     items?: BillItemUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutPaymentsInput = {
@@ -17477,6 +22272,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: BillItemUncheckedUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUncheckedUpdateOneWithoutBillNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -17561,6 +22357,531 @@ export namespace Prisma {
     bills?: BillUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type PatientCreateWithoutAdmissionsInput = {
+    id: string
+    uhid?: string | null
+    name: string
+    age: number
+    ageUnit?: string
+    gender: string
+    mobile: string
+    email?: string | null
+    address?: string | null
+    bloodGroup?: string | null
+    emergencyContact?: string | null
+    referredDoctor?: string | null
+    registeredAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    user?: UserCreateNestedOneWithoutPatientsInput
+    bills?: BillCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientUncheckedCreateWithoutAdmissionsInput = {
+    id: string
+    uhid?: string | null
+    name: string
+    age: number
+    ageUnit?: string
+    gender: string
+    mobile: string
+    email?: string | null
+    address?: string | null
+    bloodGroup?: string | null
+    emergencyContact?: string | null
+    referredDoctor?: string | null
+    createdBy?: number | null
+    registeredAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    bills?: BillUncheckedCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientCreateOrConnectWithoutAdmissionsInput = {
+    where: PatientWhereUniqueInput
+    create: XOR<PatientCreateWithoutAdmissionsInput, PatientUncheckedCreateWithoutAdmissionsInput>
+  }
+
+  export type BillCreateWithoutAdmissionInput = {
+    billNo: string
+    patientName: string
+    patientAge?: number | null
+    patientGender?: string | null
+    patientMobile?: string | null
+    doctorName?: string | null
+    subtotal: number
+    discountType?: string
+    discountValue?: number
+    discountAmount?: number
+    gstPercent?: number
+    gstAmount?: number
+    totalAmount: number
+    paidAmount?: number
+    dueAmount?: number
+    paymentMethod?: string
+    paymentStatus?: string
+    notes?: string | null
+    clinicSnapshot?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutBillsInput
+    user?: UserCreateNestedOneWithoutBillsInput
+    items?: BillItemCreateNestedManyWithoutBillInput
+    payments?: PaymentCreateNestedManyWithoutBillInput
+  }
+
+  export type BillUncheckedCreateWithoutAdmissionInput = {
+    id?: number
+    billNo: string
+    patientId: string
+    patientName: string
+    patientAge?: number | null
+    patientGender?: string | null
+    patientMobile?: string | null
+    doctorName?: string | null
+    subtotal: number
+    discountType?: string
+    discountValue?: number
+    discountAmount?: number
+    gstPercent?: number
+    gstAmount?: number
+    totalAmount: number
+    paidAmount?: number
+    dueAmount?: number
+    paymentMethod?: string
+    paymentStatus?: string
+    notes?: string | null
+    clinicSnapshot?: string | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: BillItemUncheckedCreateNestedManyWithoutBillInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutBillInput
+  }
+
+  export type BillCreateOrConnectWithoutAdmissionInput = {
+    where: BillWhereUniqueInput
+    create: XOR<BillCreateWithoutAdmissionInput, BillUncheckedCreateWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeCreateWithoutAdmissionInput = {
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+  }
+
+  export type AdmissionChargeUncheckedCreateWithoutAdmissionInput = {
+    id?: number
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+  }
+
+  export type AdmissionChargeCreateOrConnectWithoutAdmissionInput = {
+    where: AdmissionChargeWhereUniqueInput
+    create: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeCreateManyAdmissionInputEnvelope = {
+    data: AdmissionChargeCreateManyAdmissionInput | AdmissionChargeCreateManyAdmissionInput[]
+  }
+
+  export type AdmissionDepositCreateWithoutAdmissionInput = {
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+  }
+
+  export type AdmissionDepositUncheckedCreateWithoutAdmissionInput = {
+    id?: number
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+  }
+
+  export type AdmissionDepositCreateOrConnectWithoutAdmissionInput = {
+    where: AdmissionDepositWhereUniqueInput
+    create: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput>
+  }
+
+  export type AdmissionDepositCreateManyAdmissionInputEnvelope = {
+    data: AdmissionDepositCreateManyAdmissionInput | AdmissionDepositCreateManyAdmissionInput[]
+  }
+
+  export type PatientUpsertWithoutAdmissionsInput = {
+    update: XOR<PatientUpdateWithoutAdmissionsInput, PatientUncheckedUpdateWithoutAdmissionsInput>
+    create: XOR<PatientCreateWithoutAdmissionsInput, PatientUncheckedCreateWithoutAdmissionsInput>
+    where?: PatientWhereInput
+  }
+
+  export type PatientUpdateToOneWithWhereWithoutAdmissionsInput = {
+    where?: PatientWhereInput
+    data: XOR<PatientUpdateWithoutAdmissionsInput, PatientUncheckedUpdateWithoutAdmissionsInput>
+  }
+
+  export type PatientUpdateWithoutAdmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uhid?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    ageUnit?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    mobile?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    referredDoctor?: NullableStringFieldUpdateOperationsInput | string | null
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneWithoutPatientsNestedInput
+    bills?: BillUpdateManyWithoutPatientNestedInput
+  }
+
+  export type PatientUncheckedUpdateWithoutAdmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uhid?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    ageUnit?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    mobile?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    bloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContact?: NullableStringFieldUpdateOperationsInput | string | null
+    referredDoctor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bills?: BillUncheckedUpdateManyWithoutPatientNestedInput
+  }
+
+  export type BillUpsertWithoutAdmissionInput = {
+    update: XOR<BillUpdateWithoutAdmissionInput, BillUncheckedUpdateWithoutAdmissionInput>
+    create: XOR<BillCreateWithoutAdmissionInput, BillUncheckedCreateWithoutAdmissionInput>
+    where?: BillWhereInput
+  }
+
+  export type BillUpdateToOneWithWhereWithoutAdmissionInput = {
+    where?: BillWhereInput
+    data: XOR<BillUpdateWithoutAdmissionInput, BillUncheckedUpdateWithoutAdmissionInput>
+  }
+
+  export type BillUpdateWithoutAdmissionInput = {
+    billNo?: StringFieldUpdateOperationsInput | string
+    patientName?: StringFieldUpdateOperationsInput | string
+    patientAge?: NullableIntFieldUpdateOperationsInput | number | null
+    patientGender?: NullableStringFieldUpdateOperationsInput | string | null
+    patientMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    discountType?: StringFieldUpdateOperationsInput | string
+    discountValue?: FloatFieldUpdateOperationsInput | number
+    discountAmount?: FloatFieldUpdateOperationsInput | number
+    gstPercent?: FloatFieldUpdateOperationsInput | number
+    gstAmount?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
+    dueAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutBillsNestedInput
+    user?: UserUpdateOneWithoutBillsNestedInput
+    items?: BillItemUpdateManyWithoutBillNestedInput
+    payments?: PaymentUpdateManyWithoutBillNestedInput
+  }
+
+  export type BillUncheckedUpdateWithoutAdmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    billNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    patientName?: StringFieldUpdateOperationsInput | string
+    patientAge?: NullableIntFieldUpdateOperationsInput | number | null
+    patientGender?: NullableStringFieldUpdateOperationsInput | string | null
+    patientMobile?: NullableStringFieldUpdateOperationsInput | string | null
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    discountType?: StringFieldUpdateOperationsInput | string
+    discountValue?: FloatFieldUpdateOperationsInput | number
+    discountAmount?: FloatFieldUpdateOperationsInput | number
+    gstPercent?: FloatFieldUpdateOperationsInput | number
+    gstAmount?: FloatFieldUpdateOperationsInput | number
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
+    dueAmount?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    clinicSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: BillItemUncheckedUpdateManyWithoutBillNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
+  }
+
+  export type AdmissionChargeUpsertWithWhereUniqueWithoutAdmissionInput = {
+    where: AdmissionChargeWhereUniqueInput
+    update: XOR<AdmissionChargeUpdateWithoutAdmissionInput, AdmissionChargeUncheckedUpdateWithoutAdmissionInput>
+    create: XOR<AdmissionChargeCreateWithoutAdmissionInput, AdmissionChargeUncheckedCreateWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeUpdateWithWhereUniqueWithoutAdmissionInput = {
+    where: AdmissionChargeWhereUniqueInput
+    data: XOR<AdmissionChargeUpdateWithoutAdmissionInput, AdmissionChargeUncheckedUpdateWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeUpdateManyWithWhereWithoutAdmissionInput = {
+    where: AdmissionChargeScalarWhereInput
+    data: XOR<AdmissionChargeUpdateManyMutationInput, AdmissionChargeUncheckedUpdateManyWithoutAdmissionInput>
+  }
+
+  export type AdmissionChargeScalarWhereInput = {
+    AND?: AdmissionChargeScalarWhereInput | AdmissionChargeScalarWhereInput[]
+    OR?: AdmissionChargeScalarWhereInput[]
+    NOT?: AdmissionChargeScalarWhereInput | AdmissionChargeScalarWhereInput[]
+    id?: IntFilter<"AdmissionCharge"> | number
+    admissionId?: IntFilter<"AdmissionCharge"> | number
+    itemName?: StringFilter<"AdmissionCharge"> | string
+    itemCategory?: StringFilter<"AdmissionCharge"> | string
+    quantity?: IntFilter<"AdmissionCharge"> | number
+    unitPrice?: FloatFilter<"AdmissionCharge"> | number
+    total?: FloatFilter<"AdmissionCharge"> | number
+    chargedAt?: DateTimeFilter<"AdmissionCharge"> | Date | string
+    createdBy?: IntNullableFilter<"AdmissionCharge"> | number | null
+  }
+
+  export type AdmissionDepositUpsertWithWhereUniqueWithoutAdmissionInput = {
+    where: AdmissionDepositWhereUniqueInput
+    update: XOR<AdmissionDepositUpdateWithoutAdmissionInput, AdmissionDepositUncheckedUpdateWithoutAdmissionInput>
+    create: XOR<AdmissionDepositCreateWithoutAdmissionInput, AdmissionDepositUncheckedCreateWithoutAdmissionInput>
+  }
+
+  export type AdmissionDepositUpdateWithWhereUniqueWithoutAdmissionInput = {
+    where: AdmissionDepositWhereUniqueInput
+    data: XOR<AdmissionDepositUpdateWithoutAdmissionInput, AdmissionDepositUncheckedUpdateWithoutAdmissionInput>
+  }
+
+  export type AdmissionDepositUpdateManyWithWhereWithoutAdmissionInput = {
+    where: AdmissionDepositScalarWhereInput
+    data: XOR<AdmissionDepositUpdateManyMutationInput, AdmissionDepositUncheckedUpdateManyWithoutAdmissionInput>
+  }
+
+  export type AdmissionDepositScalarWhereInput = {
+    AND?: AdmissionDepositScalarWhereInput | AdmissionDepositScalarWhereInput[]
+    OR?: AdmissionDepositScalarWhereInput[]
+    NOT?: AdmissionDepositScalarWhereInput | AdmissionDepositScalarWhereInput[]
+    id?: IntFilter<"AdmissionDeposit"> | number
+    admissionId?: IntFilter<"AdmissionDeposit"> | number
+    receiptNo?: StringFilter<"AdmissionDeposit"> | string
+    amount?: FloatFilter<"AdmissionDeposit"> | number
+    method?: StringFilter<"AdmissionDeposit"> | string
+    reference?: StringNullableFilter<"AdmissionDeposit"> | string | null
+    receivedAt?: DateTimeFilter<"AdmissionDeposit"> | Date | string
+    receivedBy?: IntNullableFilter<"AdmissionDeposit"> | number | null
+  }
+
+  export type AdmissionCreateWithoutChargesInput = {
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutAdmissionsInput
+    bill?: BillCreateNestedOneWithoutAdmissionInput
+    deposits?: AdmissionDepositCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUncheckedCreateWithoutChargesInput = {
+    id?: number
+    admissionNo: string
+    patientId: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deposits?: AdmissionDepositUncheckedCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionCreateOrConnectWithoutChargesInput = {
+    where: AdmissionWhereUniqueInput
+    create: XOR<AdmissionCreateWithoutChargesInput, AdmissionUncheckedCreateWithoutChargesInput>
+  }
+
+  export type AdmissionUpsertWithoutChargesInput = {
+    update: XOR<AdmissionUpdateWithoutChargesInput, AdmissionUncheckedUpdateWithoutChargesInput>
+    create: XOR<AdmissionCreateWithoutChargesInput, AdmissionUncheckedCreateWithoutChargesInput>
+    where?: AdmissionWhereInput
+  }
+
+  export type AdmissionUpdateToOneWithWhereWithoutChargesInput = {
+    where?: AdmissionWhereInput
+    data: XOR<AdmissionUpdateWithoutChargesInput, AdmissionUncheckedUpdateWithoutChargesInput>
+  }
+
+  export type AdmissionUpdateWithoutChargesInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutAdmissionsNestedInput
+    bill?: BillUpdateOneWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateWithoutChargesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deposits?: AdmissionDepositUncheckedUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionCreateWithoutDepositsInput = {
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    patient: PatientCreateNestedOneWithoutAdmissionsInput
+    bill?: BillCreateNestedOneWithoutAdmissionInput
+    charges?: AdmissionChargeCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionUncheckedCreateWithoutDepositsInput = {
+    id?: number
+    admissionNo: string
+    patientId: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    charges?: AdmissionChargeUncheckedCreateNestedManyWithoutAdmissionInput
+  }
+
+  export type AdmissionCreateOrConnectWithoutDepositsInput = {
+    where: AdmissionWhereUniqueInput
+    create: XOR<AdmissionCreateWithoutDepositsInput, AdmissionUncheckedCreateWithoutDepositsInput>
+  }
+
+  export type AdmissionUpsertWithoutDepositsInput = {
+    update: XOR<AdmissionUpdateWithoutDepositsInput, AdmissionUncheckedUpdateWithoutDepositsInput>
+    create: XOR<AdmissionCreateWithoutDepositsInput, AdmissionUncheckedCreateWithoutDepositsInput>
+    where?: AdmissionWhereInput
+  }
+
+  export type AdmissionUpdateToOneWithWhereWithoutDepositsInput = {
+    where?: AdmissionWhereInput
+    data: XOR<AdmissionUpdateWithoutDepositsInput, AdmissionUncheckedUpdateWithoutDepositsInput>
+  }
+
+  export type AdmissionUpdateWithoutDepositsInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    patient?: PatientUpdateOneRequiredWithoutAdmissionsNestedInput
+    bill?: BillUpdateOneWithoutAdmissionNestedInput
+    charges?: AdmissionChargeUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateWithoutDepositsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    charges?: AdmissionChargeUncheckedUpdateManyWithoutAdmissionNestedInput
+  }
+
   export type PatientCreateManyUserInput = {
     id: string
     uhid?: string | null
@@ -17629,6 +22950,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bills?: BillUpdateManyWithoutPatientNestedInput
+    admissions?: AdmissionUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateWithoutUserInput = {
@@ -17648,6 +22970,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bills?: BillUncheckedUpdateManyWithoutPatientNestedInput
+    admissions?: AdmissionUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientUncheckedUpdateManyWithoutUserInput = {
@@ -17693,6 +23016,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneRequiredWithoutBillsNestedInput
     items?: BillItemUpdateManyWithoutBillNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutUserInput = {
@@ -17721,6 +23045,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: BillItemUncheckedUpdateManyWithoutBillNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUncheckedUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateManyWithoutUserInput = {
@@ -17795,6 +23120,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type AdmissionCreateManyPatientInput = {
+    id?: number
+    admissionNo: string
+    doctorName?: string | null
+    ward?: string | null
+    bedNo?: string | null
+    bedRate?: number
+    notes?: string | null
+    admittedAt?: Date | string
+    dischargedAt?: Date | string | null
+    status?: string
+    billId?: number | null
+    createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type BillUpdateWithoutPatientInput = {
     billNo?: StringFieldUpdateOperationsInput | string
     patientName?: StringFieldUpdateOperationsInput | string
@@ -17820,6 +23162,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutBillsNestedInput
     items?: BillItemUpdateManyWithoutBillNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutPatientInput = {
@@ -17848,6 +23191,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: BillItemUncheckedUpdateManyWithoutBillNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
+    admission?: AdmissionUncheckedUpdateOneWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateManyWithoutPatientInput = {
@@ -17871,6 +23215,60 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     clinicSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmissionUpdateWithoutPatientInput = {
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bill?: BillUpdateOneWithoutAdmissionNestedInput
+    charges?: AdmissionChargeUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateWithoutPatientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    charges?: AdmissionChargeUncheckedUpdateManyWithoutAdmissionNestedInput
+    deposits?: AdmissionDepositUncheckedUpdateManyWithoutAdmissionNestedInput
+  }
+
+  export type AdmissionUncheckedUpdateManyWithoutPatientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    admissionNo?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
+    ward?: NullableStringFieldUpdateOperationsInput | string | null
+    bedNo?: NullableStringFieldUpdateOperationsInput | string | null
+    bedRate?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    admittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dischargedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    billId?: NullableIntFieldUpdateOperationsInput | number | null
     createdBy?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17958,6 +23356,88 @@ export namespace Prisma {
     paidAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AdmissionChargeCreateManyAdmissionInput = {
+    id?: number
+    itemName: string
+    itemCategory?: string
+    quantity?: number
+    unitPrice: number
+    total: number
+    chargedAt?: Date | string
+    createdBy?: number | null
+  }
+
+  export type AdmissionDepositCreateManyAdmissionInput = {
+    id?: number
+    receiptNo: string
+    amount: number
+    method?: string
+    reference?: string | null
+    receivedAt?: Date | string
+    receivedBy?: number | null
+  }
+
+  export type AdmissionChargeUpdateWithoutAdmissionInput = {
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionChargeUncheckedUpdateWithoutAdmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionChargeUncheckedUpdateManyWithoutAdmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemCategory?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: FloatFieldUpdateOperationsInput | number
+    total?: FloatFieldUpdateOperationsInput | number
+    chargedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositUpdateWithoutAdmissionInput = {
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositUncheckedUpdateWithoutAdmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AdmissionDepositUncheckedUpdateManyWithoutAdmissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receiptNo?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receivedBy?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
 
 
   /**
@@ -17975,6 +23455,10 @@ export namespace Prisma {
      * @deprecated Use BillCountOutputTypeDefaultArgs instead
      */
     export type BillCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BillCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AdmissionCountOutputTypeDefaultArgs instead
+     */
+    export type AdmissionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdmissionCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ClinicSettingsDefaultArgs instead
      */
@@ -18015,6 +23499,18 @@ export namespace Prisma {
      * @deprecated Use ActivityLogDefaultArgs instead
      */
     export type ActivityLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ActivityLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AdmissionDefaultArgs instead
+     */
+    export type AdmissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdmissionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AdmissionChargeDefaultArgs instead
+     */
+    export type AdmissionChargeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdmissionChargeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AdmissionDepositDefaultArgs instead
+     */
+    export type AdmissionDepositArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdmissionDepositDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

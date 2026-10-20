@@ -285,6 +285,47 @@ exports.Prisma.ActivityLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AdmissionScalarFieldEnum = {
+  id: 'id',
+  admissionNo: 'admissionNo',
+  patientId: 'patientId',
+  doctorName: 'doctorName',
+  ward: 'ward',
+  bedNo: 'bedNo',
+  bedRate: 'bedRate',
+  notes: 'notes',
+  admittedAt: 'admittedAt',
+  dischargedAt: 'dischargedAt',
+  status: 'status',
+  billId: 'billId',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AdmissionChargeScalarFieldEnum = {
+  id: 'id',
+  admissionId: 'admissionId',
+  itemName: 'itemName',
+  itemCategory: 'itemCategory',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  total: 'total',
+  chargedAt: 'chargedAt',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.AdmissionDepositScalarFieldEnum = {
+  id: 'id',
+  admissionId: 'admissionId',
+  receiptNo: 'receiptNo',
+  amount: 'amount',
+  method: 'method',
+  reference: 'reference',
+  receivedAt: 'receivedAt',
+  receivedBy: 'receivedBy'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -306,7 +347,10 @@ exports.Prisma.ModelName = {
   BillItem: 'BillItem',
   Payment: 'Payment',
   License: 'License',
-  ActivityLog: 'ActivityLog'
+  ActivityLog: 'ActivityLog',
+  Admission: 'Admission',
+  AdmissionCharge: 'AdmissionCharge',
+  AdmissionDeposit: 'AdmissionDeposit'
 };
 
 /**

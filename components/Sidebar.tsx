@@ -8,6 +8,7 @@ import { api, db } from '@/lib/db';
 import { useLicense } from '@/components/LicenseProvider';
 import {
   BarChart3,
+  BedDouble,
   LayoutDashboard,
   Receipt,
   FileText,
@@ -48,6 +49,7 @@ export const navSections: NavSection[] = [
     title: 'BILLING',
     items: [
       { name: 'New Bill', href: '/billing', icon: Receipt, shortcut: 'F2' },
+      { name: 'Admitted (IPD)', href: '/ipd', icon: BedDouble, shortcut: 'F7' },
       { name: 'Invoices', href: '/invoices', icon: FileText, shortcut: 'F4' },
       { name: 'Patients', href: '/patients', icon: Users, shortcut: 'F6' },
     ],
