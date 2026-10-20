@@ -1,189 +1,173 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { AppLayout } from '@/components/AppLayout';
 import { db } from '@/lib/db';
+import { isAdmin } from '@/lib/roles';
 import { formatCurrency, formatDate } from '@/lib/utils';
-import {
-  Users,
-  Search,
-  Plus,
-  Eye,
-  Phone,
-  Calendar,
-  User,
-  HeartPulse,
-  Receipt,
-  FileText,
-} from 'lucide-react';
-import { inputCls, labelCls, btnPrimary, btnGhost, card, th, td, Modal, Field, useToast, ToastView } from '@/components/kit';
-import Link from 'next/link';
+import { Search, Plus, Eye, Receipt, Trash2, AlertTriangle } from 'lucide-react';
+import { inputCls, btnPrimary, btnGhost, btnDanger, th, td, Modal, Field, useToast, ToastView, useLive, useUser } from '@/components/kit';
+
+const BLANK = { name: '', mobile: '', age: '' as number | '', gender: 'MALE', bloodGroup: '', address: '', referredDoctor: '' };
+const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 export default function PatientsPage() {
   const [toast, showToast] = useToast();
+  const user = useUser();
+  const owner = isAdmin(user?.role);
   const [patients, setPatients] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState(BLANK);
+  const [history, setHistory] = useState<{ patient: any; bills: any[] | null } | null>(null);
+  const [deleting, setDeleting] = useState<any>(null);
 
-  // Modals
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState<any | null>(null);
-
-  // New Patient Form
-  const [name, setName] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [age, setAge] = useState<number | ''>(35);
-  const [gender, setGender] = useState('MALE');
-  const [address, setAddress] = useState('');
-  const [bloodGroup, setBloodGroup] = useState('B+');
-  const [referredDoctor, setReferredDoctor] = useState('Dr. Rajesh Verma');
-
-  const loadPatients = async () => {
+  // Searches the whole register (not just what is on screen), 200 ms after typing stops; newest first.
+  const [query, setQuery] = useState('');
+  useEffect(() => {
+    const t = setTimeout(() => setQuery(search.trim()), 200);
+    return () => clearTimeout(t);
+  }, [search]);
+  useLive(async () => {
     try {
-      setLoading(true);
-      const data = await db.query('patient', 'findMany', {
-        orderBy: { registeredAt: 'desc' },
-        take: 100,
-        include: { bills: true },
-      });
-      setPatients(data || []);
+      const where: any = { deletedAt: null };
+      if (query) where.OR = [{ name: { contains: query } }, { mobile: { contains: query } }, { id: { contains: query.toUpperCase() } }];
+      setPatients(
+        await db.query('patient', 'findMany', {
+          where,
+          orderBy: { registeredAt: 'desc' },
+          take: 200,
+          include: { _count: { select: { bills: true } }, bills: { select: { createdAt: true }, orderBy: { createdAt: 'desc' }, take: 1 } },
+        }),
+      );
     } catch (e: any) {
       showToast(e.message || 'Failed to load patients', 'error');
-    } finally {
-      setLoading(false);
     }
-  };
+  }, ['patient', 'bill'], [query]);
 
-  useEffect(() => {
-    loadPatients();
-  }, []);
-
-  const handleCreatePatient = async (e: React.FormEvent) => {
+  const register = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) {
-      showToast('Patient name is required', 'error');
-      return;
-    }
-
+    if (!form.name.trim()) return showToast('Patient name is required', 'error');
     try {
       // Patient ID (MED-YYYY-00001) is assigned by the backend.
-      await db.query('patient', 'create', {
-        data: {
-          name: name.trim(),
-          mobile: mobile.trim(),
-          age: Number(age || 0),
-          gender,
-          address: address.trim(),
-          bloodGroup,
-          referredDoctor,
-        },
+      const p = await db.query('patient', 'create', {
+        data: { ...form, name: form.name.trim(), mobile: form.mobile.trim(), age: Number(form.age || 0), bloodGroup: form.bloodGroup || null },
       });
-
-      showToast(`Patient ${name} registered successfully!`, 'success');
-      setIsAddModalOpen(false);
-      setName('');
-      setMobile('');
-      loadPatients();
+      showToast(`${p.name} registered as ${p.id}`, 'success');
+      setAdding(false);
+      setForm(BLANK);
+      setSearch('');
     } catch (e: any) {
-      showToast(e.message || 'Failed to create patient', 'error');
+      showToast(e.message || 'Failed to register patient', 'error');
     }
   };
 
-  const filteredPatients = patients.filter((p) => {
-    const q = search.toLowerCase();
-    return (
-      p.name.toLowerCase().includes(q) ||
-      (p.mobile && p.mobile.includes(q)) ||
-      p.id.toLowerCase().includes(q)
-    );
-  });
+  const openHistory = async (patient: any) => {
+    setHistory({ patient, bills: null });
+    try {
+      const bills = await db.query('bill', 'findMany', { where: { patientId: patient.id }, orderBy: { createdAt: 'desc' } });
+      setHistory({ patient, bills });
+    } catch (e: any) {
+      showToast(e.message, 'error');
+    }
+  };
+
+  // Owner only. Hides the patient everywhere; their bills stay in invoices and the owner's reports.
+  const confirmDelete = async () => {
+    try {
+      await db.query('patient', 'update', { where: { id: deleting.id }, data: { deletedAt: new Date().toISOString() } });
+      showToast(`${deleting.name} deleted`, 'success');
+      setPatients((list) => list.filter((p) => p.id !== deleting.id));
+    } catch (e: any) {
+      showToast(e.message || 'Failed to delete patient', 'error');
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  const set = (k: keyof typeof BLANK) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [k]: e.target.value });
 
   return (
     <AppLayout
-      title="Patient Directory"
-      subtitle="Comprehensive medical records, contact profiles, and past billing history"
+      title="Patients"
+      subtitle="Find a patient, start their bill, see their visits"
       actions={
-        <button onClick={() => setIsAddModalOpen(true)} className={btnPrimary}>
-          <Plus className="h-4 w-4" />
-          + Register Patient
+        <button onClick={() => setAdding(true)} className={btnPrimary}>
+          <Plus className="h-4 w-4" /> Register patient
         </button>
       }
     >
       <ToastView toast={toast} />
 
-      <div className="space-y-5">
-        {/* Search */}
+      <div className="space-y-4">
         <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm">
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search by Patient Name, Phone Number, or Patient ID..."
+              placeholder="Search by name, mobile or patient ID"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className={`${inputCls} pl-10 h-10`}
+              className={`${inputCls} h-10 pl-10`}
+              autoFocus
             />
           </div>
-          <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">
-            {filteredPatients.length} Patients
-          </span>
+          <span className="whitespace-nowrap text-xs font-semibold text-muted-foreground">{plural(patients.length, 'patient')}</span>
         </div>
 
-        {/* Patient Table */}
-        <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
                 <tr>
                   <th className={th}>Patient ID</th>
-                  <th className={th}>Full Name</th>
+                  <th className={th}>Name</th>
                   <th className={th}>Age / Gender</th>
                   <th className={th}>Mobile</th>
-                  <th className={th}>Blood Group</th>
                   <th className={th}>Doctor</th>
-                  <th className={th}>Total Visits</th>
-                  <th className={th}>Registered</th>
+                  <th className={th}>Visits</th>
+                  <th className={th}>Last visit</th>
                   <th className={`${th} text-right`}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/50">
-                {filteredPatients.map((p) => (
-                  <tr key={p.id} className="hover:bg-muted/30 transition-colors">
+              <tbody>
+                {patients.map((p) => (
+                  <tr key={p.id} className="hover:bg-muted/30">
                     <td className={`${td} font-mono font-bold text-primary`}>{p.id}</td>
-                    <td className={`${td} font-semibold text-foreground text-sm`}>{p.name}</td>
-                    <td className={`${td} text-muted-foreground`}>
-                      {p.age} Yrs / {p.gender}
+                    <td className={`${td} text-sm font-semibold`}>
+                      {p.name}
+                      {p.bloodGroup && <span className="ml-2 rounded bg-destructive/10 px-1.5 py-0.5 text-[10px] font-bold text-destructive">{p.bloodGroup}</span>}
                     </td>
-                    <td className={`${td} font-medium`}>{p.mobile || '—'}</td>
+                    <td className={`${td} text-muted-foreground`}>{p.age} yrs / {p.gender}</td>
+                    <td className={td}>{p.mobile || '—'}</td>
+                    <td className={`${td} text-muted-foreground`}>{p.referredDoctor || '—'}</td>
                     <td className={td}>
-                      <span className="inline-block px-2 py-0.5 rounded font-bold text-[10px] bg-destructive/10 text-destructive">
-                        {p.bloodGroup || '—'}
-                      </span>
+                      <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold">{plural(p._count?.bills || 0, 'visit')}</span>
                     </td>
-                    <td className={`${td} text-muted-foreground`}>{p.referredDoctor || 'Self'}</td>
-                    <td className={td}>
-                      <span className="inline-block px-2 py-0.5 rounded-full bg-muted font-bold text-[11px]">
-                        {p.bills?.length || 0} bills
-                      </span>
-                    </td>
-                    <td className={`${td} text-muted-foreground`}>{formatDate(p.registeredAt)}</td>
+                    <td className={`${td} text-muted-foreground`}>{p.bills?.[0] ? formatDate(p.bills[0].createdAt) : 'Never'}</td>
                     <td className={`${td} text-right`}>
-                      <div className="flex justify-end gap-1.5">
-                        <button
-                          onClick={() => setSelectedPatient(p)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors cursor-pointer"
-                        >
-                          <Eye className="h-3.5 w-3.5" />
-                          History
+                      <div className="flex justify-end gap-1">
+                        <Link href={`/billing?patient=${encodeURIComponent(p.id)}`} className="inline-flex items-center gap-1 rounded-lg bg-primary px-2.5 py-1 font-semibold text-primary-foreground hover:bg-primary/90">
+                          <Receipt className="h-3.5 w-3.5" /> Bill
+                        </Link>
+                        <button onClick={() => openHistory(p)} className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-medium text-primary hover:bg-primary/10 cursor-pointer">
+                          <Eye className="h-3.5 w-3.5" /> History
                         </button>
+                        {owner && (
+                          <button onClick={() => setDeleting(p)} aria-label={`Delete ${p.name}`} title="Delete patient" className="rounded-lg p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive cursor-pointer">
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
                 ))}
-                {filteredPatients.length === 0 && (
+                {!patients.length && (
                   <tr>
-                    <td colSpan={9} className="text-center py-12 text-xs text-muted-foreground">
-                      No patients found matching your search.
+                    <td colSpan={8} className="py-12 text-center text-muted-foreground">
+                      {search ? 'No patient matches your search.' : 'No patients yet. They are added automatically when you make a bill.'}
                     </td>
                   </tr>
                 )}
@@ -193,182 +177,108 @@ export default function PatientsPage() {
         </div>
       </div>
 
-      {/* Register Patient Modal */}
-      {isAddModalOpen && (
-        <Modal title="Register New Patient" onClose={() => setIsAddModalOpen(false)}>
-          <form onSubmit={handleCreatePatient} className="space-y-4">
-            <Field label="Full Name *">
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Anjali Sharma"
-                className={inputCls}
-                required
-              />
+      {adding && (
+        <Modal title="Register patient" onClose={() => setAdding(false)}>
+          <form onSubmit={register} className="grid grid-cols-2 gap-3">
+            <Field label="Full name *" className="col-span-2">
+              <input value={form.name} onChange={set('name')} placeholder="e.g. Anjali Sharma" className={inputCls} required autoFocus />
             </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Mobile Number">
-                <input
-                  type="tel"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  placeholder="10-digit phone"
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Blood Group">
-                <select
-                  value={bloodGroup}
-                  onChange={(e) => setBloodGroup(e.target.value)}
-                  className={inputCls}
-                >
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                </select>
-              </Field>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Age (Years)">
-                <input
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value ? Number(e.target.value) : '')}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Gender">
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className={inputCls}
-                >
-                  <option value="MALE">Male</option>
-                  <option value="FEMALE">Female</option>
-                  <option value="OTHER">Other</option>
-                </select>
-              </Field>
-            </div>
-
-            <Field label="Consultant Doctor">
-              <input
-                type="text"
-                value={referredDoctor}
-                onChange={(e) => setReferredDoctor(e.target.value)}
-                className={inputCls}
-              />
+            <Field label="Mobile">
+              <input type="tel" value={form.mobile} onChange={set('mobile')} placeholder="10 digits" className={inputCls} />
             </Field>
-
-            <Field label="Residential Address">
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Street, City"
-                className={inputCls}
-              />
+            <Field label="Age (years)">
+              <input type="number" min="0" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value ? Number(e.target.value) : '' })} className={inputCls} />
             </Field>
-
-            <div className="flex justify-end gap-2 pt-4 border-t border-border">
-              <button
-                type="button"
-                onClick={() => setIsAddModalOpen(false)}
-                className={btnGhost}
-              >
-                Cancel
-              </button>
-              <button type="submit" className={btnPrimary}>
-                Register Patient
-              </button>
+            <Field label="Gender">
+              <select value={form.gender} onChange={set('gender')} className={inputCls}>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </Field>
+            <Field label="Blood group">
+              <select value={form.bloodGroup} onChange={set('bloodGroup')} className={inputCls}>
+                <option value="">Not known</option>
+                {BLOOD_GROUPS.map((b) => <option key={b} value={b}>{b}</option>)}
+              </select>
+            </Field>
+            <Field label="Doctor" className="col-span-2">
+              <input value={form.referredDoctor} onChange={set('referredDoctor')} placeholder="optional" className={inputCls} />
+            </Field>
+            <Field label="Address" className="col-span-2">
+              <input value={form.address} onChange={set('address')} placeholder="optional" className={inputCls} />
+            </Field>
+            <div className="col-span-2 flex justify-end gap-2 border-t border-border pt-4">
+              <button type="button" onClick={() => setAdding(false)} className={btnGhost}>Cancel</button>
+              <button type="submit" className={btnPrimary}>Register</button>
             </div>
           </form>
         </Modal>
       )}
 
-      {/* Patient History Modal */}
-      {selectedPatient && (
-        <Modal
-          title={`Patient Medical & Billing History: ${selectedPatient.name}`}
-          onClose={() => setSelectedPatient(null)}
-          wide
-        >
-          <div className="space-y-5">
-            <div className="rounded-xl bg-muted/40 p-4 border border-border grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+      {history && (
+        <Modal title={`${history.patient.name} · ${history.patient.id}`} onClose={() => setHistory(null)} wide>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-muted/40 p-4 text-xs sm:grid-cols-4">
+              <div><span className="block text-[10px] font-bold uppercase text-muted-foreground">Age / Gender</span>{history.patient.age} yrs / {history.patient.gender}</div>
+              <div><span className="block text-[10px] font-bold uppercase text-muted-foreground">Mobile</span>{history.patient.mobile || '—'}</div>
+              <div><span className="block text-[10px] font-bold uppercase text-muted-foreground">Registered</span>{formatDate(history.patient.registeredAt)}</div>
               <div>
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Patient ID</span>
-                <span className="font-mono font-bold text-primary">{selectedPatient.id}</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Age / Gender</span>
-                <span className="font-semibold text-foreground">{selectedPatient.age} Yrs / {selectedPatient.gender}</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Phone Number</span>
-                <span className="font-semibold text-foreground">{selectedPatient.mobile || '—'}</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Blood Group</span>
-                <span className="font-semibold text-destructive">{selectedPatient.bloodGroup || '—'}</span>
+                <span className="block text-[10px] font-bold uppercase text-muted-foreground">Total billed</span>
+                <span className="font-bold">{history.bills ? formatCurrency(history.bills.reduce((a, b) => a + b.totalAmount, 0)) : '…'}</span>
               </div>
             </div>
-
-            <div>
-              <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-1.5">
-                <Receipt className="h-4 w-4 text-primary" />
-                Past Invoices & Treatments ({selectedPatient.bills?.length || 0})
-              </h4>
-              <div className="rounded-xl border border-border overflow-hidden">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-muted">
-                    <tr>
-                      <th className="p-2.5 font-bold">Bill No</th>
-                      <th className="p-2.5 font-bold">Date</th>
-                      <th className="p-2.5 font-bold">Doctor</th>
-                      <th className="p-2.5 font-bold">Payment</th>
-                      <th className="p-2.5 font-bold text-right">Amount</th>
+            <div className="overflow-hidden rounded-xl border border-border">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="p-2.5">Bill no</th>
+                    <th className="p-2.5">Date</th>
+                    <th className="p-2.5">Doctor</th>
+                    <th className="p-2.5">Payment</th>
+                    <th className="p-2.5 text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {history.bills?.map((b) => (
+                    <tr key={b.id}>
+                      <td className="p-2.5 font-mono font-bold text-primary">{b.billNo}</td>
+                      <td className="p-2.5 text-muted-foreground">{formatDate(b.createdAt)}</td>
+                      <td className="p-2.5">{b.doctorName || '—'}</td>
+                      <td className="p-2.5">{b.paymentMethod}</td>
+                      <td className="p-2.5 text-right font-bold">{formatCurrency(b.totalAmount)}</td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border">
-                    {selectedPatient.bills?.map((b: any) => (
-                      <tr key={b.id} className="hover:bg-muted/30">
-                        <td className="p-2.5 font-mono font-bold text-primary">{b.billNo}</td>
-                        <td className="p-2.5 text-muted-foreground">{formatDate(b.createdAt)}</td>
-                        <td className="p-2.5">{b.doctorName || 'Self'}</td>
-                        <td className="p-2.5">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-600">
-                            {b.paymentMethod}
-                          </span>
-                        </td>
-                        <td className="p-2.5 text-right font-bold text-foreground">{formatCurrency(b.totalAmount)}</td>
-                      </tr>
-                    ))}
-                    {(!selectedPatient.bills || selectedPatient.bills.length === 0) && (
-                      <tr>
-                        <td colSpan={5} className="text-center py-6 text-muted-foreground">
-                          No past bills found for this patient.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                  {history.bills?.length === 0 && (
+                    <tr><td colSpan={5} className="py-6 text-center text-muted-foreground">No bills yet.</td></tr>
+                  )}
+                </tbody>
+              </table>
             </div>
+            <div className="flex justify-end gap-2 border-t border-border pt-3">
+              <button onClick={() => setHistory(null)} className={btnGhost}>Close</button>
+              <Link href={`/billing?patient=${encodeURIComponent(history.patient.id)}`} className={btnPrimary}>
+                <Receipt className="h-4 w-4" /> New bill for {history.patient.name.split(' ')[0]}
+              </Link>
+            </div>
+          </div>
+        </Modal>
+      )}
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-border">
-              <button
-                type="button"
-                onClick={() => setSelectedPatient(null)}
-                className={btnGhost}
-              >
-                Close
+      {deleting && (
+        <Modal title="Delete patient?" onClose={() => setDeleting(null)}>
+          <div className="space-y-4 text-sm">
+            <div className="flex gap-3 rounded-xl border border-destructive/20 bg-destructive/5 p-3">
+              <AlertTriangle className="h-5 w-5 shrink-0 text-destructive" />
+              <p>
+                <b>{deleting.name}</b> ({deleting.id}) will disappear from Patients and from billing search.
+                {deleting._count?.bills ? ` Their ${plural(deleting._count.bills, 'bill')} stay in Invoices and your reports.` : ''}
+              </p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button onClick={() => setDeleting(null)} className={btnGhost}>Cancel</button>
+              <button onClick={confirmDelete} className={btnDanger}>
+                <Trash2 className="h-4 w-4" /> Delete patient
               </button>
             </div>
           </div>

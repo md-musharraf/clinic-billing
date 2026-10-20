@@ -22,7 +22,7 @@ export default function CounterDashboard() {
     try {
       const [b, p, c] = await Promise.all([
         db.query('bill', 'findMany', { where: { createdAt: today }, orderBy: { createdAt: 'desc' }, include: { items: true } }),
-        db.query('patient', 'count', { where: { registeredAt: today } }),
+        db.query('patient', 'count', { where: { registeredAt: today, deletedAt: null } }),
         clinic ? clinic : db.query('clinicSettings', 'findFirst', { where: { id: 1 } }),
       ]);
       setBills(b || []);

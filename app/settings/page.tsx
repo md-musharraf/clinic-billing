@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   AlertCircle,
 } from 'lucide-react';
-import { inputCls, labelCls, btnPrimary, card, Field, useToast, ToastView } from '@/components/kit';
+import { inputCls, labelCls, btnPrimary, useToast, ToastView } from '@/components/kit';
+import { ClinicDetails, DoctorDetails, InvoiceLook, InvoicePreview, type Clinic } from '@/components/ClinicForm';
+import { EMPTY_CLINIC } from '@/lib/clinic-fields';
 
 export default function SettingsPage() {
   const [toast, showToast] = useToast();
@@ -26,95 +28,27 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Clinic Profile State
-  const [clinicName, setClinicName] = useState('Arogya Medical Clinic & Pharmacy');
-  const [tagline, setTagline] = useState('Comprehensive Health & Wellness Center');
-  const [address, setAddress] = useState('Main Hospital Road, Medical Hub');
-  const [phone, setPhone] = useState('+91 98765 43210');
-  const [email, setEmail] = useState('contact@arogyaclinic.com');
-  const [website, setWebsite] = useState('www.arogyaclinic.com');
-  const [doctorName, setDoctorName] = useState('Dr. Rajesh Verma');
-  const [doctorQualification, setDoctorQualification] = useState('MBBS, MD (Medicine)');
-  const [doctorRegNo, setDoctorRegNo] = useState('MCI-82341/2012');
-  const [dlNumber, setDlNumber] = useState('DL-20B/21B-89234');
-  const [gstin, setGstin] = useState('20AABCU9603R1ZM');
-  const [currencySymbol, setCurrencySymbol] = useState('₹');
-  const [termsConditions, setTermsConditions] = useState(
-    '1. Consultation validity: 7 days. 2. Medicines once sold cannot be returned without original cash memo.'
-  );
+  const [clinic, setClinic] = useState<Clinic>({ ...EMPTY_CLINIC });
 
   // Licence activation (keys are made on the admin dashboard)
   const [licenseKeyInput, setLicenseKeyInput] = useState('');
   const [copiedId, setCopiedId] = useState(false);
 
   useEffect(() => {
-    async function loadSettings() {
-      try {
-        setLoading(true);
-        const s = await db.query('clinicSettings', 'findFirst', { where: { id: 1 } });
-        if (s) {
-          if (s.clinicName) setClinicName(s.clinicName);
-          if (s.tagline) setTagline(s.tagline);
-          if (s.address) setAddress(s.address);
-          if (s.phone) setPhone(s.phone);
-          if (s.email) setEmail(s.email);
-          if (s.website) setWebsite(s.website);
-          if (s.doctorName) setDoctorName(s.doctorName);
-          if (s.doctorQualification) setDoctorQualification(s.doctorQualification);
-          if (s.doctorRegNo) setDoctorRegNo(s.doctorRegNo);
-          if (s.dlNumber) setDlNumber(s.dlNumber);
-          if (s.gstin) setGstin(s.gstin);
-          if (s.currencySymbol) setCurrencySymbol(s.currencySymbol);
-          if (s.termsConditions) setTermsConditions(s.termsConditions);
-        }
-      } catch (e: any) {
-        showToast(e.message || 'Failed to load clinic settings', 'error');
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadSettings();
-  }, []);
+    db.query('clinicSettings', 'findFirst', { where: { id: 1 } })
+      .then((s) => s && setClinic({ ...EMPTY_CLINIC, ...Object.fromEntries(Object.entries(s).filter(([k, v]) => k in EMPTY_CLINIC && v !== null)) }))
+      .catch((e) => showToast(e.message || 'Failed to load clinic settings', 'error'))
+      .finally(() => setLoading(false));
+  }, [showToast]);
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!clinic.clinicName.trim()) return showToast('Clinic name is required', 'error');
     setSaving(true);
     try {
-      await db.query('clinicSettings', 'upsert', {
-        where: { id: 1 },
-        update: {
-          clinicName,
-          tagline,
-          address,
-          phone,
-          email,
-          website,
-          doctorName,
-          doctorQualification,
-          doctorRegNo,
-          dlNumber,
-          gstin,
-          currencySymbol,
-          termsConditions,
-        },
-        create: {
-          id: 1,
-          clinicName,
-          tagline,
-          address,
-          phone,
-          email,
-          website,
-          doctorName,
-          doctorQualification,
-          doctorRegNo,
-          dlNumber,
-          gstin,
-          currencySymbol,
-          termsConditions,
-        },
-      });
-      showToast('Clinic profile updated successfully!', 'success');
+      const data = Object.fromEntries(Object.keys(EMPTY_CLINIC).map((k) => [k, clinic[k as keyof Clinic]]));
+      await db.query('clinicSettings', 'upsert', { where: { id: 1 }, update: data, create: { id: 1, ...data } });
+      showToast('Clinic profile and bill design saved', 'success');
     } catch (e: any) {
       showToast(e.message || 'Failed to save settings', 'error');
     } finally {
@@ -154,151 +88,31 @@ export default function SettingsPage() {
     >
       <ToastView toast={toast} />
 
-      <div className="max-w-5xl space-y-8">
-        {/* Section 1: Clinic Branding */}
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">
-          <div className="flex items-center gap-3 border-b border-border pb-4">
-            <Building2 className="h-6 w-6 text-primary" />
-            <div>
-              <h3 className="text-base font-bold text-foreground">Clinic Letterhead & Branding</h3>
-              <p className="text-xs text-muted-foreground">Information printed on bills, receipts, and patient reports</p>
+      <div className="max-w-7xl space-y-8">
+        <form onSubmit={handleSaveProfile} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="mb-5 flex items-center justify-between gap-3 border-b border-border pb-4">
+            <div className="flex items-center gap-3">
+              <Building2 className="h-6 w-6 text-primary" />
+              <div>
+                <h3 className="text-base font-bold text-foreground">Clinic profile &amp; bill design</h3>
+                <p className="text-xs text-muted-foreground">Everything printed on your bills. Changes apply to new prints straight away.</p>
+              </div>
+            </div>
+            <button type="submit" disabled={saving || loading} className={btnPrimary}>
+              <Save className="h-4 w-4" /> {saving ? 'Saving…' : 'Save'}
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="space-y-6">
+              <ClinicDetails value={clinic} onChange={setClinic} />
+              <DoctorDetails value={clinic} onChange={setClinic} />
+              <InvoiceLook value={clinic} onChange={setClinic} />
+            </div>
+            <div className="xl:sticky xl:top-0 xl:self-start">
+              <InvoicePreview clinic={clinic} />
             </div>
           </div>
-
-          <form onSubmit={handleSaveProfile} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field label="Clinic / Hospital Name *">
-                <input
-                  type="text"
-                  value={clinicName}
-                  onChange={(e) => setClinicName(e.target.value)}
-                  className={inputCls}
-                  required
-                />
-              </Field>
-              <Field label="Clinic Tagline">
-                <input
-                  type="text"
-                  value={tagline}
-                  onChange={(e) => setTagline(e.target.value)}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Address *">
-                <input
-                  type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className={inputCls}
-                  required
-                />
-              </Field>
-              <Field label="Phone Number *">
-                <input
-                  type="text"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className={inputCls}
-                  required
-                />
-              </Field>
-              <Field label="Email Address">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Website URL">
-                <input
-                  type="text"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                  className={inputCls}
-                />
-              </Field>
-            </div>
-
-            <div className="border-t border-border/60 pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Field label="In-Charge Doctor Name">
-                <input
-                  type="text"
-                  value={doctorName}
-                  onChange={(e) => setDoctorName(e.target.value)}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Doctor Qualification">
-                <input
-                  type="text"
-                  value={doctorQualification}
-                  onChange={(e) => setDoctorQualification(e.target.value)}
-                  placeholder="e.g. MBBS, MD"
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Medical Council Reg No">
-                <input
-                  type="text"
-                  value={doctorRegNo}
-                  onChange={(e) => setDoctorRegNo(e.target.value)}
-                  placeholder="e.g. MCI-48291"
-                  className={inputCls}
-                />
-              </Field>
-            </div>
-
-            <div className="border-t border-border/60 pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Field label="Pharmacy Drug License No. (D.L. No)">
-                <input
-                  type="text"
-                  value={dlNumber}
-                  onChange={(e) => setDlNumber(e.target.value)}
-                  placeholder="DL-20B/21B-XXXXX"
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="GSTIN / Tax ID">
-                <input
-                  type="text"
-                  value={gstin}
-                  onChange={(e) => setGstin(e.target.value)}
-                  placeholder="GST Number"
-                  className={inputCls}
-                />
-              </Field>
-              <Field label="Currency Symbol">
-                <input
-                  type="text"
-                  value={currencySymbol}
-                  onChange={(e) => setCurrencySymbol(e.target.value)}
-                  className={inputCls}
-                />
-              </Field>
-            </div>
-
-            <Field label="Invoice Terms & Conditions">
-              <textarea
-                rows={2}
-                value={termsConditions}
-                onChange={(e) => setTermsConditions(e.target.value)}
-                className={`${inputCls} py-2`}
-              />
-            </Field>
-
-            <div className="flex justify-end pt-2">
-              <button
-                type="submit"
-                disabled={saving}
-                className={btnPrimary}
-              >
-                <Save className="h-4 w-4" />
-                {saving ? 'Saving Profile...' : 'Save Clinic Profile'}
-              </button>
-            </div>
-          </form>
-        </div>
+        </form>
 
         {/* Section 2: Hardware-Locked Licensing */}
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">

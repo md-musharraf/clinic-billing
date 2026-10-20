@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "prisma generate && node scripts/schema-sql.js && node scripts/build.js",
     "start": "next start",
-    "test": "node test/billing-summary.test.js && node test/license.test.js",
+    "test": "node test/billing-summary.test.js && node test/license.test.js && node test/access.test.js",
     "electron:dev": "concurrently -k \"npm run dev\" \"wait-on tcp:3000 && electron .\"",
     "electron:build": "npm run build && electron-builder",
     "pack": "npm run build && electron-builder --dir",

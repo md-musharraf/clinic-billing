@@ -7,7 +7,7 @@ Built using the exact same architecture, UI system, offline licensing, and datab
 - **Frontend Stack**: Next.js 14 + React 18 + Tailwind CSS + Lucide React + Framer Motion
 - **Database Engine**: Prisma ORM with SQLite (`prisma/dev.db`), offline DDL auto-sync (`prisma/schema.sql`)
 - **Authentication & RBAC**: separate **Owner** and **Reception** logins (Owner/Manager → owner dashboard; Reception, Pharmacist, Doctor → counter dashboard), enforced by a backend session
-- **Licensing**: hardware-locked (Windows `MachineGuid`), 30-day auto trial, keys + pause/stop from the admin dashboard
+- **Licensing**: hardware-locked (Windows `MachineGuid`), 7-day auto trial, keys + pause/stop from the admin dashboard
 - **Printing**: Direct Thermal Receipt (80mm/58mm) and Vector A4/A5 Tax Invoice print
 
 ---
@@ -40,6 +40,18 @@ npm run electron:build
 
 ## 🚀 Key Modules & Capabilities
 
+### First run (`/setup`)
+A new PC opens a 4-step setup: clinic details → doctor & tax (GSTIN / drug licence optional) → bill design
+(logo, doctor's signature, colour, A4 / A5 / 80 mm receipt, thank-you line, terms, with a live preview) → owner login.
+It ends with the owner recovery code and the Machine ID to send for a licence. The owner dashboard then shows a
+"Get your clinic ready" checklist (doctors, prices, reception login, first bill). Everything is editable later in Settings.
+
+### New Bill (`/billing` • F2, F9 saves)
+One screen, no page scrolling: patient, item search, item list (the only part that scrolls; the newest line comes into
+view), per-type totals, discount, GST, payment and Save. Typing a mobile or name lists existing patients (family members
+on one number too); Patients → **Bill** opens it with the patient already picked. ↑↓ + Enter add items from the
+catalog; an unknown item gets its category guessed and the cursor goes to its price.
+
 ### 0. 👑 Owner Dashboard (`/owner`, Owner login only)
 - Pick Today / Yesterday / This week / This month / Last month or any date range.
 - Patients (unique + new registrations), bills, money collected, due, discount, GST.
@@ -56,7 +68,7 @@ npm run electron:build
 - Payment modes: Cash, UPI, Card, Net Banking.
 
 ### 2. 🔐 Licence (managed from the JharLab admin dashboard)
-- Locked to the PC's Windows `MachineGuid`; automatic **30-day free trial** on first run.
+- Locked to the PC's Windows `MachineGuid`; automatic **7-day free trial** on first run.
 - Keys are made only on the admin dashboard (customer → Software: **MedBilling Clinic**); they end in `|MEDBILLING`,
   so JharLab and MedBilling keys cannot unlock each other. The app has no key generator.
 - Every check (and once a minute while open) the app calls the same `GET /api/license/status` as JharLab, with
@@ -67,7 +79,8 @@ npm run electron:build
 - **SUPER_ADMIN (Owner)** / **ADMIN (Manager)**: Owner login, owner dashboard, staff, backup, settings.
 - **RECEPTIONIST**: Reception login, today's counter, billing, invoices, patients.
 - **PHARMACIST**, **DOCTOR**: Reception login with their own screen lists.
-- The backend refuses DB access without a signed-in session; only owners can change logins, licences or make backups.
+- The backend refuses DB access without a signed-in session; only owners can change logins, licences, make backups,
+  delete bills or delete patients. A deleted patient is hidden from Patients and billing search; their bills stay in reports.
 - Owner sets new staff passwords in Staff Logins; the owner's own reset uses the 8-character recovery code from setup.
 
 ### 4. 💊 Master Item & Price Catalog (`/catalog` • F3)
@@ -85,7 +98,7 @@ npm run electron:build
 
 ### 7. ✅ Tests
 ```bash
-npm test          # owner-report maths, roles, licence vs a fake dashboard
+npm test          # owner-report maths, roles, licence vs a fake dashboard, setup + delete rules
 node test_app.js  # end-to-end against prisma/dev.db
 ```
 

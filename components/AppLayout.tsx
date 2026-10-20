@@ -11,11 +11,12 @@ interface AppLayoutProps {
   title: string;
   subtitle?: string;
   actions?: React.ReactNode;
+  fill?: boolean; // screen fits the window; its own panels scroll instead of the page
 }
 
 const THEME_KEY = 'medbilling_theme';
 
-export function AppLayout({ children, title, subtitle, actions }: AppLayoutProps) {
+export function AppLayout({ children, title, subtitle, actions, fill }: AppLayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -95,7 +96,7 @@ export function AppLayout({ children, title, subtitle, actions }: AppLayoutProps
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className={fill ? 'min-h-0 flex-1 overflow-hidden p-4' : 'flex-1 overflow-y-auto p-6'}>{children}</main>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { canOpen, roleLabel, homeFor } from '@/lib/roles';
-import { api } from '@/lib/db';
+import { api, db } from '@/lib/db';
 import { useLicense } from '@/components/LicenseProvider';
 import {
   BarChart3,
@@ -77,11 +77,15 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState<{ name: string; role: string; email?: string } | null>(null);
   const license = useLicense();
+  const [clinicName, setClinicName] = useState('');
 
   useEffect(() => {
     try {
       setUser(JSON.parse(localStorage.getItem('medbilling_current_user') || 'null'));
     } catch {}
+    db.query('clinicSettings', 'findFirst', { where: { id: 1 }, select: { clinicName: true } })
+      .then((c) => setClinicName(c?.clinicName || ''))
+      .catch(() => {});
   }, []);
 
   const handleLogout = async () => {
@@ -108,7 +112,7 @@ export function Sidebar() {
             </div>
             <div>
               <span className="font-bold text-base tracking-tight text-foreground block leading-tight">MedBilling</span>
-              <span className="text-[11px] font-medium text-muted-foreground block">Clinical SaaS & POS</span>
+              <span className="block max-w-[150px] truncate text-[11px] font-medium text-muted-foreground" title={clinicName}>{clinicName || 'Clinic billing'}</span>
             </div>
           </Link>
         ) : (
@@ -127,7 +131,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation Sections */}
-      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
+      <div className="flex-1 overflow-y-auto py-3 px-3 space-y-4">
         {navSections.map((sec) => {
           const visibleItems = user ? sec.items.filter((item) => canOpen(userRole, item.href)) : [];
           if (visibleItems.length === 0) return null;
@@ -135,11 +139,11 @@ export function Sidebar() {
           return (
             <div key={sec.title}>
               {!collapsed && (
-                <div className="px-3 pb-2 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+                <div className="px-3 pb-1.5 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
                   {sec.title}
                 </div>
               )}
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {visibleItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -149,7 +153,7 @@ export function Sidebar() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all group relative',
+                        'flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all group relative',
                         isActive
                           ? 'bg-primary text-primary-foreground shadow-sm shadow-primary/25 font-semibold'
                           : 'text-muted-foreground hover:bg-muted/80 hover:text-foreground'

@@ -81,6 +81,17 @@ export function ToastView({ toast }: { toast: Toast }) {
   );
 }
 
+// The signed-in user (id, name, email, role) saved at login; null until read.
+export function useUser(): { id: number; name: string; email: string; role: string } | null {
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('medbilling_current_user') || 'null'));
+    } catch {}
+  }, []);
+  return user;
+}
+
 // Runs load() now, whenever deps change, and whenever the desktop app reports a write to one of `models`.
 export function useLive(load: () => void, models: string[], deps: unknown[] = []) {
   const latest = useRef(load);

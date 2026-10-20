@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { AppLayout } from '@/components/AppLayout';
 import { InvoiceModal } from '@/components/InvoiceModal';
 import { db, api } from '@/lib/db';
@@ -10,8 +11,67 @@ import { FEE_GROUPS, SHORT } from '@/lib/billing-summary';
 import { inputCls, btnPrimary, th, td, Stat, useLive, useToast, ToastView } from '@/components/kit';
 import {
   Users, Receipt, Wallet, AlertTriangle, BadgePercent, Landmark, FileDown, Search, Eye,
-  FlaskConical, Pill, Stethoscope, Waves, ScanLine, Package,
+  FlaskConical, Pill, Stethoscope, Waves, ScanLine, Package, CheckCircle2, Circle, X,
 } from 'lucide-react';
+
+const READY_KEY = 'medbilling_setup_checklist_hidden';
+
+// First days after Setup: what is left before the counter can run on its own. Hides when done (or dismissed).
+function GettingStarted() {
+  const [steps, setSteps] = useState<{ label: string; hint: string; href: string; done: boolean }[] | null>(null);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(READY_KEY)) return;
+    } catch {}
+    Promise.all([
+      db.query('clinicSettings', 'findFirst', { where: { id: 1 } }),
+      db.query('doctor', 'count', {}),
+      db.query('user', 'count', { where: { role: { notIn: ['SUPER_ADMIN', 'ADMIN'] } } }),
+      db.query('bill', 'count', {}),
+    ])
+      .then(([clinic, doctors, staff, bills]) =>
+        setSteps([
+          { label: 'Design your bill', hint: 'Logo, signature, colour, paper size', href: '/settings', done: !!(clinic?.logo || clinic?.doctorSignature) },
+          { label: 'Add your doctors', hint: 'With consultation fees, for one-tap fee on bills', href: '/doctors', done: doctors > 0 },
+          { label: 'Check item & fee prices', hint: 'Tests, medicines, USG, X-Ray come pre-filled', href: '/catalog', done: bills > 0 },
+          { label: 'Create a reception login', hint: 'Reception bills patients but cannot see earnings', href: '/staff', done: staff > 0 },
+          { label: 'Make your first bill', hint: 'F2 from anywhere', href: '/billing', done: bills > 0 },
+        ]),
+      )
+      .catch(() => {});
+  }, []);
+  if (!steps || steps.every((s) => s.done)) return null;
+  const left = steps.filter((s) => !s.done).length;
+  const hide = () => {
+    try {
+      localStorage.setItem(READY_KEY, '1');
+    } catch {}
+    setSteps(null);
+  };
+  return (
+    <section className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <h3 className="text-base font-bold">Get your clinic ready</h3>
+          <p className="text-xs text-muted-foreground">{left} of {steps.length} steps left</p>
+        </div>
+        <button onClick={hide} aria-label="Hide checklist" className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted cursor-pointer">
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-5">
+        {steps.map((s) => (
+          <Link key={s.label} href={s.href} className={`rounded-xl border bg-card p-3 transition-colors hover:border-primary/60 ${s.done ? 'border-emerald-500/40 opacity-70' : 'border-border'}`}>
+            <span className="flex items-center gap-1.5 text-sm font-semibold">
+              {s.done ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Circle className="h-4 w-4 text-muted-foreground" />} {s.label}
+            </span>
+            <span className="mt-0.5 block text-[11px] text-muted-foreground">{s.hint}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 
 const GROUP_STYLE: Record<string, { icon: React.ElementType; bar: string; chip: string }> = {
@@ -122,6 +182,7 @@ export default function OwnerDashboard() {
       <ToastView toast={toast} />
 
       <div className={`space-y-5 transition-opacity ${loading && data ? 'opacity-60' : ''}`}>
+        <GettingStarted />
         {/* Period picker */}
         <div className="flex flex-wrap items-end gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm">
           <div className="flex flex-wrap gap-1.5">
